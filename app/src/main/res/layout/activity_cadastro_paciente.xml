@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="view"
+            type="android.view.View" />
+
+        <variable
+            name="user"
+            type="com.project.erphealthcare.data.model.Paciente" />
+
+        <variable
+            name="viewModel"
+            type="com.project.erphealthcare.ui.cadastro.paciente.CadastroPacienteActivity" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blue_login_general">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:context=".ui.cadastro.paciente.CadastroPacienteActivity">
+
+            <TextView
+                android:id="@+id/tv_cadastrar_paciente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Cadastro paciente"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/custom_input"
+                android:hint="Nome do paciente"
+                android:padding="16dp"
+                android:text="@={user.nome}"
+                app:layout_constraintStart_toStartOf="@+id/tv_cadastrar_paciente"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cadastrar_paciente" />
+
+            <EditText
+                android:id="@+id/editTextCpf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/custom_input"
+                android:hint="CPF"
+                android:padding="16dp"
+                android:text="@={user.cpf}"
+                app:layout_constraintStart_toStartOf="@+id/editTextNome"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
+
+            <EditText
+                android:id="@+id/editTextNomeMae"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/custom_input"
+                android:hint="Nome da mãe"
+                android:padding="16dp"
+                android:text="@={user.nomeMae}"
+                app:layout_constraintStart_toStartOf="@+id/editTextCpf"
+                app:layout_constraintTop_toBottomOf="@+id/editTextCpf" />
+
+            <EditText
+                android:id="@+id/editTextIdade"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/custom_input"
+                android:hint="Idade do paciente"
+                android:inputType="number"
+                android:padding="16dp"
+                android:text="@{String.valueOf(user.idade)}"
+                app:layout_constraintEnd_toEndOf="@+id/editTextNome"
+                app:layout_constraintStart_toEndOf="@+id/spinnerGenero"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNomeMae" />
+
+            <Spinner
+                android:id="@+id/spinnerGenero"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/custom_input"
+                android:hint="Gênero"
+                android:padding="16dp"
+                android:text=""
+                app:layout_constraintBottom_toBottomOf="@+id/editTextIdade"
+                app:layout_constraintEnd_toStartOf="@+id/editTextIdade"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNomeMae" />
+
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/custom_input"
+                android:hint="@string/email"
+                android:padding="16dp"
+                android:text="@={user.email}"
+                app:layout_constraintStart_toStartOf="@+id/spinnerGenero"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerGenero" />
+
+            <EditText
+                android:id="@+id/editTextTelefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/custom_input"
+                android:hint="Telefone"
+                android:padding="16dp"
+                android:text="@={user.telefone}"
+                app:layout_constraintStart_toStartOf="@+id/editTextEmail"
+                app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+
+            <EditText
+                android:id="@+id/editTextEndereco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/custom_input"
+                android:hint="Endereço"
+                android:padding="16dp"
+                android:text="@={user.enderecoCompleto}"
+                app:layout_constraintStart_toStartOf="@+id/editTextTelefone"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTelefone" />
+
+
+            <EditText
+                android:id="@+id/editTextNaturalidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/custom_input"
+                android:hint="Naturalidade"
+                android:padding="16dp"
+                android:text="@={user.naturalidade}"
+                app:layout_constraintStart_toStartOf="@+id/editTextEndereco"
+                app:layout_constraintTop_toBottomOf="@+id/editTextEndereco" />
+
+            <Spinner
+                android:id="@+id/spinnerTipoSanguineo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/custom_input"
+                android:hint="Tipo Sanguineo"
+                android:padding="16dp"
+                android:text=""
+                app:layout_constraintBottom_toBottomOf="@+id/editTextPeso"
+                app:layout_constraintEnd_toStartOf="@+id/editTextPeso"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNaturalidade" />
+
+            <EditText
+                android:id="@+id/editTextPeso"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/custom_input"
+                android:hint="Peso do paciente"
+                android:inputType="number"
+                android:padding="16dp"
+                android:text="@{String.valueOf(user.peso)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/spinnerTipoSanguineo"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNaturalidade" />
+
+            <EditText
+                android:id="@+id/editTextAltura"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/custom_input"
+                android:hint="Altura do paciente"
+                android:inputType="number"
+                android:padding="16dp"
+                android:text="@{String.valueOf(user.altura)}"
+                app:layout_constraintEnd_toEndOf="@id/spinnerTipoSanguineo"
+                app:layout_constraintStart_toStartOf="@id/spinnerTipoSanguineo"
+                app:layout_constraintTop_toBottomOf="@+id/editTextPeso" />
+
+            <EditText
+                android:id="@+id/editTextSenha"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/custom_input"
+                android:hint="Senha"
+                android:inputType="number"
+                android:padding="16dp"
+                android:text="@{user.senha}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/spinnerTipoSanguineo"
+                app:layout_constraintTop_toBottomOf="@+id/editTextPeso" />
+
+            <Button
+                android:id="@+id/buttonEnviar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:padding="12dp"
+                android:text="Enviar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/spinnerTipoSanguineo"
+                app:layout_constraintTop_toBottomOf="@+id/editTextAltura"
+                app:layout_constraintVertical_bias="1.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "644562749873",
+    "project_id": "erphealth-5f41e",
+    "storage_bucket": "erphealth-5f41e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644562749873:android:d485bec9cd4f21ae47d590",
+        "android_client_info": {
+          "package_name": "com.project.erphealthcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644562749873-4mdp74qtosr5066t9q14otmnai79j811.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1_iwjIqGxMXUm2BZKfAe5opKcsFENKB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644562749873-4mdp74qtosr5066t9q14otmnai79j811.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

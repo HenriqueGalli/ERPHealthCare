@@ -38,124 +38,160 @@
                 android:layout_marginBottom="16dp"
                 android:text="Cadastro paciente"
                 android:textSize="24sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextNome"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/custom_input"
                 android:hint="Nome do paciente"
-                android:padding="16dp"
-                android:text="@={user.nome}"
                 app:layout_constraintStart_toStartOf="@+id/tv_cadastrar_paciente"
-                app:layout_constraintTop_toBottomOf="@+id/tv_cadastrar_paciente" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_cadastrar_paciente">
 
-            <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@={user.nome}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextCpf"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/custom_input"
                 android:hint="CPF"
-                android:padding="16dp"
-                android:text="@={user.cpf}"
                 app:layout_constraintStart_toStartOf="@+id/editTextNome"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNome" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextNome">
 
-            <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:text="@={user.cpf}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextNomeMae"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/custom_input"
                 android:hint="Nome da mãe"
-                android:padding="16dp"
-                android:text="@={user.nomeMae}"
                 app:layout_constraintStart_toStartOf="@+id/editTextCpf"
-                app:layout_constraintTop_toBottomOf="@+id/editTextCpf" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextCpf">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextIdade"
-                android:layout_width="0dp"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@={user.nomeMae}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <DatePicker
+                android:id="@+id/simpleDatePicker"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/custom_input"
-                android:hint="Idade do paciente"
-                android:inputType="number"
-                android:padding="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/editTextNome"
-                app:layout_constraintStart_toEndOf="@+id/spinnerGenero"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/editTextNomeMae"
                 app:layout_constraintTop_toBottomOf="@+id/editTextNomeMae" />
+
 
             <Spinner
                 android:id="@+id/spinnerGenero"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="4dp"
-                android:background="@drawable/custom_input"
-                android:hint="Gênero"
-                android:padding="16dp"
-                android:text=""
-                app:layout_constraintBottom_toBottomOf="@+id/editTextIdade"
-                app:layout_constraintEnd_toStartOf="@+id/editTextIdade"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNomeMae" />
+                app:layout_constraintTop_toBottomOf="@+id/simpleDatePicker" />
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextEmail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/custom_input"
                 android:hint="@string/email"
-                android:padding="16dp"
-                android:text="@={user.email}"
                 app:layout_constraintStart_toStartOf="@+id/spinnerGenero"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerGenero" />
+                app:layout_constraintTop_toBottomOf="@+id/spinnerGenero">
 
-            <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@{user.email}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextTelefone"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/custom_input"
                 android:hint="Telefone"
-                android:padding="16dp"
-                android:text="@={user.telefone}"
                 app:layout_constraintStart_toStartOf="@+id/editTextEmail"
-                app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextEmail">
 
-            <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:text="@{user.telefone}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextEndereco"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/custom_input"
                 android:hint="Endereço"
-                android:padding="16dp"
-                android:text="@={user.enderecoCompleto}"
                 app:layout_constraintStart_toStartOf="@+id/editTextTelefone"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTelefone" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTelefone">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@={user.enderecoCompleto}" />
 
-            <com.google.android.material.textfield.TextInputEditText
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextNaturalidade"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/custom_input"
                 android:hint="Naturalidade"
-                android:padding="16dp"
-                android:text="@={user.naturalidade}"
                 app:layout_constraintStart_toStartOf="@+id/editTextEndereco"
-                app:layout_constraintTop_toBottomOf="@+id/editTextEndereco" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextEndereco">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@={user.naturalidade}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Spinner
                 android:id="@+id/spinnerTipoSanguineo"
@@ -163,7 +199,6 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="4dp"
-                android:background="@drawable/custom_input"
                 android:hint="Tipo Sanguineo"
                 android:padding="16dp"
                 android:text=""
@@ -172,48 +207,71 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextNaturalidade" />
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextPeso"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/custom_input"
                 android:hint="Peso do paciente"
-                android:inputType="number"
-                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/spinnerTipoSanguineo"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNaturalidade" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextNaturalidade">
 
-            <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:text="@{String.valueOf(user.peso)}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextAltura"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/custom_input"
                 android:hint="Altura do paciente"
-                android:inputType="numberDecimal"
-                android:padding="16dp"
+
                 app:layout_constraintEnd_toEndOf="@id/spinnerTipoSanguineo"
                 app:layout_constraintStart_toStartOf="@id/spinnerTipoSanguineo"
-                app:layout_constraintTop_toBottomOf="@+id/editTextPeso" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextPeso">
 
-            <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:text="@{String.valueOf(user.altura)}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextSenha"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/custom_input"
                 android:hint="Senha"
-                ndroid:inputType="textPassword"
-                android:padding="16dp"
-                android:text="@{user.senha}"
+                app:endIconMode="password_toggle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/spinnerTipoSanguineo"
-                app:layout_constraintTop_toBottomOf="@+id/editTextPeso" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextPeso">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:text="@{user.senha}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/buttonEnviar"
@@ -221,9 +279,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:padding="12dp"
-                android:text="Enviar"
+                android:backgroundTint="@color/blue_login"
                 android:onClick="@{(v)-> viewModel.cadastrar()}"
+                android:padding="12dp"
+                android:text="Salvar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/spinnerTipoSanguineo"

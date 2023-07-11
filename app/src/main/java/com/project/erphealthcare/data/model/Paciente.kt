@@ -9,7 +9,6 @@ data class Paciente(
     @Json(name = "nome") var nome: String?,
     @Json(name = "nomeMae") var nomeMae: String?,
     @Json(name = "senha") var senha: String?,
-    @Json(name = "idade") var idade: String?,
     @Json(name = "email") var email: String?,
     @Json(name = "telefone") var telefone: String?,
     @Json(name = "tipoSanguineo") var tipoSanguineo: String?,

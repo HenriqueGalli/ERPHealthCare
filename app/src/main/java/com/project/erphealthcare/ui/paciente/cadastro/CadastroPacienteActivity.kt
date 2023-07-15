@@ -1,18 +1,26 @@
-package com.project.erphealthcare.ui.cadastro.paciente
+package com.project.erphealthcare.ui.paciente.cadastro
 
 import android.os.Build
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.project.erphealthcare.data.model.Paciente
 import androidx.databinding.DataBindingUtil
 import com.project.erphealthcare.R
+import com.project.erphealthcare.data.api.ERPDataSource
+import com.project.erphealthcare.data.model.Paciente
+import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.databinding.ActivityCadastroPacienteBinding
+import com.project.erphealthcare.utils.CpfUtils
 
 class CadastroPacienteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastroPacienteBinding
+
+    private val viewModel: CadastroPacienteViewModel =
+        CadastroPacienteViewModel.ViewModelFactory(ERPDataSource())
+            .create(CadastroPacienteViewModel::class.java)
+
     private var paciente: Paciente? = null
     private var isNewUser = true
 
@@ -25,11 +33,39 @@ class CadastroPacienteActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_cadastro_paciente)
         binding.viewModel = this
         setupGenderSpinner()
+        setupListener()
         setupBloodTypeSpinner()
+        setupObserver()
         if (intent.hasExtra("PACIENTE")) {
             paciente = intent.getSerializableExtra("PACIENTE", Paciente::class.java)
         }
 
+    }
+
+    private fun setupListener() {
+        binding.editTextCpf.addTextChangedListener(
+            CpfUtils.mask(
+                "###.###.###-##",
+                binding.editTextCpf
+            )
+        )
+    }
+
+    private fun setupObserver() {
+        viewModel.cadastrarLiveData.observe(this) { res ->
+            when (res) {
+                is CreatePacienteResult.Success -> userCreated()
+                else -> userCreatedError()
+            }
+        }
+    }
+
+    private fun userCreatedError() {
+        //TODO("Not yet implemented")
+    }
+
+    private fun userCreated() {
+        //TODO("Not yet implemented")
     }
 
     private fun setupGenderSpinner() {
@@ -45,6 +81,7 @@ class CadastroPacienteActivity : AppCompatActivity() {
             )
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerGenero.adapter = dataAdapter
+
         if (intent.hasExtra("PACIENTE"))
             binding.spinnerGenero.setSelection(dataAdapter.getPosition(paciente?.sexo))
         else
@@ -74,7 +111,7 @@ class CadastroPacienteActivity : AppCompatActivity() {
             if (isNewUser) {
                 val paciente = Paciente(
                     nome = binding.editTextNome.editText?.text.toString(),
-                    cpf = binding.editTextCpf.editText?.text.toString(),
+                    cpf = binding.editTextCpf.text.toString(),
                     nomeMae = binding.editTextNomeMae.editText?.text.toString(),
                     email = binding.editTextEmail.editText?.text.toString(),
                     telefone = binding.editTextTelefone.editText?.text.toString(),
@@ -86,9 +123,25 @@ class CadastroPacienteActivity : AppCompatActivity() {
                     dataNascimento = getDate(),
                     sexo = binding.spinnerGenero.selectedItem.toString(),
                     tipoSanguineo = binding.spinnerTipoSanguineo.toString()
-                    )
+                )
+                viewModel.cadastrarPaciente(paciente)
+            } else{
+                val paciente = Paciente(
+                    nome = binding.editTextNome.editText?.text.toString(),
+                    cpf = binding.editTextCpf.text.toString(),
+                    nomeMae = binding.editTextNomeMae.editText?.text.toString(),
+                    email = binding.editTextEmail.editText?.text.toString(),
+                    telefone = binding.editTextTelefone.editText?.text.toString(),
+                    enderecoCompleto = binding.editTextEndereco.editText?.text.toString(),
+                    naturalidade = binding.editTextNaturalidade.editText?.text.toString(),
+                    peso = binding.editTextPeso.editText?.text.toString().toFloat(),
+                    altura = binding.editTextAltura.editText?.text.toString().toFloat(),
+                    senha = binding.editTextSenha.editText?.text.toString(),
+                    dataNascimento = getDate(),
+                    sexo = binding.spinnerGenero.selectedItem.toString(),
+                    tipoSanguineo = binding.spinnerTipoSanguineo.toString()
+                )
             }
-            //Chamar ViewModel com chamada de api de cadastro
         }
     }
 
@@ -97,7 +150,7 @@ class CadastroPacienteActivity : AppCompatActivity() {
             binding.editTextNome.error = "Campo Obrigatório"
             return false
         }
-        if (binding.editTextCpf.editText?.text.toString().isEmpty()) {
+        if (binding.editTextCpf.text.toString().isEmpty()) {
             binding.editTextCpf.error = "Campo Obrigatório"
             return false
         }

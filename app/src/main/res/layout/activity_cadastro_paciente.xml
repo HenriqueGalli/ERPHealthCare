@@ -15,7 +15,7 @@
 
         <variable
             name="viewModel"
-            type="com.project.erphealthcare.ui.cadastro.paciente.CadastroPacienteActivity" />
+            type="com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity" />
     </data>
 
     <ScrollView
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
-            tools:context=".ui.cadastro.paciente.CadastroPacienteActivity">
+            tools:context=".ui.paciente.cadastro.CadastroPacienteActivity">
 
             <TextView
                 android:id="@+id/tv_cadastrar_paciente"
@@ -60,7 +60,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/editTextCpf"
+                android:id="@+id/editTextCpfLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,6 +70,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextNome">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextCpf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -86,8 +87,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Nome da mãe"
-                app:layout_constraintStart_toStartOf="@+id/editTextCpf"
-                app:layout_constraintTop_toBottomOf="@+id/editTextCpf">
+                app:layout_constraintStart_toStartOf="@+id/editTextCpfLayout"
+                app:layout_constraintTop_toBottomOf="@+id/editTextCpfLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"

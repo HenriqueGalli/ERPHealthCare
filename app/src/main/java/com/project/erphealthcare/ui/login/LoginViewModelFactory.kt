@@ -2,8 +2,8 @@ package com.project.erphealthcare.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.project.erphealthcare.data.LoginDataSource
-import com.project.erphealthcare.data.LoginRepository
+import com.project.erphealthcare.data.api.ERPDataSource
+import com.project.erphealthcare.data.repository.LoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
@@ -16,7 +16,7 @@ class LoginViewModelFactory : ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(
                 loginRepository = LoginRepository(
-                    dataSource = LoginDataSource()
+                    dataSource = ERPDataSource()
                 )
             ) as T
         }

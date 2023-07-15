@@ -1,5 +1,6 @@
 package com.project.erphealthcare.ui.login
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.Observer
@@ -15,8 +16,10 @@ import android.widget.EditText
 import android.widget.Toast
 import com.project.erphealthcare.databinding.ActivityLoginBinding
 
-import com.project.erphealthcare.R
-import com.project.erphealthcare.ui.cadastro.paciente.CadastroPacienteActivity
+import com.project.erphealthcare.data.model.LoginResponse
+import com.project.erphealthcare.data.result.LoginResult
+import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity
+import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -49,24 +52,23 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        loginViewModel.loginResult.observe(this@LoginActivity, Observer {
-            val loginResult = it ?: return@Observer
+        loginViewModel.loginLiveData.observe(this) { loginResult ->
+
+            when (loginResult) {
+                is LoginResult.Success -> successLogin(loginResult.loginResponse)
+                is LoginResult.ApiError -> showLoginFailed("Usuário ou senha inválidos")
+                else -> showLoginFailed("Ocorreu um erro ao realizar o login, tente novamente mais tarde")
+            }
 
             loading.visibility = View.GONE
-            if (loginResult.error != null) {
-                showLoginFailed(loginResult.error)
-            }
-            if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
-            }
             setResult(Activity.RESULT_OK)
             finish()
-        })
+        }
 
         username.afterTextChanged {
             loginViewModel.loginDataChanged(
-                username.text.toString(),
-                password.text.toString()
+                username.toString(),
+                password.toString()
             )
         }
 
@@ -102,18 +104,18 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
+    private fun successLogin(model: LoginResponse) {
         Toast.makeText(
             applicationContext,
-            "$welcome $displayName",
+            "${model.authentication} ${model.apiKey}",
             Toast.LENGTH_LONG
         ).show()
+        val intent = Intent(this, HomePacienteActivity::class.java)
+        startActivity(intent)
+        this.finish()
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
+    private fun showLoginFailed(@SuppressLint("SupportAnnotationUsage") @StringRes errorString: String) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 }

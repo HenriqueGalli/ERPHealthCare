@@ -1,6 +1,8 @@
 package com.project.erphealthcare.data.repository
 
 import com.project.erphealthcare.data.api.ERPDataSource
+import com.project.erphealthcare.data.model.Paciente
+import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.LoginResult
 
 /**
@@ -8,9 +10,13 @@ import com.project.erphealthcare.data.result.LoginResult
  * maintains an in-memory cache of login status and user credentials information.
  */
 
-class LoginRepository(val dataSource: ERPDataSource) {
+class Repository(val dataSource: ERPDataSource) {
 
     suspend fun login(username: String, password: String): LoginResult {
         return dataSource.login(username, password)
+    }
+
+    suspend fun createPaciente(user: Paciente): CreatePacienteResult {
+        return dataSource.createPaciente(user)
     }
 }

@@ -1,4 +1,4 @@
-package com.project.erphealthcare.ui.login
+package com.project.erphealthcare.ui.paciente.cadastro
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,13 +9,13 @@ import com.project.erphealthcare.data.repository.Repository
  * ViewModel provider factory to instantiate LoginViewModel.
  * Required given LoginViewModel has a non-empty constructor
  */
-class LoginViewModelFactory : ViewModelProvider.Factory {
+class CadastroPacienteViewModelFactory : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(
-                loginRepository = Repository(
+        if (modelClass.isAssignableFrom(CadastroPacienteViewModel::class.java)) {
+            return CadastroPacienteViewModel(
+                repository = Repository(
                     dataSource = ERPDataSource()
                 )
             ) as T

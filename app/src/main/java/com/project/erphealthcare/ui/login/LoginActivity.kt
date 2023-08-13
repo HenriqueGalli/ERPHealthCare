@@ -105,11 +105,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun successLogin(model: LoginResponse) {
-        Toast.makeText(
-            applicationContext,
-            "${model.authentication} ${model.apiKey}",
-            Toast.LENGTH_LONG
-        ).show()
         val intent = Intent(this, HomePacienteActivity::class.java)
         startActivity(intent)
         this.finish()
@@ -117,6 +112,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showLoginFailed(@SuppressLint("SupportAnnotationUsage") @StringRes errorString: String) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+        binding.loginErro?.visibility = View.VISIBLE
     }
 }
 

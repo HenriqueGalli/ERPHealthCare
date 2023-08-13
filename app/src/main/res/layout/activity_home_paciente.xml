@@ -17,7 +17,6 @@
                 android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/blue_login"
                 android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -27,10 +26,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:textStyle="bold"
                     android:gravity="center"
                     android:padding="16dp"
-                    android:text="HealthERP"
-                    android:textSize="18sp"
+                    android:text="Med Tech"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -158,6 +158,212 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivTemperatura" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvExames"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Acompanhamento Exames"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tvSinaisVitais"
+                app:layout_constraintTop_toBottomOf="@+id/clBatimentosMenu" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clExames"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/clBatimentosMenu"
+                android:background="@drawable/blue_border_radius"
+                app:layout_constraintStart_toStartOf="@id/clBatimentosMenu"
+                app:layout_constraintTop_toBottomOf="@+id/tvExames">
+
+                <ImageView
+                    android:id="@+id/ivExames"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_gerenciamento_exame"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Gerenciar\nExames"
+                    app:layout_constraintEnd_toEndOf="@+id/ivExames"
+                    app:layout_constraintStart_toStartOf="@id/ivExames"
+                    app:layout_constraintTop_toBottomOf="@+id/ivExames" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clProximosExames"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/clOxigenacao"
+                android:background="@drawable/blue_border_radius"
+                app:layout_constraintStart_toStartOf="@+id/clOxigenacao"
+                app:layout_constraintTop_toTopOf="@+id/clExames">
+
+                <ImageView
+                    android:id="@+id/ivProximosExames"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_calendario"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Próximos\nExames"
+                    android:gravity="center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivProximosExames" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvHistoricoMedico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Acompanhamento Histórico Médico"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tvSinaisVitais"
+                app:layout_constraintTop_toBottomOf="@+id/clExames" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clAlergias"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/clBatimentosMenu"
+                android:background="@drawable/blue_border_radius"
+                app:layout_constraintStart_toStartOf="@id/clBatimentosMenu"
+                app:layout_constraintTop_toBottomOf="@+id/tvHistoricoMedico">
+
+                <ImageView
+                    android:id="@+id/ivAlergias"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_baseline_alergies"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Gerenciar\nAlergias"
+                    app:layout_constraintEnd_toEndOf="@+id/ivAlergias"
+                    app:layout_constraintStart_toStartOf="@id/ivAlergias"
+                    app:layout_constraintTop_toBottomOf="@+id/ivAlergias" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clCirurgias"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/clProximosExames"
+                android:background="@drawable/blue_border_radius"
+                app:layout_constraintStart_toStartOf="@+id/clProximosExames"
+                app:layout_constraintTop_toTopOf="@+id/clAlergias">
+
+                <ImageView
+                    android:id="@+id/ivCirurgias"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_cirurgia"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Histórico\nCirurgias"
+                    android:gravity="center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivCirurgias" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clDoencas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/clTemperatura"
+                android:background="@drawable/blue_border_radius"
+                app:layout_constraintStart_toStartOf="@+id/clTemperatura"
+                app:layout_constraintTop_toTopOf="@+id/clAlergias">
+
+                <ImageView
+                    android:id="@+id/ivDoencas"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_doencas"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Histórico\nDoenças"
+                    android:gravity="center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivDoencas" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clMedicamentos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/clAlergias"
+                android:background="@drawable/blue_border_radius"
+                app:layout_constraintStart_toStartOf="@id/clAlergias"
+                app:layout_constraintTop_toBottomOf="@+id/clAlergias">
+
+                <ImageView
+                    android:id="@+id/ivMedicamentos"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_remedio"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Gerenciar\nMedicamentos"
+                    app:layout_constraintEnd_toEndOf="@+id/ivMedicamentos"
+                    app:layout_constraintStart_toStartOf="@id/ivMedicamentos"
+                    app:layout_constraintTop_toBottomOf="@+id/ivMedicamentos" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
-import com.project.erphealthcare.data.repository.LoginRepository
+import com.project.erphealthcare.data.repository.Repository
 import com.project.erphealthcare.data.result.LoginResult
 
 import com.project.erphealthcare.R
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(private val loginRepository: Repository) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm

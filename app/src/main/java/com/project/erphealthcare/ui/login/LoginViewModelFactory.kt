@@ -5,10 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.project.erphealthcare.data.api.ERPDataSource
 import com.project.erphealthcare.data.repository.Repository
 
-/**
- * ViewModel provider factory to instantiate LoginViewModel.
- * Required given LoginViewModel has a non-empty constructor
- */
 class LoginViewModelFactory : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

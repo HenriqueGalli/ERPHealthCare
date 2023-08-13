@@ -18,7 +18,7 @@ class CadastroPacienteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCadastroPacienteBinding
 
     private val viewModel: CadastroPacienteViewModel =
-        CadastroPacienteViewModel.ViewModelFactory(ERPDataSource())
+        CadastroPacienteViewModelFactory()
             .create(CadastroPacienteViewModel::class.java)
 
     private var paciente: Paciente? = null

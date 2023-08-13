@@ -20,16 +20,4 @@ class CadastroPacienteViewModel(private val repository: Repository): ViewModel()
             cadastrarLiveData.value = res
         }
     }
-
-    class ViewModelFactory(private val dataSource: ERPDataSource) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(CadastroPacienteViewModel::class.java)) {
-                return modelClass.getConstructor(ERPDataSource::class.java)
-                    .newInstance(dataSource)
-            }
-
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 }

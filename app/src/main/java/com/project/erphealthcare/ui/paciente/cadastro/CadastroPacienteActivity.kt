@@ -2,10 +2,14 @@ package com.project.erphealthcare.ui.paciente.cadastro
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import br.com.preventivewelfare.api.result.DeleteUserResult
+import br.com.preventivewelfare.api.result.EditUserResult
 import com.project.erphealthcare.R
 import com.project.erphealthcare.data.api.ERPDataSource
 import com.project.erphealthcare.data.model.Paciente
@@ -32,14 +36,31 @@ class CadastroPacienteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_cadastro_paciente)
         binding.viewModel = this
-        setupGenderSpinner()
         setupListener()
-        setupBloodTypeSpinner()
         setupObserver()
+        setupFields()
         if (intent.hasExtra("PACIENTE")) {
-            paciente = intent.getSerializableExtra("PACIENTE", Paciente::class.java)
+            setupEditUser()
+        }
+        else{
+            binding.editTextAltura.editText?.setText("")
+            binding.editTextPeso.editText?.setText("")
         }
 
+    }
+
+    private fun setupEditUser() {
+        paciente = intent.getSerializableExtra("PACIENTE") as Paciente
+        binding.user = paciente
+        binding.tvCadastrarPaciente.text = "Editar dados paciente"
+        binding.buttonExcluir.visibility = View.VISIBLE
+        binding.buttonEnviar.text = "Salvar"
+        isNewUser = false
+    }
+
+    private fun setupFields() {
+        setupBloodTypeSpinner()
+        setupGenderSpinner()
     }
 
     private fun setupListener() {
@@ -47,6 +68,12 @@ class CadastroPacienteActivity : AppCompatActivity() {
             CpfUtils.mask(
                 "###.###.###-##",
                 binding.editTextCpf
+            )
+        )
+        binding.editTextTelefone.editText?.addTextChangedListener(
+            CpfUtils.mask(
+                "(##)#####-####",
+                binding.editTextTelefone.editText!!
             )
         )
     }
@@ -58,14 +85,56 @@ class CadastroPacienteActivity : AppCompatActivity() {
                 else -> userCreatedError()
             }
         }
+
+        viewModel.editarLiveData.observe(this) { res ->
+            when (res) {
+                is EditUserResult.Success -> userEdited()
+                else -> userCreatedError()
+            }
+        }
+        viewModel.excluirLiveData.observe(this) { res ->
+            when (res) {
+                is DeleteUserResult.Success -> userDeletedSuccess()
+                is DeleteUserResult.ServerError -> userDeletedError()
+            }
+        }
+    }
+
+    private fun userEdited() {
+        val fragment = PopUpCadastroActivity(isError = false, isNewUser = false, context = this)
+        fragment.show(supportFragmentManager, "My Fragment")
+    }
+
+    private fun userDeletedError() {
+        val fragment =
+            PopUpCadastroActivity(
+                isError = true,
+                isNewUser = false,
+                isExcludedMessage = true,
+                context = this
+            )
+        fragment.show(supportFragmentManager, "My Fragment")
+    }
+
+    private fun userDeletedSuccess() {
+        val fragment =
+            PopUpCadastroActivity(
+                isError = false,
+                isNewUser = false,
+                isExcludedMessage = true,
+                context = this
+            )
+        fragment.show(supportFragmentManager, "My Fragment")
     }
 
     private fun userCreatedError() {
-        //TODO("Not yet implemented")
+        val fragment = PopUpCadastroActivity(isError = true, context = this)
+        fragment.show(supportFragmentManager, "My Fragment")
     }
 
     private fun userCreated() {
-        //TODO("Not yet implemented")
+        val fragment = PopUpCadastroActivity(isError = false, context = this)
+        fragment.show(supportFragmentManager, "My Fragment")
     }
 
     private fun setupGenderSpinner() {
@@ -141,8 +210,23 @@ class CadastroPacienteActivity : AppCompatActivity() {
                     sexo = binding.spinnerGenero.selectedItem.toString(),
                     tipoSanguineo = binding.spinnerTipoSanguineo.toString()
                 )
+                viewModel.editar(paciente)
             }
         }
+    }
+
+    fun excluir(){
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Você realmente quer deletar o usuário?")
+            .setCancelable(false)
+            .setPositiveButton("Sim") { dialog, id ->
+                viewModel.deletar()
+            }
+            .setNegativeButton("Não") { dialog, id ->
+                dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
     }
 
     private fun validateFields(): Boolean {
@@ -188,6 +272,8 @@ class CadastroPacienteActivity : AppCompatActivity() {
         }
         return true
     }
+
+
 
     private fun getDate(): String {
         val year = binding.simpleDatePicker.year

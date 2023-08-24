@@ -19,7 +19,7 @@ class LoginViewModel(private val loginRepository: Repository) : ViewModel() {
     private val _loginLiveData = MutableLiveData<LoginResult>()
     val loginLiveData: LiveData<LoginResult> = _loginLiveData
 
-    fun login(username: String, password: String)  = runBlocking {
+    fun login(username: String, password: String) = runBlocking {
         launch {
             val res = loginRepository.login(username, password)
             _loginLiveData.value = res
@@ -35,10 +35,6 @@ class LoginViewModel(private val loginRepository: Repository) : ViewModel() {
     }
 
     private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
-        } else {
-            username.isNotBlank()
-        }
+        return username.contains('@')
     }
 }

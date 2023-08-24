@@ -3,10 +3,8 @@ package com.project.erphealthcare.data.api
 import com.project.erphealthcare.data.model.LoginResponse
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.LoginResult
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.Response
+import retrofit2.http.*
 
 interface ErpServices {
 
@@ -20,4 +18,15 @@ interface ErpServices {
     suspend fun createPaciente(
         @Body user: Paciente
     ): Paciente
+
+    @PUT("user/")
+    suspend fun updateUser(
+        @Body user: Paciente
+    ): Paciente
+
+    @GET("user/")
+    suspend fun getPaciente(): Paciente
+
+    @DELETE("user/")
+    suspend fun deleteUser(): Response<Any>
 }

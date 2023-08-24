@@ -44,12 +44,12 @@ class LoginActivity : AppCompatActivity() {
             val loginState = it ?: return@Observer
             login.isEnabled = loginState.isDataValid
 
-            if (loginState.usernameError != null) {
-                username.error = getString(loginState.usernameError)
-            }
-            if (loginState.passwordError != null) {
-                password.error = getString(loginState.passwordError)
-            }
+//            if (loginState.usernameError != null) {
+//                username.error = getString(loginState.usernameError)
+//            }
+//            if (loginState.passwordError != null) {
+//                password.error = getString(loginState.passwordError)
+//            }
         })
 
         loginViewModel.loginLiveData.observe(this) { loginResult ->
@@ -61,8 +61,8 @@ class LoginActivity : AppCompatActivity() {
             }
 
             loading.visibility = View.GONE
-            setResult(Activity.RESULT_OK)
-            finish()
+//            setResult(Activity.RESULT_OK)
+//            finish()
         }
 
         username.afterTextChanged {
@@ -82,11 +82,11 @@ class LoginActivity : AppCompatActivity() {
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
-                    EditorInfo.IME_ACTION_DONE ->
-                        loginViewModel.login(
-                            username.text.toString(),
-                            password.text.toString()
-                        )
+//                    EditorInfo.IME_ACTION_DONE ->
+//                        loginViewModel.login(
+//                            username.text.toString(),
+//                            password.text.toString()
+//                        )
                 }
                 false
             }
@@ -106,12 +106,13 @@ class LoginActivity : AppCompatActivity() {
 
     private fun successLogin(model: LoginResponse) {
         val intent = Intent(this, HomePacienteActivity::class.java)
+        intent.putExtra("TOKEN", model.apiKey)
         startActivity(intent)
-        this.finish()
+        //this.finish()
     }
 
     private fun showLoginFailed(@SuppressLint("SupportAnnotationUsage") @StringRes errorString: String) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
         binding.loginErro?.visibility = View.VISIBLE
     }
 }

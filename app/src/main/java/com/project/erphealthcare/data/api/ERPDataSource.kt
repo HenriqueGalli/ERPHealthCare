@@ -1,7 +1,10 @@
 package com.project.erphealthcare.data.api
 
+import android.util.Log
+import br.com.preventivewelfare.api.result.EditUserResult
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.CreatePacienteResult
+import com.project.erphealthcare.data.result.GetPacienteResult
 import com.project.erphealthcare.data.result.LoginResult
 import retrofit2.HttpException
 
@@ -26,6 +29,29 @@ class ERPDataSource {
             if (throwable is HttpException) {
                 CreatePacienteResult.ApiError(401)
             } else CreatePacienteResult.ServerError
+        }
+    }
+
+    suspend fun editPaciente(user: Paciente): EditUserResult {
+        return try {
+            val res = ApiService.service.updateUser(user)
+            EditUserResult.Success
+        } catch (throwable: Throwable) {
+            EditUserResult.ServerError
+        }
+    }
+
+    suspend fun getPaciente(token: String): GetPacienteResult {
+        return try {
+            if(token.isNotEmpty()){
+                ApiService.token = token
+            }
+            val res = ApiService.service.getPaciente()
+            GetPacienteResult.Success(res)
+        } catch (throwable: Throwable){
+            val message = throwable
+            Log.d("", throwable.message.toString())
+            GetPacienteResult.ServerError
         }
     }
 }

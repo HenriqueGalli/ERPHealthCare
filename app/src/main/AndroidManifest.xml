@@ -13,7 +13,7 @@
         android:theme="@style/Theme.ERPHealthCare"
         tools:targetApi="31" >
         <activity
-            android:name=".HomePacienteActivity"
+            android:name=".ui.paciente.home.HomePacienteActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"

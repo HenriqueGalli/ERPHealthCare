@@ -6,6 +6,7 @@ import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.api.ERPDataSource
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.CreatePacienteResult
+import com.project.erphealthcare.data.result.GetMedicalHistoryResult
 import com.project.erphealthcare.data.result.GetPacienteResult
 import com.project.erphealthcare.data.result.LoginResult
 
@@ -30,6 +31,10 @@ class Repository(val dataSource: ERPDataSource) {
 
     suspend fun getPaciente(token: String): GetPacienteResult {
         return dataSource.getPaciente(token)
+    }
+
+    suspend fun getMedicalHistory(): GetMedicalHistoryResult {
+        return dataSource.getMedicalHistory()
     }
 
     suspend fun deleteUser(): DeleteUserResult? {

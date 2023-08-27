@@ -4,6 +4,7 @@ import android.util.Log
 import br.com.preventivewelfare.api.result.EditUserResult
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.CreatePacienteResult
+import com.project.erphealthcare.data.result.GetMedicalHistoryResult
 import com.project.erphealthcare.data.result.GetPacienteResult
 import com.project.erphealthcare.data.result.LoginResult
 import retrofit2.HttpException
@@ -52,6 +53,15 @@ class ERPDataSource {
             val message = throwable
             Log.d("", throwable.message.toString())
             GetPacienteResult.ServerError
+        }
+    }
+
+    suspend fun getMedicalHistory(): GetMedicalHistoryResult {
+        return try {
+            val res = ApiService.service.getMedicalHistory()
+            GetMedicalHistoryResult.Success(res)
+        } catch (throwable: Throwable){
+            GetMedicalHistoryResult.ServerError
         }
     }
 }

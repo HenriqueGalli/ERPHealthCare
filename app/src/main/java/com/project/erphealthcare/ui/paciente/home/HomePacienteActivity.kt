@@ -9,6 +9,7 @@ import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.GetPacienteResult
 import com.project.erphealthcare.databinding.ActivityCadastroPacienteBinding
 import com.project.erphealthcare.databinding.ActivityHomePacienteBinding
+import com.project.erphealthcare.ui.paciente.alergias.AlergiasPacienteActivity
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteViewModel
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteViewModelFactory
@@ -43,6 +44,12 @@ class HomePacienteActivity : AppCompatActivity() {
             startActivity(intent)
             this.finish()
         }
+        binding.clAlergias.setOnClickListener {
+            val intent = Intent(this, AlergiasPacienteActivity::class.java)
+            startActivity(intent)
+            this.finish()
+        }
+
     }
 
     private fun setupObserver() {

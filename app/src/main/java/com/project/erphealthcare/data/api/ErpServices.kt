@@ -1,5 +1,6 @@
 package com.project.erphealthcare.data.api
 
+import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.LoginResponse
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.LoginResult
@@ -26,6 +27,9 @@ interface ErpServices {
 
     @GET("user/")
     suspend fun getPaciente(): Paciente
+
+    @GET("/user/medical-history/")
+    suspend fun getMedicalHistory(): HistoricoMedico
 
     @DELETE("user/")
     suspend fun deleteUser(): Response<Any>

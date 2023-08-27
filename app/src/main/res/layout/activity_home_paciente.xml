@@ -249,6 +249,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:padding="8dp"
+                android:focusable="true"
                 app:layout_constraintEnd_toEndOf="@+id/clBatimentosMenu"
                 android:background="@drawable/blue_border_radius"
                 app:layout_constraintStart_toStartOf="@id/clBatimentosMenu"

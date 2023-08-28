@@ -2,17 +2,16 @@ package com.project.erphealthcare.ui.paciente.cadastro
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import br.com.preventivewelfare.api.result.DeleteUserResult
 import br.com.preventivewelfare.api.result.EditUserResult
-import com.project.erphealthcare.data.api.ERPDataSource
+import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.repository.Repository
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class CadastroPacienteViewModel(private val repository: Repository): ViewModel() {
+class CadastroPacienteViewModel(private val repository: Repository) : ViewModel() {
 
     val cadastrarLiveData: MutableLiveData<CreatePacienteResult> = MutableLiveData()
     val excluirLiveData: MutableLiveData<DeleteUserResult> = MutableLiveData()
@@ -32,7 +31,7 @@ class CadastroPacienteViewModel(private val repository: Repository): ViewModel()
         }
     }
 
-    fun deletar() = runBlocking{
+    fun deletar() = runBlocking {
         launch {
             val res = repository.deleteUser()
             excluirLiveData.value = res

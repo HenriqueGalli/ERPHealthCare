@@ -2,6 +2,7 @@ package com.project.erphealthcare.data.api
 
 import android.util.Log
 import br.com.preventivewelfare.api.result.EditUserResult
+import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.GetMedicalHistoryResult
@@ -24,7 +25,7 @@ class ERPDataSource {
 
     suspend fun createPaciente(paciente: Paciente): CreatePacienteResult {
         return try {
-            val res = ApiService.service.createPaciente(paciente)
+            ApiService.service.createPaciente(paciente)
             CreatePacienteResult.Success
         } catch (throwable: Throwable) {
             if (throwable is HttpException) {
@@ -64,4 +65,14 @@ class ERPDataSource {
             GetMedicalHistoryResult.ServerError
         }
     }
+
+    suspend fun createMedicalHistory(historico: HistoricoMedico): GetMedicalHistoryResult {
+        return try {
+            val res = ApiService.service.createHistoricoMedico(historico)
+            GetMedicalHistoryResult.Success(res)
+        } catch (throwable: Throwable) {
+            GetMedicalHistoryResult.ServerError
+        }
+    }
+
 }

@@ -191,7 +191,7 @@ class CadastroPacienteActivity : AppCompatActivity() {
                     senha = binding.editTextSenha.editText?.text.toString(),
                     dataNascimento = getDate(),
                     sexo = binding.spinnerGenero.selectedItem.toString(),
-                    tipoSanguineo = binding.spinnerTipoSanguineo.toString()
+                    tipoSanguineo = binding.spinnerTipoSanguineo.selectedItem.toString()
                 )
                 viewModel.cadastrarPaciente(paciente)
             } else{

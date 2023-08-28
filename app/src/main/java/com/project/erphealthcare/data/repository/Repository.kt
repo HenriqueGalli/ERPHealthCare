@@ -4,6 +4,7 @@ import br.com.preventivewelfare.api.result.DeleteUserResult
 import br.com.preventivewelfare.api.result.EditUserResult
 import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.api.ERPDataSource
+import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.GetMedicalHistoryResult
@@ -23,6 +24,10 @@ class Repository(val dataSource: ERPDataSource) {
 
     suspend fun createPaciente(user: Paciente): CreatePacienteResult {
         return dataSource.createPaciente(user)
+    }
+
+    suspend fun createMedicalHistory(historico: HistoricoMedico): GetMedicalHistoryResult {
+        return dataSource.createMedicalHistory(historico)
     }
 
     suspend fun editPaciente(user: Paciente): EditUserResult {

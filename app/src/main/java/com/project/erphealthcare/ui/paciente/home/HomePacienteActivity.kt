@@ -62,10 +62,11 @@ class HomePacienteActivity : AppCompatActivity() {
     }
 
     private fun erroGetUser() {
-        //TODO("Not yet implemented")
+
     }
 
     private fun setupUser(user: Paciente?) {
+        viewModel.validateMedicalHistory()
         if (user != null) {
             paciente = user
             val nome = paciente.nome

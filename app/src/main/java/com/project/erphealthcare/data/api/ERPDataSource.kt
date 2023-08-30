@@ -75,4 +75,13 @@ class ERPDataSource {
         }
     }
 
+    suspend fun updateMedicalHistory(historico: HistoricoMedico): GetMedicalHistoryResult {
+        return try {
+            val res = ApiService.service.updateHistoricoMedico(historico)
+            GetMedicalHistoryResult.Success(res)
+        } catch (throwable: Throwable) {
+            GetMedicalHistoryResult.ServerError
+        }
+    }
+
 }

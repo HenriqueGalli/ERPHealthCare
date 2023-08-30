@@ -29,11 +29,10 @@ class HomePacienteViewModel(private val repository: Repository): ViewModel() {
                res = repository.createMedicalHistory(createEmptyHistoricoMedico())
             }
             historicoMedicoLiveData.postValue(res)
-
         }
     }
 
-    fun createEmptyHistoricoMedico(): HistoricoMedico {
+    private fun createEmptyHistoricoMedico(): HistoricoMedico {
         return HistoricoMedico(
             historicoFamiliar = ArrayList(),
             historicoMedicoProgresso = ArrayList(),

@@ -38,4 +38,8 @@ interface ErpServices {
     @POST("user/medical-history/")
     suspend fun createHistoricoMedico(
         @Body historico: HistoricoMedico): HistoricoMedico
+
+    @PUT("user/medical-history/")
+    suspend fun updateHistoricoMedico(
+        @Body historico: HistoricoMedico): HistoricoMedico
 }

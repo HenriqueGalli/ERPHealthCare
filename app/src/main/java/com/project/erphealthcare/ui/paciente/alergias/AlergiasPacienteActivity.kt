@@ -22,6 +22,8 @@ class AlergiasPacienteActivity : AppCompatActivity() {
 
     private lateinit var adapter: ListagemAdapter
 
+    private lateinit var historicoMedico: HistoricoMedico
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -52,6 +54,9 @@ class AlergiasPacienteActivity : AppCompatActivity() {
     }
 
     private fun successMedicalHistory(historico: HistoricoMedico?) {
+        if (historico != null) {
+            historicoMedico = historico
+        }
         setupAdapter(historico?.alergias)
     }
 
@@ -75,9 +80,8 @@ class AlergiasPacienteActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        binding.addAlergia.setOnClickListener { view ->
+
         }
     }
 }

@@ -57,7 +57,7 @@ class AlergiasPacienteActivity : AppCompatActivity() {
         if (historico != null) {
             historicoMedico = historico
         }
-        setupAdapter(historico?.alergias)
+        setupAdapter(historico?.alergias ?: ArrayList())
     }
 
     private fun errorGetHistory() {
@@ -69,8 +69,8 @@ class AlergiasPacienteActivity : AppCompatActivity() {
         binding.toolbarLayout.title = title
     }
 
-    private fun setupAdapter(alergias: ArrayList<String>?) {
-        adapter = alergias?.let { ListagemAdapter(it) }!!
+    private fun setupAdapter(alergias: ArrayList<String>) {
+        adapter = ListagemAdapter(alergias)
         binding.rvAlergias.adapter = adapter
         binding.rvAlergias.layoutManager = LinearLayoutManager(
             this, LinearLayoutManager.VERTICAL,
@@ -81,7 +81,9 @@ class AlergiasPacienteActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.addAlergia.setOnClickListener { view ->
-
+            adapter.addAlergia()
+            val itemCount = adapter.itemCount
+            binding.rvAlergias.smoothScrollToPosition(itemCount - 1)
         }
     }
 }

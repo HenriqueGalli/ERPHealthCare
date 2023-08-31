@@ -18,20 +18,22 @@
             android:contentDescription="@null"
             android:src="@drawable/ic_dot"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tv_label_name"
+            app:layout_constraintEnd_toStartOf="@+id/et_label_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_label_name"
+        <EditText
+            android:id="@+id/et_label_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"
+            android:enabled="false"
             android:layout_marginBottom="16dp"
-            android:text="Alergia"
+            android:inputType="text"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
             android:textColor="@color/black"
             android:textSize="24sp"
-
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/edit"
@@ -43,14 +45,31 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:contentDescription="@null"
-            android:visibility="gone"
+            android:clickable="true"
             android:src="@drawable/ic_baseline_edit"
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/exclude"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/tv_label_name"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/et_label_name"
+            app:layout_constraintTop_toTopOf="parent"
+            android:focusable="true" />
+
+        <ImageView
+            android:id="@+id/check"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="@null"
+            android:clickable="true"
+            android:visibility="gone"
+            android:src="@drawable/ic_baseline_check_24"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/exclude"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/et_label_name"
+            app:layout_constraintTop_toTopOf="parent"
+            android:focusable="true" />
 
         <ImageView
             android:id="@+id/exclude"

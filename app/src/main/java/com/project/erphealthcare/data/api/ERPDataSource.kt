@@ -4,10 +4,7 @@ import android.util.Log
 import br.com.preventivewelfare.api.result.EditUserResult
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
-import com.project.erphealthcare.data.result.CreatePacienteResult
-import com.project.erphealthcare.data.result.GetMedicalHistoryResult
-import com.project.erphealthcare.data.result.GetPacienteResult
-import com.project.erphealthcare.data.result.LoginResult
+import com.project.erphealthcare.data.result.*
 import retrofit2.HttpException
 
 class ERPDataSource {
@@ -75,12 +72,12 @@ class ERPDataSource {
         }
     }
 
-    suspend fun updateMedicalHistory(historico: HistoricoMedico): GetMedicalHistoryResult {
+    suspend fun updateMedicalHistory(historico: HistoricoMedico): UpdateMedicalHistoryResult {
         return try {
             val res = ApiService.service.updateHistoricoMedico(historico)
-            GetMedicalHistoryResult.Success(res)
+            UpdateMedicalHistoryResult.Success(res)
         } catch (throwable: Throwable) {
-            GetMedicalHistoryResult.ServerError
+            UpdateMedicalHistoryResult.ServerError
         }
     }
 

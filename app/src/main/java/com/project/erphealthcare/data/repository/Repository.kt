@@ -6,10 +6,7 @@ import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.api.ERPDataSource
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
-import com.project.erphealthcare.data.result.CreatePacienteResult
-import com.project.erphealthcare.data.result.GetMedicalHistoryResult
-import com.project.erphealthcare.data.result.GetPacienteResult
-import com.project.erphealthcare.data.result.LoginResult
+import com.project.erphealthcare.data.result.*
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -28,6 +25,10 @@ class Repository(val dataSource: ERPDataSource) {
 
     suspend fun createMedicalHistory(historico: HistoricoMedico): GetMedicalHistoryResult {
         return dataSource.createMedicalHistory(historico)
+    }
+
+    suspend fun updateMedicalHistory(historico: HistoricoMedico): UpdateMedicalHistoryResult {
+        return dataSource.updateMedicalHistory(historico)
     }
 
     suspend fun editPaciente(user: Paciente): EditUserResult {

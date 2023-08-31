@@ -4,11 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.project.erphealthcare.R
 import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.result.GetMedicalHistoryResult
+import com.project.erphealthcare.data.result.GetPacienteResult
+import com.project.erphealthcare.data.result.UpdateMedicalHistoryResult
 import com.project.erphealthcare.databinding.ActivityAlergiasPacienteBinding
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 
@@ -45,12 +46,24 @@ class AlergiasPacienteActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.result.observe(this) { res ->
+        viewModel.medicalHistoryResult.observe(this) { res ->
             when (res) {
                 is GetMedicalHistoryResult.ServerError -> errorGetHistory()
                 is GetMedicalHistoryResult.Success -> successMedicalHistory(res.historico)
             }
         }
+
+        viewModel.updateAlergiasResult.observe(this){ res ->
+            when(res){
+                is UpdateMedicalHistoryResult.ServerError -> errorGetHistory()
+                is UpdateMedicalHistoryResult.Success -> successUpdateAlergies()
+            }
+
+        }
+    }
+
+    private fun successUpdateAlergies() {
+        onBackPressed()
     }
 
     private fun successMedicalHistory(historico: HistoricoMedico?) {
@@ -84,6 +97,11 @@ class AlergiasPacienteActivity : AppCompatActivity() {
             adapter.addAlergia()
             val itemCount = adapter.itemCount
             binding.rvAlergias.smoothScrollToPosition(itemCount - 1)
+        }
+
+        binding.btnSalvar.setOnClickListener {
+            historicoMedico.alergias = adapter.alergias
+            viewModel.updateMedicalHistory(historicoMedico)
         }
     }
 }

@@ -31,9 +31,21 @@
                 android:layout_gravity="bottom"
                 android:layout_marginStart="@dimen/fab_margin"
                 android:layout_marginBottom="16dp"
-                android:text="Histórico de Alergias"
+                android:text="Histórico de\n Alergias"
                 android:textSize="28sp"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnSalvar"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end | bottom"
+                android:layout_marginBottom="18dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTint="@color/blue_login"
+                android:text="Salvar\nAlterações"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -58,10 +70,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-
         app:backgroundTint="@color/blue_login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/ic_baseline_add_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

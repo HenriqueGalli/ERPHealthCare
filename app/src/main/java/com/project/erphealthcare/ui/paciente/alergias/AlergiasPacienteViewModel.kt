@@ -2,21 +2,29 @@ package com.project.erphealthcare.ui.paciente.alergias
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.repository.Repository
 import com.project.erphealthcare.data.result.GetMedicalHistoryResult
-import com.project.erphealthcare.data.result.GetPacienteResult
+import com.project.erphealthcare.data.result.UpdateMedicalHistoryResult
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class AlergiasPacienteViewModel(private val repository: Repository): ViewModel() {
 
-    val result: MutableLiveData<GetMedicalHistoryResult> = MutableLiveData()
+    val medicalHistoryResult: MutableLiveData<GetMedicalHistoryResult> = MutableLiveData()
+    val updateAlergiasResult: MutableLiveData<UpdateMedicalHistoryResult> = MutableLiveData()
 
     fun getMedicalHistory() = runBlocking {
         launch {
             val res = repository.getMedicalHistory()
-            result.postValue(res)
+            medicalHistoryResult.postValue(res)
+        }
+    }
+
+    fun updateMedicalHistory(historicoMedico: HistoricoMedico) = runBlocking{
+        launch {
+            val res = repository.updateMedicalHistory(historicoMedico)
+            updateAlergiasResult.postValue(res)
         }
     }
 }

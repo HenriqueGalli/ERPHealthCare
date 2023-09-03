@@ -89,7 +89,6 @@ class AlergiasPacienteActivity : AppCompatActivity() {
             this, LinearLayoutManager.VERTICAL,
             false
         )
-
     }
 
     private fun setupListeners() {

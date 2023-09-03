@@ -63,6 +63,15 @@ class ERPDataSource {
         }
     }
 
+    suspend fun getBatimentosCardiacos(): GetSinaisVitaisResult {
+        return try {
+            val res = ApiService.service.getBatimentos()
+            GetSinaisVitaisResult.Success(res)
+        } catch (throwable: Throwable){
+            GetSinaisVitaisResult.ServerError
+        }
+    }
+
     suspend fun createMedicalHistory(historico: HistoricoMedico): GetMedicalHistoryResult {
         return try {
             val res = ApiService.service.createHistoricoMedico(historico)

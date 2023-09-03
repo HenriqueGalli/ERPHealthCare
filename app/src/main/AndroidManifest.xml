@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ERPHealthCare"
         tools:targetApi="31">
         <activity
+            android:name=".ui.paciente.batimentos.BatimentosCardiacosActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.paciente.alergias.AlergiasPacienteActivity"
             android:exported="false"
             android:label="@string/title_activity_alergias_paciente"

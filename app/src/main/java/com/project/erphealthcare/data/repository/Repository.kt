@@ -43,6 +43,10 @@ class Repository(val dataSource: ERPDataSource) {
         return dataSource.getMedicalHistory()
     }
 
+    suspend fun getBatimentosCardiacos(): GetSinaisVitaisResult {
+        return dataSource.getBatimentosCardiacos()
+    }
+
     suspend fun deleteUser(): DeleteUserResult? {
         return try {
             val res = ApiService.service.deleteUser()

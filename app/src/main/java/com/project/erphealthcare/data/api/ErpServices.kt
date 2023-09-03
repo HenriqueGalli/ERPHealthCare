@@ -1,8 +1,6 @@
 package com.project.erphealthcare.data.api
 
-import com.project.erphealthcare.data.model.HistoricoMedico
-import com.project.erphealthcare.data.model.LoginResponse
-import com.project.erphealthcare.data.model.Paciente
+import com.project.erphealthcare.data.model.*
 import com.project.erphealthcare.data.result.GetMedicalHistoryResult
 import com.project.erphealthcare.data.result.LoginResult
 import retrofit2.Response
@@ -31,6 +29,9 @@ interface ErpServices {
 
     @GET("/user/medical-history/")
     suspend fun getMedicalHistory(): HistoricoMedico
+
+    @GET("/heart-rate/history/")
+    suspend fun getBatimentos(): ArrayList<MedicoesSinaisVitais>
 
     @DELETE("user/")
     suspend fun deleteUser(): Response<Any>

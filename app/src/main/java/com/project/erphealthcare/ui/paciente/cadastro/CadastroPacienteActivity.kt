@@ -180,7 +180,7 @@ class CadastroPacienteActivity : AppCompatActivity() {
             if (isNewUser) {
                 val paciente = Paciente(
                     nome = binding.editTextNome.editText?.text.toString(),
-                    cpf = binding.editTextCpf.text.toString(),
+                    cpf = binding.editTextCpf.text.toString().replace("-","").replace(".",""),
                     nomeMae = binding.editTextNomeMae.editText?.text.toString(),
                     email = binding.editTextEmail.editText?.text.toString(),
                     telefone = binding.editTextTelefone.editText?.text.toString(),
@@ -197,7 +197,7 @@ class CadastroPacienteActivity : AppCompatActivity() {
             } else{
                 val paciente = Paciente(
                     nome = binding.editTextNome.editText?.text.toString(),
-                    cpf = binding.editTextCpf.text.toString(),
+                    cpf = binding.editTextCpf.text.toString().replace("-","").replace(".",""),
                     nomeMae = binding.editTextNomeMae.editText?.text.toString(),
                     email = binding.editTextEmail.editText?.text.toString(),
                     telefone = binding.editTextTelefone.editText?.text.toString(),

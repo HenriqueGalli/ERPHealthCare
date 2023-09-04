@@ -96,6 +96,7 @@ class LoginActivity : AppCompatActivity() {
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
+                //binding.loginErro?.visibility = View.GONE
                 val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(windowToken, 0)
             }
@@ -112,7 +113,6 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, HomePacienteActivity::class.java)
         intent.putExtra("TOKEN", model.apiKey)
         startActivity(intent)
-        //this.finish()
     }
 
     private fun showLoginFailed(@SuppressLint("SupportAnnotationUsage") @StringRes errorString: String) {
@@ -121,9 +121,6 @@ class LoginActivity : AppCompatActivity() {
     }
 }
 
-/**
- * Extension function to simplify setting an afterTextChanged action to EditText components.
- */
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(editable: Editable?) {

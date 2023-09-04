@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil
 import br.com.preventivewelfare.api.result.DeleteUserResult
 import br.com.preventivewelfare.api.result.EditUserResult
 import com.project.erphealthcare.R
-import com.project.erphealthcare.data.api.ERPDataSource
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.databinding.ActivityCadastroPacienteBinding
@@ -38,13 +37,12 @@ class CadastroPacienteActivity : AppCompatActivity() {
         binding.viewModel = this
         setupListener()
         setupObserver()
-        setupFields()
         if (intent.hasExtra("PACIENTE")) {
             setupEditUser()
-        }
-        else{
+        } else {
             binding.editTextAltura.editText?.setText("")
             binding.editTextPeso.editText?.setText("")
+            setupFields()
         }
 
     }
@@ -52,8 +50,13 @@ class CadastroPacienteActivity : AppCompatActivity() {
     private fun setupEditUser() {
         paciente = intent.getSerializableExtra("PACIENTE") as Paciente
         binding.user = paciente
+        setupFields()
         binding.tvCadastrarPaciente.text = "Editar dados paciente"
         binding.buttonExcluir.visibility = View.VISIBLE
+        binding.simpleDatePicker.updateDate(
+            paciente!!.getBirthYear(),
+            paciente!!.getBirthMonth(), paciente!!.getBirthDay()
+        )
         binding.buttonEnviar.text = "Salvar"
         isNewUser = false
     }
@@ -180,10 +183,11 @@ class CadastroPacienteActivity : AppCompatActivity() {
             if (isNewUser) {
                 val paciente = Paciente(
                     nome = binding.editTextNome.editText?.text.toString(),
-                    cpf = binding.editTextCpf.text.toString().replace("-","").replace(".",""),
+                    cpf = binding.editTextCpf.text.toString().replace("-", "").replace(".", ""),
                     nomeMae = binding.editTextNomeMae.editText?.text.toString(),
                     email = binding.editTextEmail.editText?.text.toString(),
-                    telefone = binding.editTextTelefone.editText?.text.toString(),
+                    telefone = binding.editTextTelefone.editText?.text.toString().replace("(", "")
+                        .replace(")", "").replace("-", ""),
                     enderecoCompleto = binding.editTextEndereco.editText?.text.toString(),
                     naturalidade = binding.editTextNaturalidade.editText?.text.toString(),
                     peso = binding.editTextPeso.editText?.text.toString().toFloat(),
@@ -194,13 +198,14 @@ class CadastroPacienteActivity : AppCompatActivity() {
                     tipoSanguineo = binding.spinnerTipoSanguineo.selectedItem.toString()
                 )
                 viewModel.cadastrarPaciente(paciente)
-            } else{
+            } else {
                 val paciente = Paciente(
                     nome = binding.editTextNome.editText?.text.toString(),
-                    cpf = binding.editTextCpf.text.toString().replace("-","").replace(".",""),
+                    cpf = binding.editTextCpf.text.toString().replace("-", "").replace(".", ""),
                     nomeMae = binding.editTextNomeMae.editText?.text.toString(),
                     email = binding.editTextEmail.editText?.text.toString(),
-                    telefone = binding.editTextTelefone.editText?.text.toString(),
+                    telefone = binding.editTextTelefone.editText?.text.toString().replace("(", "")
+                        .replace(")", "").replace("-", ""),
                     enderecoCompleto = binding.editTextEndereco.editText?.text.toString(),
                     naturalidade = binding.editTextNaturalidade.editText?.text.toString(),
                     peso = binding.editTextPeso.editText?.text.toString().toFloat(),
@@ -215,7 +220,7 @@ class CadastroPacienteActivity : AppCompatActivity() {
         }
     }
 
-    fun excluir(){
+    fun excluir() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Você realmente quer deletar o usuário?")
             .setCancelable(false)
@@ -272,7 +277,6 @@ class CadastroPacienteActivity : AppCompatActivity() {
         }
         return true
     }
-
 
 
     private fun getDate(): String {

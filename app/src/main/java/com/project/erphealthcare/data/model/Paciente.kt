@@ -19,4 +19,14 @@ data class Paciente(
     @Json(name = "cpf") var cpf: String?,
     @Json(name = "naturalidade") var naturalidade: String?,
     @Json(name = "enderecoCompleto") var enderecoCompleto: String?
-): Serializable
+): Serializable {
+    fun getBirthDay(): Int {
+        return dataNascimento?.split('-')?.get(2)?.substring(0,2)?.toInt() ?: 0
+    }
+    fun getBirthMonth(): Int {
+        return dataNascimento?.split('-')?.get(1)?.toInt()?.minus(1) ?: 0
+    }
+    fun getBirthYear(): Int {
+        return dataNascimento?.split('-')?.get(0)?.toInt() ?: 0
+    }
+}

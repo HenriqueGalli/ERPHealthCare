@@ -54,7 +54,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="text"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@={user.nome}" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -93,10 +95,22 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="text"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@={user.nomeMae}" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvDataNascimento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:text="Data de Nascimento"
+                app:layout_constraintStart_toStartOf="@id/editTextNomeMae"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNomeMae" />
 
             <DatePicker
                 android:id="@+id/simpleDatePicker"
@@ -105,9 +119,18 @@
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/editTextNomeMae"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNomeMae" />
+                app:layout_constraintStart_toStartOf="@+id/tvDataNascimento"
+                app:layout_constraintTop_toBottomOf="@+id/tvDataNascimento" />
 
+            <TextView
+                android:id="@+id/tvGenero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:text="Gênero"
+                app:layout_constraintStart_toStartOf="@id/simpleDatePicker"
+                app:layout_constraintTop_toBottomOf="@+id/simpleDatePicker" />
 
             <Spinner
                 android:id="@+id/spinnerGenero"
@@ -118,7 +141,7 @@
                 android:layout_marginEnd="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/simpleDatePicker" />
+                app:layout_constraintTop_toBottomOf="@+id/tvGenero" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextEmail"
@@ -133,7 +156,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="text"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@{user.email}" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -153,6 +178,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@{user.telefone}" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -171,7 +197,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="text"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@={user.enderecoCompleto}" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -183,16 +211,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Naturalidade"
+                android:maxLines="1"
                 app:layout_constraintStart_toStartOf="@+id/editTextEndereco"
                 app:layout_constraintTop_toBottomOf="@+id/editTextEndereco">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="text"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@={user.naturalidade}" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvTipoSanguineo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:text="Tipo Sanguíneo"
+                app:layout_constraintStart_toStartOf="@id/editTextNaturalidade"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNaturalidade" />
 
             <Spinner
                 android:id="@+id/spinnerTipoSanguineo"
@@ -225,6 +266,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@{String.valueOf(user.peso)}" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -246,8 +288,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@{String.valueOf(user.altura)}" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -268,8 +311,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
+                    android:inputType="text"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:text="@{user.senha}" />
 
             </com.google.android.material.textfield.TextInputLayout>

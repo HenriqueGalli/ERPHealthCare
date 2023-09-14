@@ -9,8 +9,8 @@ import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.GetPacienteResult
 import com.project.erphealthcare.databinding.ActivityCadastroPacienteBinding
 import com.project.erphealthcare.databinding.ActivityHomePacienteBinding
+import com.project.erphealthcare.ui.paciente.SinalVital.BatimentosCardiacosActivity
 import com.project.erphealthcare.ui.paciente.alergias.AlergiasPacienteActivity
-import com.project.erphealthcare.ui.paciente.batimentos.BatimentosCardiacosActivity
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteViewModel
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteViewModelFactory
@@ -52,10 +52,22 @@ class HomePacienteActivity : AppCompatActivity() {
         }
         binding.clBatimentosMenu.setOnClickListener{
             val intent = Intent(this, BatimentosCardiacosActivity::class.java)
+            intent.putExtra("MEDICAO", "BATIMENTOS")
             startActivity(intent)
             this.finish()
         }
-
+        binding.clOxigenacao.setOnClickListener{
+            val intent = Intent(this, BatimentosCardiacosActivity::class.java)
+            intent.putExtra("MEDICAO", "OXIGENACAO")
+            startActivity(intent)
+            this.finish()
+        }
+        binding.clTemperatura.setOnClickListener{
+            val intent = Intent(this, BatimentosCardiacosActivity::class.java)
+            intent.putExtra("MEDICAO", "TEMPERATURA")
+            startActivity(intent)
+            this.finish()
+        }
     }
 
     private fun setupObserver() {

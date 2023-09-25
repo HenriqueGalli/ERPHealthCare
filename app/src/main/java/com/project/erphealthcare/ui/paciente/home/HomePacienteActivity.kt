@@ -14,6 +14,7 @@ import com.project.erphealthcare.ui.paciente.batimentos.BatimentosCardiacosActiv
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteViewModel
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteViewModelFactory
+import com.project.erphealthcare.ui.paciente.exames.ListaExamesActivity
 
 class HomePacienteActivity : AppCompatActivity() {
 
@@ -52,6 +53,11 @@ class HomePacienteActivity : AppCompatActivity() {
         }
         binding.clBatimentosMenu.setOnClickListener{
             val intent = Intent(this, BatimentosCardiacosActivity::class.java)
+            startActivity(intent)
+            this.finish()
+        }
+        binding.clExames.setOnClickListener{
+            val intent = Intent(this, ListaExamesActivity::class.java)
             startActivity(intent)
             this.finish()
         }

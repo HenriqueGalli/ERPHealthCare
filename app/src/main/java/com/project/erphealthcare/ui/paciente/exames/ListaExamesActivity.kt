@@ -8,8 +8,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.model.Exame
 import com.project.erphealthcare.databinding.ActivityListaExamesBinding
+import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
@@ -28,6 +30,14 @@ class ListaExamesActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupAdapter()
         setupListeners()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, HomePacienteActivity::class.java)
+        intent.putExtra("TOKEN", ApiService.token)
+        startActivity(intent)
+        this.finish()
     }
 
     private fun setupAdapter() {

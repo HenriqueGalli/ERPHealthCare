@@ -269,7 +269,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Gerenciar\nAlergias"
+                    android:text="Histórico\nAlergias"
                     app:layout_constraintEnd_toEndOf="@+id/ivAlergias"
                     app:layout_constraintStart_toStartOf="@id/ivAlergias"
                     app:layout_constraintTop_toBottomOf="@+id/ivAlergias" />
@@ -360,7 +360,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Gerenciar\nMedicamentos"
+                    android:text="Histórico\nMedicamentos"
                     app:layout_constraintEnd_toEndOf="@+id/ivMedicamentos"
                     app:layout_constraintStart_toStartOf="@id/ivMedicamentos"
                     app:layout_constraintTop_toBottomOf="@+id/ivMedicamentos" />

@@ -1,4 +1,4 @@
-package com.project.erphealthcare.ui.paciente.alergias
+package com.project.erphealthcare.ui.paciente.historicoMedico
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import com.project.erphealthcare.R
 
 class ListagemAdapter(historicoMedico: ArrayList<String>) :
     RecyclerView.Adapter<ListagemAdapter.ViewHolder>() {
-    val alergias = historicoMedico
+    val historico = historicoMedico
     private val ALERGIA = "ALERGIA"
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -35,9 +35,9 @@ class ListagemAdapter(historicoMedico: ArrayList<String>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(alergias[position])
+        holder.bind(historico[position])
         holder.exclude.setOnClickListener {
-            alergias.remove(alergias[position])
+            historico.remove(historico[position])
             notifyDataSetChanged()
         }
         holder.edit.setOnClickListener {
@@ -57,10 +57,10 @@ class ListagemAdapter(historicoMedico: ArrayList<String>) :
             holder.edit.visibility = View.VISIBLE
             holder.check.visibility = View.GONE
             val enteredText = holder.tvName.text.toString()
-            alergias[holder.absoluteAdapterPosition] = enteredText
+            historico[holder.absoluteAdapterPosition] = enteredText
             holder.tvName.isEnabled = false
         }
-        if (position == alergias.size-1 && alergias[position] == ALERGIA) {
+        if (position == historico.size-1 && historico[position] == ALERGIA) {
             val imm =
                 holder.edit.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
@@ -73,11 +73,11 @@ class ListagemAdapter(historicoMedico: ArrayList<String>) :
     }
 
     override fun getItemCount(): Int {
-        return alergias.size
+        return historico.size
     }
 
-    fun addAlergia() {
-        alergias.add(ALERGIA)
+    fun addItem() {
+        historico.add(ALERGIA)
         notifyDataSetChanged()
     }
 }

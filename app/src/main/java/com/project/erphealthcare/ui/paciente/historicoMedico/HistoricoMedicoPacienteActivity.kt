@@ -36,6 +36,7 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity() {
                 "CIRURGIAS" -> setupCirurgiasView()
                 "DOENCAS" -> setupDoencasView()
                 "MEDICAMENTOS_ANTERIORES" -> setupMedicamentosAnterioresView()
+                "MEDICAMENTOS_ATUAIS" -> setupMedicamentosAtuaisView()
             }
             viewModel.getMedicalHistory()
         }
@@ -47,6 +48,12 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity() {
         setupMedicamentosAnterioresLayout()
         setupMedicamentosAnterioresListeners()
         setupMedicamentosAnterioresObservers()
+    }
+
+    private fun setupMedicamentosAtuaisView() {
+        setupMedicamentosAtuaisLayout()
+        setupMedicamentosAtuaisListeners()
+        setupMedicamentosAtuaisObservers()
     }
 
     private fun setupAlergiasView() {
@@ -73,6 +80,24 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity() {
         intent.putExtra("TOKEN", ApiService.token)
         startActivity(intent)
         this.finish()
+    }
+
+    private fun setupMedicamentosAtuaisObservers() {
+        viewModel.medicalHistoryResult.observe(this) { res ->
+            when (res) {
+                is GetMedicalHistoryResult.ServerError -> errorGetHistory()
+                is GetMedicalHistoryResult.Success -> successMedicamentosAtuaisMedicalHistory(
+                    res.historico
+                )
+            }
+        }
+
+        viewModel.updateAlergiasResult.observe(this) { res ->
+            when (res) {
+                is UpdateMedicalHistoryResult.ServerError -> errorGetHistory()
+                is UpdateMedicalHistoryResult.Success -> successUpdateHistory()
+            }
+        }
     }
 
     private fun setupMedicamentosAnterioresObservers() {
@@ -154,6 +179,13 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity() {
         setupAdapter(historico?.alergias ?: ArrayList())
     }
 
+    private fun successMedicamentosAtuaisMedicalHistory(historico: HistoricoMedico?) {
+        if (historico != null) {
+            historicoMedico = historico
+        }
+        setupAdapter(historico?.medicamentosAtuais ?: ArrayList())
+    }
+
     private fun successMedicamentosAnterioresMedicalHistory(historico: HistoricoMedico?) {
         if (historico != null) {
             historicoMedico = historico
@@ -185,6 +217,12 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity() {
         binding.tvTitle.text = "Histórico de\nAlergias"
     }
 
+    private fun setupMedicamentosAtuaisLayout() {
+        setSupportActionBar(findViewById(R.id.toolbar))
+        binding.toolbarLayout.title = title
+        binding.tvTitle.text = "Medicamentos\nAtuais"
+    }
+
     private fun setupMedicamentosAnterioresLayout() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
@@ -210,6 +248,19 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity() {
             this, LinearLayoutManager.VERTICAL,
             false
         )
+    }
+
+    private fun setupMedicamentosAtuaisListeners() {
+        binding.addHistorico.setOnClickListener { view ->
+            adapter.addItem()
+            val itemCount = adapter.itemCount
+            binding.rvHistorico.smoothScrollToPosition(itemCount - 1)
+        }
+
+        binding.btnSalvar.setOnClickListener {
+            historicoMedico.medicamentosAtuais = adapter.historico
+            viewModel.updateMedicalHistory(historicoMedico)
+        }
     }
 
     private fun setupMedicamentosAnterioresListeners() {

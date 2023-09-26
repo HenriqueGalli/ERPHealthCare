@@ -67,6 +67,12 @@ class HomePacienteActivity : AppCompatActivity() {
             startActivity(intent)
             this.finish()
         }
+        binding.clMedicamentosAtuais.setOnClickListener {
+            val intent = Intent(this, HistoricoMedicoPacienteActivity::class.java)
+            intent.putExtra("TIPO_HISTORICO", "MEDICAMENTOS_ATUAIS")
+            startActivity(intent)
+            this.finish()
+        }
         binding.clBatimentosMenu.setOnClickListener {
             val intent = Intent(this, BatimentosCardiacosActivity::class.java)
             startActivity(intent)

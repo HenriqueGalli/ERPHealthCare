@@ -26,11 +26,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textStyle="bold"
                     android:gravity="center"
                     android:padding="16dp"
                     android:text="Med Tech"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -41,11 +41,11 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="16dp"
                     android:contentDescription="@null"
+                    android:focusable="true"
                     android:src="@drawable/ic_person_logo"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:focusable="true" />
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -75,9 +75,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:background="@drawable/blue_border_radius"
                 android:padding="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/clOxigenacao"
-                android:background="@drawable/blue_border_radius"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvSinaisVitais">
 
@@ -94,8 +94,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Batimentos\nCardiácos"
                     android:gravity="center"
+                    android:text="Batimentos\nCardiácos"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivBatimentos" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -105,9 +105,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:background="@drawable/blue_border_radius"
                 android:padding="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/clTemperatura"
-                android:background="@drawable/blue_border_radius"
                 app:layout_constraintStart_toEndOf="@+id/clBatimentosMenu"
                 app:layout_constraintTop_toBottomOf="@+id/tvSinaisVitais">
 
@@ -124,8 +124,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Oxigenação\nSanguinea"
                     android:gravity="center"
+                    android:text="Oxigenação\nSanguinea"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivOxigenacao" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -135,8 +135,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:padding="8dp"
                 android:background="@drawable/blue_border_radius"
+                android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/clOxigenacao"
                 app:layout_constraintTop_toBottomOf="@+id/tvSinaisVitais">
@@ -176,9 +176,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:background="@drawable/blue_border_radius"
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/clBatimentosMenu"
-                android:background="@drawable/blue_border_radius"
                 app:layout_constraintStart_toStartOf="@id/clBatimentosMenu"
                 app:layout_constraintTop_toBottomOf="@+id/tvExames">
 
@@ -206,9 +206,9 @@
                 android:id="@+id/clProximosExames"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/blue_border_radius"
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/clOxigenacao"
-                android:background="@drawable/blue_border_radius"
                 app:layout_constraintStart_toStartOf="@+id/clOxigenacao"
                 app:layout_constraintTop_toTopOf="@+id/clExames">
 
@@ -225,10 +225,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Próximos\nExames"
                     android:gravity="center"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="Próximos\nExames"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivProximosExames" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -248,10 +248,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:padding="8dp"
-                android:focusable="true"
-                app:layout_constraintEnd_toEndOf="@+id/clBatimentosMenu"
                 android:background="@drawable/blue_border_radius"
+                android:focusable="true"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/clBatimentosMenu"
                 app:layout_constraintStart_toStartOf="@id/clBatimentosMenu"
                 app:layout_constraintTop_toBottomOf="@+id/tvHistoricoMedico">
 
@@ -279,9 +279,9 @@
                 android:id="@+id/clCirurgias"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/blue_border_radius"
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/clProximosExames"
-                android:background="@drawable/blue_border_radius"
                 app:layout_constraintStart_toStartOf="@+id/clProximosExames"
                 app:layout_constraintTop_toTopOf="@+id/clAlergias">
 
@@ -298,10 +298,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Histórico\nCirurgias"
                     android:gravity="center"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="Histórico\nCirurgias"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivCirurgias" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -309,9 +309,9 @@
                 android:id="@+id/clDoencas"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/blue_border_radius"
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/clTemperatura"
-                android:background="@drawable/blue_border_radius"
                 app:layout_constraintStart_toStartOf="@+id/clTemperatura"
                 app:layout_constraintTop_toTopOf="@+id/clAlergias">
 
@@ -328,11 +328,41 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Histórico\nDoenças"
                     android:gravity="center"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="Histórico\nDoenças"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivDoencas" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clMedicamentosAtuais"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_border_radius"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/clProximosExames"
+                app:layout_constraintStart_toStartOf="@+id/clProximosExames"
+                app:layout_constraintTop_toTopOf="@+id/clMedicamentos">
+
+                <ImageView
+                    android:id="@+id/ivMedicamentosAtuais"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_remedio"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Medicamentos\nAtuais"
+                    app:layout_constraintEnd_toEndOf="@+id/ivMedicamentosAtuais"
+                    app:layout_constraintStart_toStartOf="@id/ivMedicamentosAtuais"
+                    app:layout_constraintTop_toBottomOf="@+id/ivMedicamentosAtuais" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -340,9 +370,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:background="@drawable/blue_border_radius"
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/clAlergias"
-                android:background="@drawable/blue_border_radius"
                 app:layout_constraintStart_toStartOf="@id/clAlergias"
                 app:layout_constraintTop_toBottomOf="@+id/clAlergias">
 

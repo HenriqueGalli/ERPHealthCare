@@ -1,19 +1,16 @@
 package com.project.erphealthcare.ui.paciente.home
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.project.erphealthcare.R
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.GetPacienteResult
-import com.project.erphealthcare.databinding.ActivityCadastroPacienteBinding
 import com.project.erphealthcare.databinding.ActivityHomePacienteBinding
-import com.project.erphealthcare.ui.paciente.alergias.AlergiasPacienteActivity
+import com.project.erphealthcare.ui.paciente.historicoMedico.HistoricoMedicoPacienteActivity
 import com.project.erphealthcare.ui.paciente.batimentos.BatimentosCardiacosActivity
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity
-import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteViewModel
-import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteViewModelFactory
 import com.project.erphealthcare.ui.paciente.exames.ListaExamesActivity
 
 class HomePacienteActivity : AppCompatActivity() {
@@ -47,16 +44,41 @@ class HomePacienteActivity : AppCompatActivity() {
             this.finish()
         }
         binding.clAlergias.setOnClickListener {
-            val intent = Intent(this, AlergiasPacienteActivity::class.java)
+            val intent = Intent(this, HistoricoMedicoPacienteActivity::class.java)
+            intent.putExtra("TIPO_HISTORICO", "ALERGIAS")
             startActivity(intent)
             this.finish()
         }
-        binding.clBatimentosMenu.setOnClickListener{
+        binding.clCirurgias.setOnClickListener {
+            val intent = Intent(this, HistoricoMedicoPacienteActivity::class.java)
+            intent.putExtra("TIPO_HISTORICO", "CIRURGIAS")
+            startActivity(intent)
+            this.finish()
+        }
+        binding.clDoencas.setOnClickListener {
+            val intent = Intent(this, HistoricoMedicoPacienteActivity::class.java)
+            intent.putExtra("TIPO_HISTORICO", "DOENCAS")
+            startActivity(intent)
+            this.finish()
+        }
+        binding.clMedicamentos.setOnClickListener {
+            val intent = Intent(this, HistoricoMedicoPacienteActivity::class.java)
+            intent.putExtra("TIPO_HISTORICO", "MEDICAMENTOS_ANTERIORES")
+            startActivity(intent)
+            this.finish()
+        }
+        binding.clMedicamentosAtuais.setOnClickListener {
+            val intent = Intent(this, HistoricoMedicoPacienteActivity::class.java)
+            intent.putExtra("TIPO_HISTORICO", "MEDICAMENTOS_ATUAIS")
+            startActivity(intent)
+            this.finish()
+        }
+        binding.clBatimentosMenu.setOnClickListener {
             val intent = Intent(this, BatimentosCardiacosActivity::class.java)
             startActivity(intent)
             this.finish()
         }
-        binding.clExames.setOnClickListener{
+        binding.clExames.setOnClickListener {
             val intent = Intent(this, ListaExamesActivity::class.java)
             startActivity(intent)
             this.finish()

@@ -8,8 +8,8 @@ import com.project.erphealthcare.R
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.GetPacienteResult
 import com.project.erphealthcare.databinding.ActivityHomePacienteBinding
+import com.project.erphealthcare.ui.paciente.SinalVital.BatimentosCardiacosActivity
 import com.project.erphealthcare.ui.paciente.historicoMedico.HistoricoMedicoPacienteActivity
-import com.project.erphealthcare.ui.paciente.batimentos.BatimentosCardiacosActivity
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity
 import com.project.erphealthcare.ui.paciente.exames.ListaExamesActivity
 
@@ -73,8 +73,21 @@ class HomePacienteActivity : AppCompatActivity() {
             startActivity(intent)
             this.finish()
         }
-        binding.clBatimentosMenu.setOnClickListener {
+        binding.clBatimentosMenu.setOnClickListener{
             val intent = Intent(this, BatimentosCardiacosActivity::class.java)
+            intent.putExtra("MEDICAO", "BATIMENTOS")
+            startActivity(intent)
+            this.finish()
+        }
+        binding.clOxigenacao.setOnClickListener{
+            val intent = Intent(this, BatimentosCardiacosActivity::class.java)
+            intent.putExtra("MEDICAO", "OXIGENACAO")
+            startActivity(intent)
+            this.finish()
+        }
+        binding.clTemperatura.setOnClickListener{
+            val intent = Intent(this, BatimentosCardiacosActivity::class.java)
+            intent.putExtra("MEDICAO", "TEMPERATURA")
             startActivity(intent)
             this.finish()
         }

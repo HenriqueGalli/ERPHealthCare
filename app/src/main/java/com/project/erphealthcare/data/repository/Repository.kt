@@ -46,6 +46,12 @@ class Repository(val dataSource: ERPDataSource) {
     suspend fun getBatimentosCardiacos(): GetSinaisVitaisResult {
         return dataSource.getBatimentosCardiacos()
     }
+    suspend fun getOxigenacaoSanguinea(): GetSinaisVitaisResult {
+        return dataSource.getOxigenacaoSanguinea()
+    }
+    suspend fun getTemperaturaCorporal(): GetSinaisVitaisResult {
+        return dataSource.getTemperaturaCorporal()
+    }
 
     suspend fun deleteUser(): DeleteUserResult? {
         return try {

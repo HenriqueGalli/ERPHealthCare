@@ -33,6 +33,11 @@ interface ErpServices {
     @GET("/heart-rate/history/")
     suspend fun getBatimentos(): ArrayList<MedicoesSinaisVitais>
 
+    @GET("/oxygen-level/history/")
+    suspend fun getOxigenacao(): ArrayList<MedicoesSinaisVitais>
+
+    @GET("/corporal-temperature/history/")
+    suspend fun getTemperatura(): ArrayList<MedicoesSinaisVitais>
     @DELETE("user/")
     suspend fun deleteUser(): Response<Any>
 

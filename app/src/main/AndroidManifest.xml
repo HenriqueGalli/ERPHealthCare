@@ -27,10 +27,10 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.paciente.batimentos.BatimentosCardiacosActivity"
+            android:name=".ui.paciente.SinalVital.BatimentosCardiacosActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.paciente.alergias.AlergiasPacienteActivity"
+            android:name=".ui.paciente.historicoMedico.HistoricoMedicoPacienteActivity"
             android:exported="false"
             android:label="@string/title_activity_alergias_paciente"
             android:theme="@style/Theme.ERPHealthCare.NoActionBar" />
@@ -71,6 +71,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

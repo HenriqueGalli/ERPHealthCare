@@ -1,4 +1,4 @@
-package com.project.erphealthcare.ui.paciente.batimentos
+package com.project.erphealthcare.ui.paciente.SinalVital
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,7 +16,7 @@ import com.project.erphealthcare.utils.Formater
 class BatimentosCardiacosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBatimentosCardiacosBinding
-
+    private var tipoMedicao = ""
     private val viewModel: BatimentosPacienteViewModel =
         BatimentosPacienteViewModelFactory()
             .create(BatimentosPacienteViewModel::class.java)
@@ -27,11 +27,25 @@ class BatimentosCardiacosActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_batimentos_cardiacos)
 
         setupObserver()
-        viewModel.getBatimentosCardiacos()
+        if(intent.hasExtra("MEDICAO") ){
+            tipoMedicao = intent.getStringExtra("MEDICAO").toString()
+            if (tipoMedicao != null) {
+                validateTipoMedicao(tipoMedicao)
+            }
+        }
+
+    }
+
+    private fun validateTipoMedicao(tipoMedicao: String){
+        when(tipoMedicao){
+            "BATIMENTOS" -> viewModel.getBatimentosCardiacos()
+            "OXIGENACAO" -> viewModel.getOxigenacaoSanguinea()
+            "TEMPERATURA" -> viewModel.getTemperaturaCorporal()
+        }
     }
 
     private fun setupObserver() {
-        viewModel.batimentosResult.observe(this) { res ->
+        viewModel.medicaoResult.observe(this) { res ->
 
             when (res) {
                 is GetSinaisVitaisResult.Success -> setupAdapter(res.medicoes)
@@ -45,11 +59,18 @@ class BatimentosCardiacosActivity : AppCompatActivity() {
     }
 
     private fun setupAdapter(listaMedicoes: MutableList<MedicoesSinaisVitais>) {
+        var medicaoLabel = ""
+        when(tipoMedicao){
+            "BATIMENTOS" -> medicaoLabel = "Batimentos Cardíacos"
+            "OXIGENACAO" -> medicaoLabel = "% de Oximetria"
+            "TEMPERATURA" -> medicaoLabel = "°C"
+
+        }
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
             listaMedicoes.map { medicao ->
-                "Medição: ${medicao.valorMedicao} Batimentos Cardíacos\nData da Medição: ${
+                "Medição: ${medicao.valorMedicao} ${medicaoLabel}\nData da Medição: ${
                     Formater.formatarDataEHora(medicao.dateTimeMedicao ?: "")
                 }"
             }

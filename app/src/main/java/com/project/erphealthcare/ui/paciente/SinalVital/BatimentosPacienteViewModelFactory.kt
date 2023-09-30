@@ -1,4 +1,4 @@
-package com.project.erphealthcare.ui.paciente.batimentos
+package com.project.erphealthcare.ui.paciente.SinalVital
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

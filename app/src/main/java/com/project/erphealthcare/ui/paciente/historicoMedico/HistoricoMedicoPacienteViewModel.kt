@@ -1,4 +1,4 @@
-package com.project.erphealthcare.ui.paciente.alergias
+package com.project.erphealthcare.ui.paciente.historicoMedico
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,7 @@ import com.project.erphealthcare.data.result.UpdateMedicalHistoryResult
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class AlergiasPacienteViewModel(private val repository: Repository): ViewModel() {
+class HistoricoMedicoPacienteViewModel(private val repository: Repository): ViewModel() {
 
     val medicalHistoryResult: MutableLiveData<GetMedicalHistoryResult> = MutableLiveData()
     val updateAlergiasResult: MutableLiveData<UpdateMedicalHistoryResult> = MutableLiveData()

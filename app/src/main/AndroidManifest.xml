@@ -27,7 +27,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.paciente.SinalVital.BatimentosCardiacosActivity"
+            android:name=".ui.paciente.SinalVital.SinaisVitaisActivity"
             android:exported="false" />
         <activity
             android:name=".ui.paciente.historicoMedico.HistoricoMedicoPacienteActivity"

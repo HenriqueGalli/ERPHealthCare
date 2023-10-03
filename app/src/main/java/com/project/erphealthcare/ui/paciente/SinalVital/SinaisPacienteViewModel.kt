@@ -7,7 +7,7 @@ import com.project.erphealthcare.data.result.GetSinaisVitaisResult
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class BatimentosPacienteViewModel(private val repository: Repository): ViewModel() {
+class SinaisPacienteViewModel(private val repository: Repository): ViewModel() {
 
     val medicaoResult: MutableLiveData<GetSinaisVitaisResult> = MutableLiveData()
 

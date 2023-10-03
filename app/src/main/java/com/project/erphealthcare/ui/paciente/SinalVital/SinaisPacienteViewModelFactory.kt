@@ -9,12 +9,12 @@ import com.project.erphealthcare.data.repository.Repository
  * ViewModel provider factory to instantiate LoginViewModel.
  * Required given LoginViewModel has a non-empty constructor
  */
-class BatimentosPacienteViewModelFactory : ViewModelProvider.Factory {
+class SinaisPacienteViewModelFactory : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(BatimentosPacienteViewModel::class.java)) {
-            return BatimentosPacienteViewModel(
+        if (modelClass.isAssignableFrom(SinaisPacienteViewModel::class.java)) {
+            return SinaisPacienteViewModel(
                 repository = Repository(
                     dataSource = ERPDataSource()
                 )

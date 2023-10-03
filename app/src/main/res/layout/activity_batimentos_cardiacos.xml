@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.paciente.sinaisVitais.batimentos.BatimentosCardiacosActivity">
@@ -17,11 +17,18 @@
             android:text="Histórico Mediçoes\nBatimentos Cardiacos"
             android:textSize="24sp" />
 
-        <ListView
-            android:id="@+id/listViewBatimentos"
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
             android:layout_width="match_parent"
+            android:clickable="false"
             android:layout_height="match_parent"
             android:layout_below="@id/textViewTitulo" />
+
+        <!--        <ListView-->
+        <!--            android:id="@+id/listViewBatimentos"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_below="@id/textViewTitulo" />-->
 
     </RelativeLayout>
 </layout>

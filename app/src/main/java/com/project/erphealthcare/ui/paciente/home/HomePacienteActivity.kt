@@ -9,9 +9,9 @@ import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.GetPacienteResult
 import com.project.erphealthcare.databinding.ActivityHomePacienteBinding
 import com.project.erphealthcare.ui.paciente.SinalVital.SinaisVitaisActivity
-import com.project.erphealthcare.ui.paciente.historicoMedico.HistoricoMedicoPacienteActivity
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity
 import com.project.erphealthcare.ui.paciente.exames.ListaExamesActivity
+import com.project.erphealthcare.ui.paciente.historicoMedico.HistoricoMedicoPacienteActivity
 
 class HomePacienteActivity : AppCompatActivity() {
 
@@ -32,8 +32,6 @@ class HomePacienteActivity : AppCompatActivity() {
         if (intent.hasExtra("TOKEN")) {
             getPaciente(intent.getStringExtra("TOKEN") ?: "")
         }
-
-
     }
 
     private fun setubListeners() {
@@ -73,19 +71,19 @@ class HomePacienteActivity : AppCompatActivity() {
             startActivity(intent)
             this.finish()
         }
-        binding.clBatimentosMenu.setOnClickListener{
+        binding.clBatimentosMenu.setOnClickListener {
             val intent = Intent(this, SinaisVitaisActivity::class.java)
             intent.putExtra("MEDICAO", "BATIMENTOS")
             startActivity(intent)
             this.finish()
         }
-        binding.clOxigenacao.setOnClickListener{
+        binding.clOxigenacao.setOnClickListener {
             val intent = Intent(this, SinaisVitaisActivity::class.java)
             intent.putExtra("MEDICAO", "OXIGENACAO")
             startActivity(intent)
             this.finish()
         }
-        binding.clTemperatura.setOnClickListener{
+        binding.clTemperatura.setOnClickListener {
             val intent = Intent(this, SinaisVitaisActivity::class.java)
             intent.putExtra("MEDICAO", "TEMPERATURA")
             startActivity(intent)

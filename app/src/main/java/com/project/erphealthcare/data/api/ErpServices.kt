@@ -1,8 +1,6 @@
 package com.project.erphealthcare.data.api
 
 import com.project.erphealthcare.data.model.*
-import com.project.erphealthcare.data.result.GetMedicalHistoryResult
-import com.project.erphealthcare.data.result.LoginResult
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -38,14 +36,23 @@ interface ErpServices {
 
     @GET("/corporal-temperature/history/")
     suspend fun getTemperatura(): ArrayList<MedicoesSinaisVitais>
+
     @DELETE("user/")
     suspend fun deleteUser(): Response<Any>
 
     @POST("user/medical-history/")
     suspend fun createHistoricoMedico(
-        @Body historico: HistoricoMedico): HistoricoMedico
+        @Body historico: HistoricoMedico
+    ): HistoricoMedico
 
     @PUT("user/medical-history/")
     suspend fun updateHistoricoMedico(
-        @Body historico: HistoricoMedico): HistoricoMedico
+        @Body historico: HistoricoMedico
+    ): HistoricoMedico
+
+    @GET("caregiver/")
+    suspend fun getCuidador(): Cuidador
+
+    @GET("caregiver/association/")
+    suspend fun getListaPacientes(): ArrayList<Paciente>
 }

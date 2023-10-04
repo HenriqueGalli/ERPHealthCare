@@ -17,6 +17,12 @@
         tools:replace="android:appComponentFactory"
         tools:targetApi="31">
         <activity
+            android:name=".ui.cuidador.gerenciaPacientes.listaPacientes.ListarPacientesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.cuidador.home.HomeCuidadorActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.paciente.exames.PdfManagerActivity"
             android:exported="false" />
         <activity

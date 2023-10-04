@@ -4,7 +4,14 @@ import android.util.Log
 import br.com.preventivewelfare.api.result.EditUserResult
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
-import com.project.erphealthcare.data.result.*
+import com.project.erphealthcare.data.result.CreatePacienteResult
+import com.project.erphealthcare.data.result.GetCuidadorResult
+import com.project.erphealthcare.data.result.GetListaPacienteResult
+import com.project.erphealthcare.data.result.GetMedicalHistoryResult
+import com.project.erphealthcare.data.result.GetPacienteResult
+import com.project.erphealthcare.data.result.GetSinaisVitaisResult
+import com.project.erphealthcare.data.result.LoginResult
+import com.project.erphealthcare.data.result.UpdateMedicalHistoryResult
 import retrofit2.HttpException
 
 class ERPDataSource {
@@ -42,12 +49,12 @@ class ERPDataSource {
 
     suspend fun getPaciente(token: String): GetPacienteResult {
         return try {
-            if(token.isNotEmpty()){
+            if (token.isNotEmpty()) {
                 ApiService.token = token
             }
             val res = ApiService.service.getPaciente()
             GetPacienteResult.Success(res)
-        } catch (throwable: Throwable){
+        } catch (throwable: Throwable) {
             val message = throwable
             Log.d("", throwable.message.toString())
             GetPacienteResult.ServerError
@@ -58,7 +65,7 @@ class ERPDataSource {
         return try {
             val res = ApiService.service.getMedicalHistory()
             GetMedicalHistoryResult.Success(res)
-        } catch (throwable: Throwable){
+        } catch (throwable: Throwable) {
             GetMedicalHistoryResult.ServerError
         }
     }
@@ -67,15 +74,16 @@ class ERPDataSource {
         return try {
             val res = ApiService.service.getBatimentos()
             GetSinaisVitaisResult.Success(res)
-        } catch (throwable: Throwable){
+        } catch (throwable: Throwable) {
             GetSinaisVitaisResult.ServerError
         }
     }
+
     suspend fun getOxigenacaoSanguinea(): GetSinaisVitaisResult {
         return try {
             val res = ApiService.service.getOxigenacao()
             GetSinaisVitaisResult.Success(res)
-        } catch (throwable: Throwable){
+        } catch (throwable: Throwable) {
             GetSinaisVitaisResult.ServerError
         }
     }
@@ -84,10 +92,11 @@ class ERPDataSource {
         return try {
             val res = ApiService.service.getTemperatura()
             GetSinaisVitaisResult.Success(res)
-        } catch (throwable: Throwable){
+        } catch (throwable: Throwable) {
             GetSinaisVitaisResult.ServerError
         }
     }
+
     suspend fun createMedicalHistory(historico: HistoricoMedico): GetMedicalHistoryResult {
         return try {
             val res = ApiService.service.createHistoricoMedico(historico)
@@ -103,6 +112,32 @@ class ERPDataSource {
             UpdateMedicalHistoryResult.Success(res)
         } catch (throwable: Throwable) {
             UpdateMedicalHistoryResult.ServerError
+        }
+    }
+
+    suspend fun getCuidador(token: String): GetCuidadorResult? {
+        return try {
+            if (token.isNotEmpty()) {
+                ApiService.token = token
+            }
+            val res = ApiService.service.getCuidador()
+            GetCuidadorResult.Success(res)
+        } catch (throwable: Throwable) {
+            val message = throwable
+            Log.d("", throwable.message.toString())
+            GetCuidadorResult.ServerError
+        }
+    }
+
+    suspend fun getListaPaciente(token: String): GetListaPacienteResult {
+        return try {
+            if (token.isNotEmpty()) {
+                ApiService.token = token
+            }
+            val res = ApiService.service.getListaPacientes()
+            GetListaPacienteResult.Success(res)
+        } catch (throwable: Throwable) {
+            GetListaPacienteResult.ServerError
         }
     }
 

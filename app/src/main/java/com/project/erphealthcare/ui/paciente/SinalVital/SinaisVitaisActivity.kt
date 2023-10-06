@@ -74,7 +74,7 @@ class SinaisVitaisActivity : AppCompatActivity() {
 
         val entries: MutableList<Entry> = ArrayList()
         val dateFormatInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
-        val dateFormatOutput = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateFormatOutput = SimpleDateFormat("HH:mm", Locale.getDefault())
 
         for ((index, medicao) in listaMedicoes.withIndex()) {
             medicao.dateTimeMedicao?.let {
@@ -96,8 +96,8 @@ class SinaisVitaisActivity : AppCompatActivity() {
 
         val lineData = LineData(lineDataSet)
         binding.lineChart.data = lineData
-        binding.lineChart.setTouchEnabled(true)
-        binding.lineChart.setPinchZoom(true)
+        binding.lineChart.setTouchEnabled(false)
+        binding.lineChart.setPinchZoom(false)
         val dataSets: MutableList<ILineDataSet> = ArrayList()
         dataSets.add(lineDataSet)
 

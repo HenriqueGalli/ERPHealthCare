@@ -17,10 +17,20 @@ interface ErpServices {
         @Body user: Paciente
     ): Paciente
 
+    @POST("caregiver/")
+    suspend fun createCuidador(
+        @Body user: Cuidador
+    ): Cuidador
+
     @PUT("user/")
     suspend fun updateUser(
         @Body user: Paciente
     ): Paciente
+
+    @PUT("caregiver/")
+    suspend fun updateCuidador(
+        @Body user: Cuidador
+    ): Cuidador
 
     @GET("user/")
     suspend fun getPaciente(): Paciente
@@ -39,6 +49,9 @@ interface ErpServices {
 
     @DELETE("user/")
     suspend fun deleteUser(): Response<Any>
+
+    @DELETE("caregiver/")
+    suspend fun deleteCuidador(): Response<Any>
 
     @POST("user/medical-history/")
     suspend fun createHistoricoMedico(

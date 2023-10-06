@@ -2,8 +2,10 @@ package com.project.erphealthcare.data.api
 
 import android.util.Log
 import br.com.preventivewelfare.api.result.EditUserResult
+import com.project.erphealthcare.data.model.Cuidador
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
+import com.project.erphealthcare.data.result.CreateCuidadorResult
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.GetCuidadorResult
 import com.project.erphealthcare.data.result.GetListaPacienteResult
@@ -38,9 +40,29 @@ class ERPDataSource {
         }
     }
 
+    suspend fun createCuidador(cuidador: Cuidador): CreateCuidadorResult {
+        return try {
+            val res = ApiService.service.createCuidador(cuidador)
+            CreateCuidadorResult.Success
+        } catch (throwable: Throwable) {
+            if (throwable is HttpException) {
+                CreateCuidadorResult.ApiError(401)
+            } else CreateCuidadorResult.ServerError
+        }
+    }
+
     suspend fun editPaciente(user: Paciente): EditUserResult {
         return try {
             val res = ApiService.service.updateUser(user)
+            EditUserResult.Success
+        } catch (throwable: Throwable) {
+            EditUserResult.ServerError
+        }
+    }
+
+    suspend fun editCuidador(user: Cuidador): EditUserResult {
+        return try {
+            val res = ApiService.service.updateCuidador(user)
             EditUserResult.Success
         } catch (throwable: Throwable) {
             EditUserResult.ServerError

@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.project.erphealthcare.data.model.LoginResponse
 import com.project.erphealthcare.data.result.LoginResult
 import com.project.erphealthcare.databinding.ActivityLoginBinding
+import com.project.erphealthcare.ui.cuidador.cadastro.CreateCuidadorActivity
 import com.project.erphealthcare.ui.cuidador.home.HomeCuidadorActivity
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
@@ -104,6 +105,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.cadastroProfissional?.setOnClickListener {
+            val intent = Intent(this, CreateCuidadorActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun successLogin(model: LoginResponse) {

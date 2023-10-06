@@ -10,8 +10,6 @@ import kotlinx.coroutines.runBlocking
 class HomeCuidadorViewModel(private val repository: Repository) : ViewModel() {
 
     var cuidadorLiveData: MutableLiveData<GetCuidadorResult?> = MutableLiveData()
-    //val historicoMedicoLiveData: MutableLiveData<GetMedicalHistoryResult> = MutableLiveData()
-
     fun getCuidador(token: String) = runBlocking {
         launch {
             val res = repository.getCuidador(token)

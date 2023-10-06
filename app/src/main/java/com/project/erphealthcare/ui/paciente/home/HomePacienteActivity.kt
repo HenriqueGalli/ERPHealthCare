@@ -16,6 +16,7 @@ import com.project.erphealthcare.ui.paciente.historicoMedico.HistoricoMedicoPaci
 class HomePacienteActivity : AppCompatActivity() {
 
     private lateinit var paciente: Paciente
+    private lateinit var token: String
 
     private lateinit var binding: ActivityHomePacienteBinding
 
@@ -30,7 +31,8 @@ class HomePacienteActivity : AppCompatActivity() {
         setupObserver()
         setubListeners()
         if (intent.hasExtra("TOKEN")) {
-            getPaciente(intent.getStringExtra("TOKEN") ?: "")
+            token = intent.getStringExtra("TOKEN") ?: ""
+            getPaciente(token)
         }
     }
 
@@ -38,6 +40,7 @@ class HomePacienteActivity : AppCompatActivity() {
         binding.imageViewUserLogo.setOnClickListener {
             val intent = Intent(this, CadastroPacienteActivity::class.java)
             intent.putExtra("PACIENTE", paciente)
+            intent.putExtra("TOKEN", token)
             startActivity(intent)
             this.finish()
         }

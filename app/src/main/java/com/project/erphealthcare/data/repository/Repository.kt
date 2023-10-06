@@ -4,8 +4,10 @@ import br.com.preventivewelfare.api.result.DeleteUserResult
 import br.com.preventivewelfare.api.result.EditUserResult
 import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.api.ERPDataSource
+import com.project.erphealthcare.data.model.Cuidador
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
+import com.project.erphealthcare.data.result.CreateCuidadorResult
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.GetCuidadorResult
 import com.project.erphealthcare.data.result.GetListaPacienteResult
@@ -30,6 +32,10 @@ class Repository(val dataSource: ERPDataSource) {
         return dataSource.createPaciente(user)
     }
 
+    suspend fun createCuidador(cuidador: Cuidador): CreateCuidadorResult {
+        return dataSource.createCuidador(cuidador)
+    }
+
     suspend fun createMedicalHistory(historico: HistoricoMedico): GetMedicalHistoryResult {
         return dataSource.createMedicalHistory(historico)
     }
@@ -40,6 +46,10 @@ class Repository(val dataSource: ERPDataSource) {
 
     suspend fun editPaciente(user: Paciente): EditUserResult {
         return dataSource.editPaciente(user)
+    }
+
+    suspend fun editCuidador(user: Cuidador): EditUserResult {
+        return dataSource.editCuidador(user)
     }
 
     suspend fun getPaciente(token: String): GetPacienteResult {
@@ -68,6 +78,18 @@ class Repository(val dataSource: ERPDataSource) {
     suspend fun deleteUser(): DeleteUserResult? {
         return try {
             val res = ApiService.service.deleteUser()
+            if (res.code() == 204)
+                DeleteUserResult.Success
+            else
+                DeleteUserResult.ServerError
+        } catch (throwable: Throwable) {
+            DeleteUserResult.ServerError
+        }
+    }
+
+    suspend fun deleteCuidador(): DeleteUserResult? {
+        return try {
+            val res = ApiService.service.deleteCuidador()
             if (res.code() == 204)
                 DeleteUserResult.Success
             else

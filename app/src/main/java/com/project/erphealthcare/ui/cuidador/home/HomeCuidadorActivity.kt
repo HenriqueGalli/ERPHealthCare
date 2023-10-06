@@ -8,11 +8,13 @@ import com.project.erphealthcare.R
 import com.project.erphealthcare.data.model.Cuidador
 import com.project.erphealthcare.data.result.GetCuidadorResult
 import com.project.erphealthcare.databinding.ActivityHomeCuidadorBinding
+import com.project.erphealthcare.ui.cuidador.cadastro.CreateCuidadorActivity
 import com.project.erphealthcare.ui.cuidador.gerenciaPacientes.listaPacientes.ListarPacientesActivity
 
 class HomeCuidadorActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeCuidadorBinding
+    private lateinit var cuidador: Cuidador
 
     private var token = ""
 
@@ -45,6 +47,12 @@ class HomeCuidadorActivity : AppCompatActivity() {
         binding.clRemovePaciente.setOnClickListener {
 
         }
+        binding.imageViewUserLogo.setOnClickListener {
+            val intent = Intent(this, CreateCuidadorActivity::class.java)
+            intent.putExtra("CUIDADOR", cuidador)
+            startActivity(intent)
+            this.finish()
+        }
     }
 
     private fun setupObserver() {
@@ -58,9 +66,11 @@ class HomeCuidadorActivity : AppCompatActivity() {
     }
 
     private fun setupCuidador(user: Cuidador?) {
+
         if (user != null) {
+            cuidador = user
             binding.labelHomeCuidador.text =
-                "Olá ${user.nomeCuidador}! Realize aqui o gerenciamento e acompanhamento dos seus pacientes!"
+                "Olá ${user.nomeCuidador ?: "Cuidador"}! Realize aqui o gerenciamento e acompanhamento dos seus pacientes!"
         }
     }
 

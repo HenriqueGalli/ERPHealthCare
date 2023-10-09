@@ -8,6 +8,7 @@ import com.project.erphealthcare.R
 import com.project.erphealthcare.data.model.Cuidador
 import com.project.erphealthcare.data.result.GetCuidadorResult
 import com.project.erphealthcare.databinding.ActivityHomeCuidadorBinding
+import com.project.erphealthcare.ui.cuidador.gerenciaPacientes.associarPacientes.associarPaciente.AssociarPacienteActivity
 import com.project.erphealthcare.ui.cuidador.cadastro.CreateCuidadorActivity
 import com.project.erphealthcare.ui.cuidador.gerenciaPacientes.listaPacientes.ListarPacientesActivity
 
@@ -42,10 +43,15 @@ class HomeCuidadorActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.clAddPacientes.setOnClickListener {
-
+            val intent = Intent(this, AssociarPacienteActivity::class.java)
+            intent.putExtra("TOKEN", token)
+            startActivity(intent)
         }
         binding.clRemovePaciente.setOnClickListener {
-
+            val intent = Intent(this, ListarPacientesActivity::class.java)
+            intent.putExtra("TOKEN", token)
+            intent.putExtra("EDITAR_PACIENTE", true)
+            startActivity(intent)
         }
         binding.imageViewUserLogo.setOnClickListener {
             val intent = Intent(this, CreateCuidadorActivity::class.java)

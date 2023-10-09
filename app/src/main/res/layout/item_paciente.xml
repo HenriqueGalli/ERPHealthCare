@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_paciente_documento"
+        android:id="@+id/tv_paciente_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -38,7 +38,7 @@
         android:background="@color/white"
         android:contentDescription="@null"
         android:src="@drawable/baseline_seta_detalhes"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_paciente_documento"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_paciente_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_paciente_nome" />
 

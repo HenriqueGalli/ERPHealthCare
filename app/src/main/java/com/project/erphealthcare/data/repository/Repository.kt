@@ -7,6 +7,7 @@ import com.project.erphealthcare.data.api.ERPDataSource
 import com.project.erphealthcare.data.model.Cuidador
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
+import com.project.erphealthcare.data.result.AssociateCaregiverUserResult
 import com.project.erphealthcare.data.result.CreateCuidadorResult
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.GetCuidadorResult
@@ -26,6 +27,17 @@ class Repository(val dataSource: ERPDataSource) {
 
     suspend fun login(username: String, password: String): LoginResult {
         return dataSource.login(username, password)
+    }
+
+    suspend fun associateCaregiver(email: String, cpf: String): AssociateCaregiverUserResult? {
+        return dataSource.associateCaregiver(userEmail = email, cpfUser = cpf)
+    }
+
+    suspend fun deleteAssociationCaregiver(
+        email: String,
+        cpf: String
+    ): AssociateCaregiverUserResult? {
+        return dataSource.deleteAssociationCaregiver(userEmail = email, cpfUser = cpf)
     }
 
     suspend fun createPaciente(user: Paciente): CreatePacienteResult {

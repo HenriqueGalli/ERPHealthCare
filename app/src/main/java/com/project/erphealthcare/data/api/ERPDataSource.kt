@@ -5,6 +5,7 @@ import br.com.preventivewelfare.api.result.EditUserResult
 import com.project.erphealthcare.data.model.Cuidador
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
+import com.project.erphealthcare.data.result.AssociateCaregiverUserResult
 import com.project.erphealthcare.data.result.CreateCuidadorResult
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.GetCuidadorResult
@@ -26,6 +27,31 @@ class ERPDataSource {
             if (throwable is HttpException) {
                 LoginResult.ApiError(401)
             } else LoginResult.ServerError
+        }
+    }
+
+    suspend fun associateCaregiver(
+        userEmail: String, cpfUser: String
+    ): AssociateCaregiverUserResult {
+        return try {
+            ApiService.service.associateCaregiver(userEmail, cpfUser)
+            AssociateCaregiverUserResult.Success
+        } catch (throwable: Throwable) {
+            if (throwable.message?.contains("End of input at line 1 column 1 path \$") == true)
+                AssociateCaregiverUserResult.Success
+            else
+                AssociateCaregiverUserResult.ServerError
+        }
+    }
+
+    suspend fun deleteAssociationCaregiver(
+        userEmail: String, cpfUser: String
+    ): AssociateCaregiverUserResult {
+        return try {
+            ApiService.service.deleteAssociationCaregiver(userEmail, cpfUser)
+            AssociateCaregiverUserResult.Success
+        } catch (throwable: Throwable) {
+            AssociateCaregiverUserResult.ServerError
         }
     }
 

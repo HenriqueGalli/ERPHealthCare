@@ -12,6 +12,18 @@ interface ErpServices {
         @Query("senha") password: String
     ): LoginResponse
 
+    @POST("caregiver/association/")
+    suspend fun associateCaregiver(
+        @Query("userEmail") userEmail: String,
+        @Query("userCpf") userCpf: String
+    ): AssociarPacienteResponse?
+
+    @DELETE("caregiver/association/")
+    suspend fun deleteAssociationCaregiver(
+        @Query("userEmail") userEmail: String,
+        @Query("userCpf") userCpf: String
+    ): Response<Any>
+
     @POST("user/")
     suspend fun createPaciente(
         @Body user: Paciente

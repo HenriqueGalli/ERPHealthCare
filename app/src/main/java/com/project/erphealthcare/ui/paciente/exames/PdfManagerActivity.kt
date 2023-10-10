@@ -6,10 +6,10 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.github.barteksc.pdfviewer.PDFView
-
 import com.project.erphealthcare.R
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 
 class PdfManagerActivity : AppCompatActivity() {
 
@@ -74,4 +74,7 @@ class PdfManagerActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+
+
+
 }

@@ -12,9 +12,12 @@ import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.model.Exame
 import com.project.erphealthcare.databinding.ActivityListaExamesBinding
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
-import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.pdf.PdfDocument
+import java.io.ByteArrayOutputStream
 
 class ListaExamesActivity : AppCompatActivity() {
 
@@ -53,7 +56,8 @@ class ListaExamesActivity : AppCompatActivity() {
     private fun setupListeners() {
         binding.btnBuscarExame.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "application/pdf"
+            intent.type = "*/*"
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/pdf", "image/png", "image/jpeg"))
             startActivityForResult(intent, PICK_PDF_REQUEST)
         }
     }
@@ -68,7 +72,11 @@ class ListaExamesActivity : AppCompatActivity() {
                 try {
                     val inputStream: InputStream? = contentResolver.openInputStream(pdfUri)
                     if (inputStream != null) {
-                        val byteArray = readBytes(inputStream)
+
+                        var byteArray = readBytes(inputStream)
+                        if (pdfFileName.contains(".png") || pdfFileName.contains(".jpeg")){
+                            byteArray = convertImageToPDF(pdfUri)
+                        }
                         adapter.addExame(Exame(pdfFileName, byteArray))
                     }
                 } catch (e: IOException) {
@@ -104,5 +112,28 @@ class ListaExamesActivity : AppCompatActivity() {
             it.close()
         }
         return null
+    }
+
+    fun convertImageToPDF(imageUri: Uri): ByteArray {
+        val context = applicationContext // Substitua pela referência ao contexto adequado
+
+        val bitmap: Bitmap
+            // Carregue a imagem da URI
+            val inputStream = context.contentResolver.openInputStream(imageUri)
+            bitmap = BitmapFactory.decodeStream(inputStream)
+
+        val pdfDocument = PdfDocument()
+        val pageInfo = PdfDocument.PageInfo.Builder(bitmap.width, bitmap.height, 1).create()
+        val page = pdfDocument.startPage(pageInfo)
+        val canvas = page.canvas
+        canvas.drawBitmap(bitmap, 0f, 0f, null)
+        pdfDocument.finishPage(page)
+
+            val outputStream = ByteArrayOutputStream()
+            pdfDocument.writeTo(outputStream)
+            pdfDocument.close()
+
+            // Converta o documento PDF em um array de bytes
+            return outputStream.toByteArray()
     }
 }

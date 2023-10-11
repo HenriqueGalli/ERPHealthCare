@@ -25,6 +25,7 @@ class CadastroPacienteActivity : AppCompatActivity() {
             .create(CadastroPacienteViewModel::class.java)
 
     private var paciente: Paciente? = null
+    private var token: String? = ""
     private var isNewUser = true
 
     private val gender = ArrayList<String>()
@@ -37,6 +38,8 @@ class CadastroPacienteActivity : AppCompatActivity() {
         binding.viewModel = this
         setupListener()
         setupObserver()
+        if (intent.hasExtra("TOKEN"))
+            token = intent.getStringExtra("TOKEN")
         if (intent.hasExtra("PACIENTE")) {
             setupEditUser()
         } else {
@@ -79,6 +82,9 @@ class CadastroPacienteActivity : AppCompatActivity() {
                 binding.editTextTelefone.editText!!
             )
         )
+        binding.buttonExcluir.setOnClickListener {
+            excluir()
+        }
     }
 
     private fun setupObserver() {
@@ -104,7 +110,12 @@ class CadastroPacienteActivity : AppCompatActivity() {
     }
 
     private fun userEdited() {
-        val fragment = PopUpCadastroActivity(isError = false, isNewUser = false, context = this)
+        val fragment = PopUpCadastroActivity(
+            isError = false,
+            isNewUser = false,
+            context = this,
+            token = token ?: ""
+        )
         fragment.show(supportFragmentManager, "My Fragment")
     }
 

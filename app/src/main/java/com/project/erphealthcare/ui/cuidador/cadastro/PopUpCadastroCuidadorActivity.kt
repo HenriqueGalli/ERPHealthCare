@@ -1,4 +1,4 @@
-package com.project.erphealthcare.ui.paciente.cadastro
+package com.project.erphealthcare.ui.cuidador.cadastro
 
 import android.content.Context
 import android.content.Intent
@@ -11,11 +11,11 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.project.erphealthcare.R
+import com.project.erphealthcare.ui.cuidador.home.HomeCuidadorActivity
 import com.project.erphealthcare.ui.login.LoginActivity
-import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 
 
-class PopUpCadastroActivity(
+class PopUpCadastroCuidadorActivity(
     private val isError: Boolean,
     private val isNewUser: Boolean = true,
     private val token: String = "",
@@ -80,7 +80,7 @@ class PopUpCadastroActivity(
             if (isError) {
                 dialog?.dismiss()
             } else {
-                val intent = Intent(context, HomePacienteActivity::class.java)
+                val intent = Intent(context, HomeCuidadorActivity::class.java)
                 intent.putExtra("TOKEN", token)
                 activity?.finish()
                 startActivity(intent)

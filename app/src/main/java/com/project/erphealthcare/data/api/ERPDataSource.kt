@@ -2,9 +2,19 @@ package com.project.erphealthcare.data.api
 
 import android.util.Log
 import br.com.preventivewelfare.api.result.EditUserResult
+import com.project.erphealthcare.data.model.Cuidador
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
-import com.project.erphealthcare.data.result.*
+import com.project.erphealthcare.data.result.AssociateCaregiverUserResult
+import com.project.erphealthcare.data.result.CreateCuidadorResult
+import com.project.erphealthcare.data.result.CreatePacienteResult
+import com.project.erphealthcare.data.result.GetCuidadorResult
+import com.project.erphealthcare.data.result.GetListaPacienteResult
+import com.project.erphealthcare.data.result.GetMedicalHistoryResult
+import com.project.erphealthcare.data.result.GetPacienteResult
+import com.project.erphealthcare.data.result.GetSinaisVitaisResult
+import com.project.erphealthcare.data.result.LoginResult
+import com.project.erphealthcare.data.result.UpdateMedicalHistoryResult
 import retrofit2.HttpException
 
 class ERPDataSource {
@@ -20,6 +30,31 @@ class ERPDataSource {
         }
     }
 
+    suspend fun associateCaregiver(
+        userEmail: String, cpfUser: String
+    ): AssociateCaregiverUserResult {
+        return try {
+            ApiService.service.associateCaregiver(userEmail, cpfUser)
+            AssociateCaregiverUserResult.Success
+        } catch (throwable: Throwable) {
+            if (throwable.message?.contains("End of input at line 1 column 1 path \$") == true)
+                AssociateCaregiverUserResult.Success
+            else
+                AssociateCaregiverUserResult.ServerError
+        }
+    }
+
+    suspend fun deleteAssociationCaregiver(
+        userEmail: String, cpfUser: String
+    ): AssociateCaregiverUserResult {
+        return try {
+            ApiService.service.deleteAssociationCaregiver(userEmail, cpfUser)
+            AssociateCaregiverUserResult.Success
+        } catch (throwable: Throwable) {
+            AssociateCaregiverUserResult.ServerError
+        }
+    }
+
     suspend fun createPaciente(paciente: Paciente): CreatePacienteResult {
         return try {
             ApiService.service.createPaciente(paciente)
@@ -28,6 +63,17 @@ class ERPDataSource {
             if (throwable is HttpException) {
                 CreatePacienteResult.ApiError(401)
             } else CreatePacienteResult.ServerError
+        }
+    }
+
+    suspend fun createCuidador(cuidador: Cuidador): CreateCuidadorResult {
+        return try {
+            val res = ApiService.service.createCuidador(cuidador)
+            CreateCuidadorResult.Success
+        } catch (throwable: Throwable) {
+            if (throwable is HttpException) {
+                CreateCuidadorResult.ApiError(401)
+            } else CreateCuidadorResult.ServerError
         }
     }
 
@@ -40,14 +86,23 @@ class ERPDataSource {
         }
     }
 
+    suspend fun editCuidador(user: Cuidador): EditUserResult {
+        return try {
+            val res = ApiService.service.updateCuidador(user)
+            EditUserResult.Success
+        } catch (throwable: Throwable) {
+            EditUserResult.ServerError
+        }
+    }
+
     suspend fun getPaciente(token: String): GetPacienteResult {
         return try {
-            if(token.isNotEmpty()){
+            if (token.isNotEmpty()) {
                 ApiService.token = token
             }
             val res = ApiService.service.getPaciente()
             GetPacienteResult.Success(res)
-        } catch (throwable: Throwable){
+        } catch (throwable: Throwable) {
             val message = throwable
             Log.d("", throwable.message.toString())
             GetPacienteResult.ServerError
@@ -58,7 +113,7 @@ class ERPDataSource {
         return try {
             val res = ApiService.service.getMedicalHistory()
             GetMedicalHistoryResult.Success(res)
-        } catch (throwable: Throwable){
+        } catch (throwable: Throwable) {
             GetMedicalHistoryResult.ServerError
         }
     }
@@ -67,15 +122,16 @@ class ERPDataSource {
         return try {
             val res = ApiService.service.getBatimentos()
             GetSinaisVitaisResult.Success(res)
-        } catch (throwable: Throwable){
+        } catch (throwable: Throwable) {
             GetSinaisVitaisResult.ServerError
         }
     }
+
     suspend fun getOxigenacaoSanguinea(): GetSinaisVitaisResult {
         return try {
             val res = ApiService.service.getOxigenacao()
             GetSinaisVitaisResult.Success(res)
-        } catch (throwable: Throwable){
+        } catch (throwable: Throwable) {
             GetSinaisVitaisResult.ServerError
         }
     }
@@ -84,10 +140,11 @@ class ERPDataSource {
         return try {
             val res = ApiService.service.getTemperatura()
             GetSinaisVitaisResult.Success(res)
-        } catch (throwable: Throwable){
+        } catch (throwable: Throwable) {
             GetSinaisVitaisResult.ServerError
         }
     }
+
     suspend fun createMedicalHistory(historico: HistoricoMedico): GetMedicalHistoryResult {
         return try {
             val res = ApiService.service.createHistoricoMedico(historico)
@@ -103,6 +160,32 @@ class ERPDataSource {
             UpdateMedicalHistoryResult.Success(res)
         } catch (throwable: Throwable) {
             UpdateMedicalHistoryResult.ServerError
+        }
+    }
+
+    suspend fun getCuidador(token: String): GetCuidadorResult? {
+        return try {
+            if (token.isNotEmpty()) {
+                ApiService.token = token
+            }
+            val res = ApiService.service.getCuidador()
+            GetCuidadorResult.Success(res)
+        } catch (throwable: Throwable) {
+            val message = throwable
+            Log.d("", throwable.message.toString())
+            GetCuidadorResult.ServerError
+        }
+    }
+
+    suspend fun getListaPaciente(token: String): GetListaPacienteResult {
+        return try {
+            if (token.isNotEmpty()) {
+                ApiService.token = token
+            }
+            val res = ApiService.service.getListaPacientes()
+            GetListaPacienteResult.Success(res)
+        } catch (throwable: Throwable) {
+            GetListaPacienteResult.ServerError
         }
     }
 

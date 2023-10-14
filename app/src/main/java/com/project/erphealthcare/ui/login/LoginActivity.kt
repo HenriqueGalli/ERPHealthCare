@@ -1,25 +1,24 @@
 package com.project.erphealthcare.ui.login
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
-import com.project.erphealthcare.databinding.ActivityLoginBinding
-
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.project.erphealthcare.data.model.LoginResponse
 import com.project.erphealthcare.data.result.LoginResult
+import com.project.erphealthcare.databinding.ActivityLoginBinding
+import com.project.erphealthcare.ui.cuidador.cadastro.CreateCuidadorActivity
+import com.project.erphealthcare.ui.cuidador.home.HomeCuidadorActivity
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 
@@ -63,8 +62,6 @@ class LoginActivity : AppCompatActivity() {
             }
 
             loading.visibility = View.GONE
-//            setResult(Activity.RESULT_OK)
-//            finish()
         }
 
         username.afterTextChanged {
@@ -97,7 +94,8 @@ class LoginActivity : AppCompatActivity() {
                 loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
                 //binding.loginErro?.visibility = View.GONE
-                val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm =
+                    context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(windowToken, 0)
             }
         }
@@ -107,12 +105,24 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.cadastroProfissional?.setOnClickListener {
+            val intent = Intent(this, CreateCuidadorActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun successLogin(model: LoginResponse) {
-        val intent = Intent(this, HomePacienteActivity::class.java)
-        intent.putExtra("TOKEN", model.apiKey)
-        startActivity(intent)
+        if (model.cuidador) {
+            val intent = Intent(this, HomeCuidadorActivity::class.java)
+            intent.putExtra("TOKEN", model.apiKey)
+            startActivity(intent)
+        } else {
+            val intent = Intent(this, HomePacienteActivity::class.java)
+            intent.putExtra("TOKEN", model.apiKey)
+            startActivity(intent)
+        }
+
+
     }
 
     private fun showLoginFailed(@SuppressLint("SupportAnnotationUsage") @StringRes errorString: String) {

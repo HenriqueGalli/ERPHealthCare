@@ -9,13 +9,25 @@
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/img_login"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/img_login"
         android:supportsRtl="true"
         android:theme="@style/Theme.ERPHealthCare"
         tools:replace="android:appComponentFactory"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.cuidador.gerenciaPacientes.associarPacientes.associarPaciente.AssociarPacienteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.cuidador.cadastro.CreateCuidadorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.cuidador.gerenciaPacientes.listaPacientes.ListarPacientesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.cuidador.home.HomeCuidadorActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.paciente.exames.PdfManagerActivity"
             android:exported="false" />

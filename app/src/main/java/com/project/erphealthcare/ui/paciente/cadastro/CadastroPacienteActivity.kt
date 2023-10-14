@@ -161,10 +161,14 @@ class CadastroPacienteActivity : AppCompatActivity() {
     }
 
     private fun setupBloodTypeSpinner() {
-        bloodType.add("A")
-        bloodType.add("B")
-        bloodType.add("AB")
-        bloodType.add("O")
+        bloodType.add("A-")
+        bloodType.add("A+")
+        bloodType.add("B-")
+        bloodType.add("B+")
+        bloodType.add("AB-")
+        bloodType.add("AB+")
+        bloodType.add("O-")
+        bloodType.add("O+")
 
         val dataAdapter: ArrayAdapter<String> =
             ArrayAdapter<String>(

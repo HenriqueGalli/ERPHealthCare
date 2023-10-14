@@ -14,14 +14,16 @@
             android:layout_height="120dp"
             android:fitsSystemWindows="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="@color/white"
+            >
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/blue_login_general"
                 android:fitsSystemWindows="true"
+                android:background="@drawable/home_header"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">
 
@@ -31,21 +33,24 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_marginStart="@dimen/fab_margin"
-                    android:layout_marginBottom="16dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="@color/white"
                     android:text="Gerenciamento\n de Exames"
-                    android:textSize="28sp"
+                    android:textSize="23sp"
                     android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btnBuscarExame"
                     android:layout_width="wrap_content"
+                    android:background="@drawable/blue_light_border_icon"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end | bottom"
                     android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="18dp"
+                    android:layout_marginBottom="30dp"
                     android:backgroundTint="@color/blue_login"
                     android:text="Importar novo\nExame"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 

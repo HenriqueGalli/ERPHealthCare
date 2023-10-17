@@ -1,5 +1,6 @@
 package com.project.erphealthcare.ui.cuidador.gerenciaPacientes.listaPacientes
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +10,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.project.erphealthcare.R
 import com.project.erphealthcare.data.model.Paciente
+import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 
 class ListaPacientesAdapter(
     pacientesList: ArrayList<Paciente>,
     isRemovePaciente: Boolean,
-    onClickListener: OnRemovePaciente
+    onClickListener: OnRemovePaciente,
+    token: String
 ) :
     RecyclerView.Adapter<ListaPacientesAdapter.PacienteViewHolder>() {
 
     val pacientes = pacientesList
+    val tokenReceived = token
     val removePaciente = isRemovePaciente
     val listener = onClickListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PacienteViewHolder {
@@ -57,6 +61,12 @@ class ListaPacientesAdapter(
                         }
                     val alert = builder.create()
                     alert.show()
+                }
+                else{
+                    val intent = Intent(button.context, HomePacienteActivity::class.java)
+                    intent.putExtra("VISAO_CUIDADOR", paciente)
+                    intent.putExtra("TOKEN", tokenReceived)
+                    button.context.startActivity(intent)
                 }
             }
         }

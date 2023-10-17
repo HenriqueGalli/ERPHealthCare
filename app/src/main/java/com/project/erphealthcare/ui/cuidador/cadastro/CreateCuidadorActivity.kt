@@ -1,5 +1,6 @@
 package com.project.erphealthcare.ui.cuidador.cadastro
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -11,6 +12,7 @@ import com.project.erphealthcare.R
 import com.project.erphealthcare.data.model.Cuidador
 import com.project.erphealthcare.data.result.CreateCuidadorResult
 import com.project.erphealthcare.databinding.ActivityCreateCuidadorBinding
+import com.project.erphealthcare.ui.cuidador.home.HomeCuidadorActivity
 import com.project.erphealthcare.utils.CpfUtils
 
 class CreateCuidadorActivity : AppCompatActivity() {
@@ -43,6 +45,7 @@ class CreateCuidadorActivity : AppCompatActivity() {
         binding.buttonEnviar.text = "Salvar"
         isNewUser = false
     }
+
 
     private fun setupListener() {
         binding.editTextCpf.addTextChangedListener(
@@ -96,6 +99,14 @@ class CreateCuidadorActivity : AppCompatActivity() {
             }
         val alert = builder.create()
         alert.show()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, HomeCuidadorActivity::class.java)
+        intent.putExtra("TOKEN", intent.getStringExtra("TOKEN"))
+        startActivity(intent)
+        this.finish()
     }
 
     private fun userDeletedError() {

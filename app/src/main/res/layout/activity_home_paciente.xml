@@ -6,7 +6,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blue_login_general"
+        android:background="#F7FBFF"
         tools:context=".ui.paciente.home.HomePacienteActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout

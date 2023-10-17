@@ -56,6 +56,7 @@ class HomeCuidadorActivity : AppCompatActivity() {
         binding.imageViewUserLogo.setOnClickListener {
             val intent = Intent(this, CreateCuidadorActivity::class.java)
             intent.putExtra("CUIDADOR", cuidador)
+            intent.putExtra("TOKEN", token)
             startActivity(intent)
             this.finish()
         }

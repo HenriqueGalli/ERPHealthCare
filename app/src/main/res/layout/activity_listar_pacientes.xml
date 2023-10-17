@@ -14,14 +14,15 @@
             android:layout_height="120dp"
             android:fitsSystemWindows="true"
             app:layout_constraintStart_toStartOf="parent"
+            android:backgroundTint="@color/white"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/blue_login_general"
                 android:fitsSystemWindows="true"
+                android:background="@drawable/home_header"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">
 
@@ -31,9 +32,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_marginStart="@dimen/fab_margin"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="30dp"
+                    android:paddingLeft="10dp"
                     android:text="Meus\nPacientes"
-                    android:textSize="28sp"
+                    android:textColor="@color/white"
+                    android:textSize="23sp"
                     android:textStyle="bold" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

@@ -60,9 +60,9 @@ class ListarPacientesActivity : AppCompatActivity(), OnRemovePaciente {
 
     private fun setupList(pacientesLista: ArrayList<Paciente>) {
         adapter = if (intent.hasExtra("EDITAR_PACIENTE"))
-            ListaPacientesAdapter(pacientesLista, true, this)
+            ListaPacientesAdapter(pacientesLista, true, this, intent.getStringExtra("TOKEN")?:"")
         else
-            ListaPacientesAdapter(pacientesLista, false, this)
+            ListaPacientesAdapter(pacientesLista, false, this, intent.getStringExtra("TOKEN")?:"")
         binding.rvPacientes.adapter = adapter
         binding.rvPacientes.layoutManager = LinearLayoutManager(
             this, LinearLayoutManager.VERTICAL, false

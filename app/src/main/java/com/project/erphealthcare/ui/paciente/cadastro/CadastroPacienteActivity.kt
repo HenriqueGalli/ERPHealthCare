@@ -1,5 +1,6 @@
 package com.project.erphealthcare.ui.paciente.cadastro
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -14,11 +15,13 @@ import com.project.erphealthcare.R
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.databinding.ActivityCadastroPacienteBinding
+import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 import com.project.erphealthcare.utils.CpfUtils
 
 class CadastroPacienteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCadastroPacienteBinding
+
 
     private val viewModel: CadastroPacienteViewModel =
         CadastroPacienteViewModelFactory()
@@ -27,6 +30,7 @@ class CadastroPacienteActivity : AppCompatActivity() {
     private var paciente: Paciente? = null
     private var token: String? = ""
     private var isNewUser = true
+    var camposHabilitados = true
 
     private val gender = ArrayList<String>()
     private val bloodType = ArrayList<String>()
@@ -47,7 +51,23 @@ class CadastroPacienteActivity : AppCompatActivity() {
             binding.editTextPeso.editText?.setText("")
             setupFields()
         }
+        if (intent.hasExtra("VISAO_CUIDADOR"))
+            setupVisaoCuidador()
+    }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, HomePacienteActivity::class.java)
+        intent.putExtra("TOKEN", token)
+        startActivity(intent)
+        this.finish()
+    }
+
+    private fun setupVisaoCuidador() {
+        camposHabilitados = false
+        binding.buttonExcluir.visibility = View.GONE
+        binding.buttonEnviar.visibility = View.GONE
+        binding.tvCadastrarPaciente.text = "Dados pessoais do paciente"
     }
 
     private fun setupEditUser() {
@@ -172,14 +192,14 @@ class CadastroPacienteActivity : AppCompatActivity() {
     }
 
     private fun setupBloodTypeSpinner() {
-        bloodType.add("A-")
+        bloodType.add("A")
         bloodType.add("A+")
         bloodType.add("B-")
-        bloodType.add("B+")
+        bloodType.add("B")
         bloodType.add("AB-")
-        bloodType.add("AB+")
+        bloodType.add("AB")
         bloodType.add("O-")
-        bloodType.add("O+")
+        bloodType.add("O")
 
         val dataAdapter: ArrayAdapter<String> =
             ArrayAdapter<String>(

@@ -1,7 +1,9 @@
 package com.project.erphealthcare.ui.paciente.home
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.project.erphealthcare.R
@@ -24,23 +26,31 @@ class HomePacienteActivity : AppCompatActivity() {
         HomePacienteViewModelFactory()
             .create(HomePacienteViewModel::class.java)
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_paciente)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home_paciente)
-        setupObserver()
-        setubListeners()
         if (intent.hasExtra("TOKEN")) {
             token = intent.getStringExtra("TOKEN") ?: ""
+        }
+        if (intent.hasExtra("VISAO_CUIDADOR")) {
+            paciente = intent.getSerializableExtra("VISAO_CUIDADOR", Paciente::class.java)!!
+            setupPaciente(paciente)
+        } else {
             getPaciente(token)
         }
+        setupObserver()
+
     }
 
-    private fun setubListeners() {
+    private fun setubListeners(pac: Paciente, tok: String) {
         binding.imageViewUserLogo.setOnClickListener {
             val intent = Intent(this, CadastroPacienteActivity::class.java)
-            intent.putExtra("PACIENTE", paciente)
-            intent.putExtra("TOKEN", token)
+            intent.putExtra("PACIENTE", pac)
+            if (this.intent.hasExtra("VISAO_CUIDADOR"))
+                intent.putExtra("VISAO_CUIDADOR", true)
+            intent.putExtra("TOKEN", tok)
             startActivity(intent)
             this.finish()
         }
@@ -114,12 +124,24 @@ class HomePacienteActivity : AppCompatActivity() {
     }
 
     private fun setupUser(user: Paciente?) {
+        if (user != null) {
+            setubListeners(user, token)
+        }
         viewModel.validateMedicalHistory()
         if (user != null) {
             paciente = user
             val nome = paciente.nome
             binding.labelAcompanhamentoPaciente.text =
                 "Olá $nome! Aqui estão suas informações para acompanhamento!"
+        }
+    }
+
+    private fun setupPaciente(user: Paciente?) {
+        if (user != null) {
+            paciente = user
+            val nome = paciente.nome
+            binding.labelAcompanhamentoPaciente.text =
+                "Informações do paciente: $nome"
         }
     }
 

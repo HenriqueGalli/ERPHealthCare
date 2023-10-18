@@ -138,6 +138,7 @@ class HomePacienteActivity : AppCompatActivity() {
 
     private fun setupPaciente(user: Paciente?) {
         if (user != null) {
+            setubListeners(user, token)
             paciente = user
             val nome = paciente.nome
             binding.labelAcompanhamentoPaciente.text =

@@ -53,6 +53,11 @@ interface ErpServices {
     @GET("/heart-rate/history/")
     suspend fun getBatimentos(@Query("dateTimeMedicao") dataMedicao: String): ArrayList<MedicoesSinaisVitais>
 
+    @GET("heart-rate/history/caregiver/{idUsuario}/")
+    suspend fun getBatimentosCuidador(
+        @Path("idUsuario") idUsuario: Int, @Query("dateTimeMedicao") date: String
+    ): ArrayList<MedicoesSinaisVitais>
+
     @GET("/oxygen-level/history/")
     suspend fun getOxigenacao(@Query("dateTimeMedicao") dataMedicao: String): ArrayList<MedicoesSinaisVitais>
 

@@ -13,6 +13,7 @@ import com.project.erphealthcare.data.model.Cuidador
 import com.project.erphealthcare.data.result.CreateCuidadorResult
 import com.project.erphealthcare.databinding.ActivityCreateCuidadorBinding
 import com.project.erphealthcare.ui.cuidador.home.HomeCuidadorActivity
+import com.project.erphealthcare.ui.login.LoginActivity
 import com.project.erphealthcare.utils.CpfUtils
 
 class CreateCuidadorActivity : AppCompatActivity() {
@@ -103,9 +104,14 @@ class CreateCuidadorActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val intent = Intent(this, HomeCuidadorActivity::class.java)
-        intent.putExtra("TOKEN", intent.getStringExtra("TOKEN"))
-        startActivity(intent)
+        if (isNewUser) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        } else {
+            val intent = Intent(this, HomeCuidadorActivity::class.java)
+            intent.putExtra("TOKEN", intent.getStringExtra("TOKEN"))
+            startActivity(intent)
+        }
         this.finish()
     }
 

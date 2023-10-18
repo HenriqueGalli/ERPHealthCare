@@ -37,6 +37,7 @@ class SinaisVitaisActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_batimentos_cardiacos)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_batimentos_cardiacos)
+        binding.lineChart.setNoDataText("")
         setupObserver()
         setupListener()
         if (intent.hasExtra("MEDICAO")) {

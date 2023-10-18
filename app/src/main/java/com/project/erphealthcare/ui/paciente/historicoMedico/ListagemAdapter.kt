@@ -9,18 +9,19 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.project.erphealthcare.R
+import com.project.erphealthcare.ui.cuidador.gerenciaPacientes.listaPacientes.OnRemovePaciente
 
-class ListagemAdapter(historicoMedico: ArrayList<String>) :
+class ListagemAdapter(historicoMedico: ArrayList<String>, onClickListener:onAddHistorico) :
     RecyclerView.Adapter<ListagemAdapter.ViewHolder>() {
     val historico = historicoMedico
     private val ALERGIA = "ALERGIA"
+    val listener = onClickListener
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvName = view.findViewById<EditText>(R.id.et_label_name)
         val edit = view.findViewById<ImageView>(R.id.edit)
         val check = view.findViewById<ImageView>(R.id.check)
         val exclude = view.findViewById<ImageView>(R.id.exclude)
-
 
         fun bind(historico: String) {
             tvName.setText(historico)
@@ -39,6 +40,8 @@ class ListagemAdapter(historicoMedico: ArrayList<String>) :
         holder.exclude.setOnClickListener {
             historico.remove(historico[position])
             notifyDataSetChanged()
+            listener.setVisible()
+
         }
         holder.edit.setOnClickListener {
             val imm =
@@ -49,6 +52,8 @@ class ListagemAdapter(historicoMedico: ArrayList<String>) :
             holder.edit.visibility = View.GONE
             holder.check.visibility = View.VISIBLE
             holder.tvName.setSelection(holder.tvName.text.length)
+            listener.setInvisible()
+
         }
         holder.check.setOnClickListener {
             val imm =
@@ -59,6 +64,8 @@ class ListagemAdapter(historicoMedico: ArrayList<String>) :
             val enteredText = holder.tvName.text.toString()
             historico[holder.absoluteAdapterPosition] = enteredText
             holder.tvName.isEnabled = false
+            listener.setVisible()
+
         }
         if (position == historico.size-1 && historico[position] == ALERGIA) {
             val imm =

@@ -64,10 +64,10 @@ class PdfManagerActivity : AppCompatActivity() {
             val pdfView = findViewById<PDFView>(R.id.pdfView)
             // Carregue e exiba o PDF no PDFView
             pdfView.fromFile(tempFile)
-                .defaultPage(0) // Página inicial
-                .enableSwipe(true) // Ativar deslizamento horizontal
+                .defaultPage(0)
+                .enableSwipe(true)
                 .swipeHorizontal(false)
-                .enableDoubletap(true) // Ativar duplo toque para zoom
+                .enableDoubletap(true)
                 .load()
 
         } catch (e: Exception) {

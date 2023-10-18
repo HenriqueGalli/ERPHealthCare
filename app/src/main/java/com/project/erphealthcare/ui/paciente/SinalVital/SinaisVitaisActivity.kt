@@ -18,7 +18,10 @@ import com.project.erphealthcare.data.model.MedicoesSinaisVitais
 import com.project.erphealthcare.data.result.GetSinaisVitaisResult
 import com.project.erphealthcare.databinding.ActivityBatimentosCardiacosBinding
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
+import com.project.erphealthcare.utils.CpfUtils
 import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class SinaisVitaisActivity : AppCompatActivity() {
@@ -33,20 +36,20 @@ class SinaisVitaisActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_batimentos_cardiacos)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_batimentos_cardiacos)
-
         setupObserver()
+        setupListener()
         if (intent.hasExtra("MEDICAO")) {
             tipoMedicao = intent.getStringExtra("MEDICAO").toString()
-            validateTipoMedicao(tipoMedicao)
+            validateTipoMedicao(tipoMedicao,obterDataAtualNoFormato())
         }
 
     }
 
-    private fun validateTipoMedicao(tipoMedicao: String) {
+    private fun validateTipoMedicao(tipoMedicao: String, dataMedicao: String) {
         when (tipoMedicao) {
-            "BATIMENTOS" -> viewModel.getBatimentosCardiacos()
-            "OXIGENACAO" -> viewModel.getOxigenacaoSanguinea()
-            "TEMPERATURA" -> viewModel.getTemperaturaCorporal()
+            "BATIMENTOS" -> viewModel.getBatimentosCardiacos(dataMedicao)
+            "OXIGENACAO" -> viewModel.getOxigenacaoSanguinea(dataMedicao)
+            "TEMPERATURA" -> viewModel.getTemperaturaCorporal(dataMedicao)
         }
     }
 
@@ -60,16 +63,24 @@ class SinaisVitaisActivity : AppCompatActivity() {
         }
     }
 
+    private fun obterDataAtualNoFormato(): String {
+        val formato = SimpleDateFormat("yyyy-MM-dd")
+        val dataAtual = Date()
+        return formato.format(dataAtual)
+    }
+
     private fun setupError() {
 
     }
 
     private fun setupAdapter(listaMedicoes: MutableList<MedicoesSinaisVitais>) {
+        // Limpar os dados existentes no gráfico
+        binding.lineChart.clear()
+
         when (tipoMedicao) {
             "BATIMENTOS" -> binding.textViewTitulo.text = "Acompanhamento\nBatimentos Cardiácos"
             "OXIGENACAO" -> binding.textViewTitulo.text = "Acompanhamento\nOxigenação Sanguínea"
             "TEMPERATURA" -> binding.textViewTitulo.text = "Acompanhamento\nTemperatura Corporal"
-
         }
 
         val entries: MutableList<Entry> = ArrayList()
@@ -86,6 +97,7 @@ class SinaisVitaisActivity : AppCompatActivity() {
                 }
             }
         }
+
         val lineDataSet = LineDataSet(entries, "Sinais Vitais")
         lineDataSet.color = Color.rgb(62, 125, 255)
         lineDataSet.circleRadius = 8f
@@ -112,11 +124,36 @@ class SinaisVitaisActivity : AppCompatActivity() {
         // Formatar os valores do eixo X como dia/mês/ano
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
-                return entries[value.toInt()].data.toString()
+                val index = value.toInt()
+                if (index >= 0 && index < entries.size) {
+                    return entries[index].data.toString()
+                }
+                return "" // Retorna uma string vazia se o índice estiver fora dos limites
             }
         }
 
         binding.lineChart.invalidate()
+    }
+
+
+    private fun getDate(): String {
+        val year = binding.simpleDatePicker.year
+        val month = setupMonth()
+        val day = setupDay()
+        return "$year-$month-$day"
+    }
+    private fun setupDay(): String {
+        val day = binding.simpleDatePicker.dayOfMonth
+        return if (day.toString().length == 2)
+            day.toString()
+        else "0$day"
+    }
+
+    private fun setupMonth(): String {
+        val year = binding.simpleDatePicker.month + 1
+        return if (year.toString().length == 2)
+            year.toString()
+        else "0$year"
     }
 
     override fun onBackPressed() {
@@ -125,5 +162,12 @@ class SinaisVitaisActivity : AppCompatActivity() {
         intent.putExtra("TOKEN", ApiService.token)
         startActivity(intent)
         this.finish()
+    }
+
+    private fun setupListener() {
+        binding.btnBuscarExame.setOnClickListener {
+            val dataMedicao = getDate()
+            validateTipoMedicao(tipoMedicao ,dataMedicao)
+        }
     }
 }

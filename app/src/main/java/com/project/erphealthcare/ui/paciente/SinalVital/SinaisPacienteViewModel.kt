@@ -11,22 +11,22 @@ class SinaisPacienteViewModel(private val repository: Repository): ViewModel() {
 
     val medicaoResult: MutableLiveData<GetSinaisVitaisResult> = MutableLiveData()
 
-    fun getBatimentosCardiacos() = runBlocking {
+    fun getBatimentosCardiacos(dataMedicao: String) = runBlocking {
         launch {
-            val res = repository.getBatimentosCardiacos()
+            val res = repository.getBatimentosCardiacos(dataMedicao)
             medicaoResult.postValue(res)
         }
     }
 
-    fun getOxigenacaoSanguinea() = runBlocking {
+    fun getOxigenacaoSanguinea(dataMedicao: String) = runBlocking {
         launch {
-            val res = repository.getOxigenacaoSanguinea()
+            val res = repository.getOxigenacaoSanguinea(dataMedicao)
             medicaoResult.postValue(res)
         }
     }
-    fun getTemperaturaCorporal() = runBlocking {
+    fun getTemperaturaCorporal(dataMedicao: String) = runBlocking {
         launch {
-            val res = repository.getTemperaturaCorporal()
+            val res = repository.getTemperaturaCorporal(dataMedicao)
             medicaoResult.postValue(res)
         }
     }

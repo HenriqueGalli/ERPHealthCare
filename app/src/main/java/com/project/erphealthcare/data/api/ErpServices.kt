@@ -51,13 +51,13 @@ interface ErpServices {
     suspend fun getMedicalHistory(): HistoricoMedico
 
     @GET("/heart-rate/history/")
-    suspend fun getBatimentos(): ArrayList<MedicoesSinaisVitais>
+    suspend fun getBatimentos(@Query("dateTimeMedicao") dataMedicao: String): ArrayList<MedicoesSinaisVitais>
 
     @GET("/oxygen-level/history/")
-    suspend fun getOxigenacao(): ArrayList<MedicoesSinaisVitais>
+    suspend fun getOxigenacao(@Query("dateTimeMedicao") dataMedicao: String): ArrayList<MedicoesSinaisVitais>
 
     @GET("/corporal-temperature/history/")
-    suspend fun getTemperatura(): ArrayList<MedicoesSinaisVitais>
+    suspend fun getTemperatura(@Query("dateTimeMedicao") dataMedicao: String): ArrayList<MedicoesSinaisVitais>
 
     @DELETE("user/")
     suspend fun deleteUser(): Response<Any>

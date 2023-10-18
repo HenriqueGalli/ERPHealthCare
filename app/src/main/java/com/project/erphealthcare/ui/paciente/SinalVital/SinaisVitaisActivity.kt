@@ -3,6 +3,7 @@ package com.project.erphealthcare.ui.paciente.SinalVital
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.github.mikephil.charting.components.Description
@@ -70,12 +71,16 @@ class SinaisVitaisActivity : AppCompatActivity() {
     }
 
     private fun setupError() {
-
+        binding.textViewMensagem.visibility = View.INVISIBLE
     }
 
     private fun setupAdapter(listaMedicoes: MutableList<MedicoesSinaisVitais>) {
         // Limpar os dados existentes no gráfico
         binding.lineChart.clear()
+        binding.textViewMensagem.visibility = View.INVISIBLE
+
+        if(listaMedicoes.size == 0)
+            binding.textViewMensagem.visibility = View.VISIBLE
 
         when (tipoMedicao) {
             "BATIMENTOS" -> binding.textViewTitulo.text = "Acompanhamento\nBatimentos Cardiácos"

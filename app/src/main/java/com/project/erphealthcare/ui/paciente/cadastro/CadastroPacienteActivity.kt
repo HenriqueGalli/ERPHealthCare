@@ -15,6 +15,7 @@ import com.project.erphealthcare.R
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.databinding.ActivityCadastroPacienteBinding
+import com.project.erphealthcare.ui.login.LoginActivity
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 import com.project.erphealthcare.utils.CpfUtils
 
@@ -57,9 +58,14 @@ class CadastroPacienteActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val intent = Intent(this, HomePacienteActivity::class.java)
-        intent.putExtra("TOKEN", token)
-        startActivity(intent)
+        if (isNewUser) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        } else {
+            val intent = Intent(this, HomePacienteActivity::class.java)
+            intent.putExtra("TOKEN", token)
+            startActivity(intent)
+        }
         this.finish()
     }
 

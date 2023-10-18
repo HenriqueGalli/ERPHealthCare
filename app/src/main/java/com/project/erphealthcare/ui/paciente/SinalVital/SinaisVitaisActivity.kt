@@ -71,7 +71,7 @@ class SinaisVitaisActivity : AppCompatActivity() {
     }
 
     private fun setupError() {
-        binding.textViewMensagem.visibility = View.INVISIBLE
+        binding.textViewMensagem.visibility = View.VISIBLE
     }
 
     private fun setupAdapter(listaMedicoes: MutableList<MedicoesSinaisVitais>) {

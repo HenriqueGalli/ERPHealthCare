@@ -2,6 +2,7 @@ package com.project.erphealthcare.ui.paciente.historicoMedico
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.erphealthcare.R
@@ -12,7 +13,7 @@ import com.project.erphealthcare.data.result.UpdateMedicalHistoryResult
 import com.project.erphealthcare.databinding.ActivityAlergiasPacienteBinding
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 
-class HistoricoMedicoPacienteActivity : AppCompatActivity() {
+class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
 
     private lateinit var binding: ActivityAlergiasPacienteBinding
 
@@ -242,7 +243,7 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity() {
     }
 
     private fun setupAdapter(alergias: ArrayList<String>) {
-        adapter = ListagemAdapter(alergias)
+        adapter = ListagemAdapter(alergias, this)
         binding.rvHistorico.adapter = adapter
         binding.rvHistorico.layoutManager = LinearLayoutManager(
             this, LinearLayoutManager.VERTICAL,
@@ -255,11 +256,13 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity() {
             adapter.addItem()
             val itemCount = adapter.itemCount
             binding.rvHistorico.smoothScrollToPosition(itemCount - 1)
+            binding.addHistorico.visibility = View.INVISIBLE
         }
 
         binding.btnSalvar.setOnClickListener {
             historicoMedico.medicamentosAtuais = adapter.historico
             viewModel.updateMedicalHistory(historicoMedico)
+
         }
     }
 
@@ -268,11 +271,14 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity() {
             adapter.addItem()
             val itemCount = adapter.itemCount
             binding.rvHistorico.smoothScrollToPosition(itemCount - 1)
+            binding.addHistorico.visibility = View.INVISIBLE
+
         }
 
         binding.btnSalvar.setOnClickListener {
             historicoMedico.medicamentosAnteriores = adapter.historico
             viewModel.updateMedicalHistory(historicoMedico)
+
         }
     }
 
@@ -281,6 +287,7 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity() {
             adapter.addItem()
             val itemCount = adapter.itemCount
             binding.rvHistorico.smoothScrollToPosition(itemCount - 1)
+            binding.addHistorico.visibility = View.INVISIBLE
         }
 
         binding.btnSalvar.setOnClickListener {
@@ -294,6 +301,8 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity() {
             adapter.addItem()
             val itemCount = adapter.itemCount
             binding.rvHistorico.smoothScrollToPosition(itemCount - 1)
+            binding.addHistorico.visibility = View.INVISIBLE
+
         }
 
         binding.btnSalvar.setOnClickListener {
@@ -307,11 +316,20 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity() {
             adapter.addItem()
             val itemCount = adapter.itemCount
             binding.rvHistorico.smoothScrollToPosition(itemCount - 1)
+            binding.addHistorico.visibility = View.INVISIBLE
+
         }
 
         binding.btnSalvar.setOnClickListener {
             historicoMedico.doencas = adapter.historico
             viewModel.updateMedicalHistory(historicoMedico)
         }
+    }
+
+    override fun setVisible() {
+        binding.addHistorico.visibility = View.VISIBLE
+    }
+    override fun setInvisible() {
+        binding.addHistorico.visibility = View.INVISIBLE
     }
 }

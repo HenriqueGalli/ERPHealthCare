@@ -19,9 +19,7 @@ import com.project.erphealthcare.data.model.MedicoesSinaisVitais
 import com.project.erphealthcare.data.result.GetSinaisVitaisResult
 import com.project.erphealthcare.databinding.ActivityBatimentosCardiacosBinding
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
-import com.project.erphealthcare.utils.CpfUtils
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -42,7 +40,17 @@ class SinaisVitaisActivity : AppCompatActivity() {
         setupListener()
         if (intent.hasExtra("MEDICAO")) {
             tipoMedicao = intent.getStringExtra("MEDICAO").toString()
-            validateTipoMedicao(tipoMedicao,obterDataAtualNoFormato())
+            if (intent.hasExtra("VISAO_CUIDADOR")) {
+                val idPaciente = intent.getIntExtra("VISAO_CUIDADOR", 0)
+                validateTipoMedicaoCuidador(
+                    idPaciente,
+                    tipoMedicao,
+                    obterDataAtualNoFormato()
+                )
+            } else {
+                validateTipoMedicao(tipoMedicao, obterDataAtualNoFormato())
+            }
+
         }
 
     }
@@ -52,6 +60,18 @@ class SinaisVitaisActivity : AppCompatActivity() {
             "BATIMENTOS" -> viewModel.getBatimentosCardiacos(dataMedicao)
             "OXIGENACAO" -> viewModel.getOxigenacaoSanguinea(dataMedicao)
             "TEMPERATURA" -> viewModel.getTemperaturaCorporal(dataMedicao)
+        }
+    }
+
+    private fun validateTipoMedicaoCuidador(
+        idPaciente: Int,
+        tipoMedicao: String,
+        dataMedicao: String
+    ) {
+        when (tipoMedicao) {
+            "BATIMENTOS" -> viewModel.getBatimentosCardiacosCuidador(idPaciente, dataMedicao)
+            "OXIGENACAO" -> viewModel.getOxigenacaoSanguineaCuidador(idPaciente, dataMedicao)
+            "TEMPERATURA" -> viewModel.getTemperaturaCorporalCuidador(idPaciente, dataMedicao)
         }
     }
 
@@ -173,7 +193,15 @@ class SinaisVitaisActivity : AppCompatActivity() {
     private fun setupListener() {
         binding.btnBuscarExame.setOnClickListener {
             val dataMedicao = getDate()
-            validateTipoMedicao(tipoMedicao ,dataMedicao)
+            if (intent.hasExtra("VISAO_CUIDADOR")) {
+                validateTipoMedicaoCuidador(
+                    intent.getIntExtra("VISAO_CUIDADOR", 0),
+                    tipoMedicao,
+                    dataMedicao
+                )
+            } else {
+                validateTipoMedicao(tipoMedicao, dataMedicao)
+            }
         }
     }
 }

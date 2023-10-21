@@ -32,9 +32,23 @@ class SinaisPacienteViewModel(private val repository: Repository): ViewModel() {
             medicaoResult.postValue(res)
         }
     }
+
+    fun getOxigenacaoSanguineaCuidador(idPaciente: Int, dataMedicao: String) = runBlocking {
+        launch {
+            val res = repository.getOxigenacaoSanguineaCuidador(idPaciente, dataMedicao)
+            medicaoResult.postValue(res)
+        }
+    }
+
     fun getTemperaturaCorporal(dataMedicao: String) = runBlocking {
         launch {
             val res = repository.getTemperaturaCorporal(dataMedicao)
+            medicaoResult.postValue(res)
+        }
+    }
+    fun getTemperaturaCorporalCuidador(idPaciente: Int, dataMedicao: String) = runBlocking {
+        launch {
+            val res = repository.getTemperaturaCorporalCuidador(idPaciente, dataMedicao)
             medicaoResult.postValue(res)
         }
     }

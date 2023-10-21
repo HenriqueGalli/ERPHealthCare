@@ -148,9 +148,27 @@ class ERPDataSource {
         }
     }
 
+    suspend fun getOxigenacaoSanguineaCuidador(idUsuario: Int, dataMedicao: String): GetSinaisVitaisResult {
+        return try {
+            val res = ApiService.service.getOxigenacaoCuidador(idUsuario, dataMedicao)
+            GetSinaisVitaisResult.Success(res)
+        } catch (throwable: Throwable) {
+            GetSinaisVitaisResult.ServerError
+        }
+    }
+
     suspend fun getTemperaturaCorporal(dataMedicao: String): GetSinaisVitaisResult {
         return try {
             val res = ApiService.service.getTemperatura(dataMedicao)
+            GetSinaisVitaisResult.Success(res)
+        } catch (throwable: Throwable) {
+            GetSinaisVitaisResult.ServerError
+        }
+    }
+
+    suspend fun getTemperaturaCorporalCuidador(idPaciente: Int, dataMedicao: String): GetSinaisVitaisResult {
+        return try {
+            val res = ApiService.service.getTemperaturaCuidador(idPaciente, dataMedicao)
             GetSinaisVitaisResult.Success(res)
         } catch (throwable: Throwable) {
             GetSinaisVitaisResult.ServerError

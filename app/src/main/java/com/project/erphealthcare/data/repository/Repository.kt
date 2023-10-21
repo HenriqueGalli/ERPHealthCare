@@ -91,8 +91,16 @@ class Repository(val dataSource: ERPDataSource) {
         return dataSource.getOxigenacaoSanguinea(dataMedicao)
     }
 
+    suspend fun getOxigenacaoSanguineaCuidador(idPaciente: Int,dataMedicao: String): GetSinaisVitaisResult {
+        return dataSource.getOxigenacaoSanguineaCuidador(idPaciente, dataMedicao)
+    }
+
     suspend fun getTemperaturaCorporal(dataMedicao: String): GetSinaisVitaisResult {
         return dataSource.getTemperaturaCorporal(dataMedicao)
+    }
+
+    suspend fun getTemperaturaCorporalCuidador(idPaciente: Int, dataMedicao: String): GetSinaisVitaisResult {
+        return dataSource.getTemperaturaCorporalCuidador(idPaciente, dataMedicao)
     }
 
     suspend fun deleteUser(): DeleteUserResult? {

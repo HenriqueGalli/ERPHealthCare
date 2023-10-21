@@ -59,10 +59,24 @@ interface ErpServices {
     ): ArrayList<MedicoesSinaisVitais>
 
     @GET("/oxygen-level/history/")
-    suspend fun getOxigenacao(@Query("dateTimeMedicao") dataMedicao: String): ArrayList<MedicoesSinaisVitais>
+    suspend fun getOxigenacao(
+        @Query("dateTimeMedicao") dataMedicao: String
+    ): ArrayList<MedicoesSinaisVitais>
+
+    @GET("/oxygen-level/history/caregiver/{idUsuario}/")
+    suspend fun getOxigenacaoCuidador(
+        @Path("idUsuario") idUsuario: Int,
+        @Query("dateTimeMedicao") dataMedicao: String
+    ): ArrayList<MedicoesSinaisVitais>
 
     @GET("/corporal-temperature/history/")
     suspend fun getTemperatura(@Query("dateTimeMedicao") dataMedicao: String): ArrayList<MedicoesSinaisVitais>
+
+    @GET("/corporal-temperature/history/caregiver/{idUsuario}/")
+    suspend fun getTemperaturaCuidador(
+        @Path("idUsuario") idUsuario: Int,
+        @Query("dateTimeMedicao") dataMedicao: String
+    ): ArrayList<MedicoesSinaisVitais>
 
     @DELETE("user/")
     suspend fun deleteUser(): Response<Any>

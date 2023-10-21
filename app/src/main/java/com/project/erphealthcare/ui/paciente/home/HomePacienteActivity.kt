@@ -106,7 +106,7 @@ class HomePacienteActivity : AppCompatActivity() {
             val intent = Intent(this, SinaisVitaisActivity::class.java)
             intent.putExtra("MEDICAO", "OXIGENACAO")
             if (this.intent.hasExtra("VISAO_CUIDADOR"))
-                intent.putExtra("VISAO_CUIDADOR", true)
+                intent.putExtra("VISAO_CUIDADOR", pac.id)
             startActivity(intent)
             this.finish()
         }

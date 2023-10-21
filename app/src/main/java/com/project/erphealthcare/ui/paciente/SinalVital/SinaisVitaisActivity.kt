@@ -70,8 +70,8 @@ class SinaisVitaisActivity : AppCompatActivity() {
     ) {
         when (tipoMedicao) {
             "BATIMENTOS" -> viewModel.getBatimentosCardiacosCuidador(idPaciente, dataMedicao)
-            "OXIGENACAO" -> viewModel.getOxigenacaoSanguinea(dataMedicao)
-            "TEMPERATURA" -> viewModel.getTemperaturaCorporal(dataMedicao)
+            "OXIGENACAO" -> viewModel.getOxigenacaoSanguineaCuidador(idPaciente, dataMedicao)
+            "TEMPERATURA" -> viewModel.getTemperaturaCorporalCuidador(idPaciente, dataMedicao)
         }
     }
 
@@ -193,7 +193,15 @@ class SinaisVitaisActivity : AppCompatActivity() {
     private fun setupListener() {
         binding.btnBuscarExame.setOnClickListener {
             val dataMedicao = getDate()
-            validateTipoMedicao(tipoMedicao ,dataMedicao)
+            if (intent.hasExtra("VISAO_CUIDADOR")) {
+                validateTipoMedicaoCuidador(
+                    intent.getIntExtra("VISAO_CUIDADOR", 0),
+                    tipoMedicao,
+                    dataMedicao
+                )
+            } else {
+                validateTipoMedicao(tipoMedicao, dataMedicao)
+            }
         }
     }
 }

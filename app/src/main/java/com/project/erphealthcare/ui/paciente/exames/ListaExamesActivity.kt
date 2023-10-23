@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.internal.LinkedTreeMap
 import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.model.Exame
+import com.project.erphealthcare.data.result.CreateExamesResult
 import com.project.erphealthcare.data.result.GetExamesResult
 import com.project.erphealthcare.databinding.ActivityListaExamesBinding
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
@@ -38,7 +39,7 @@ class ListaExamesActivity : AppCompatActivity() {
         binding = ActivityListaExamesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupObserver()
-        viewModel.getMedicalHistory()
+        viewModel.getExamHistory()
         setupListeners()
     }
 
@@ -49,6 +50,17 @@ class ListaExamesActivity : AppCompatActivity() {
                 is GetExamesResult.ServerError -> setupAdapter(arrayListOf())
             }
         }
+
+        viewModel.createExamesResult.observe(this) { res ->
+            when(res) {
+                is CreateExamesResult.Success -> viewModel.getExamHistory()
+                is CreateExamesResult.ServerError -> errorCreateExam()
+            }
+        }
+    }
+
+    private fun errorCreateExam() {
+
     }
 
     override fun onBackPressed() {
@@ -97,19 +109,19 @@ class ListaExamesActivity : AppCompatActivity() {
                     if (inputStream != null) {
 
                         var byteArray = readBytes(inputStream)
-                        if (pdfFileName.contains(".png") || pdfFileName.contains(".jpeg")){
+                        if (pdfFileName.contains(".png") || pdfFileName.contains(".jpeg")) {
                             byteArray = convertImageToPDF(pdfUri)
                         }
-                        adapter.addExame(
-                            Exame(
-                                nomeExame = pdfFileName,
-                                arquivoExame = byteArray,
-                                nomeMedico = "Dr",
-                                dataExame = "",
-                                id = "",
-                                idUsuario = "",
-                            )
+                        val exame = Exame(
+                            nomeExame = pdfFileName,
+                            arquivoExame = byteArray,
+                            nomeMedico = "Dr",
+                            dataExame = "",
+                            id = "",
+                            idUsuario = "",
                         )
+                        //adapter.addExame(exame)
+                        viewModel.createExam(exame =exame)
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()

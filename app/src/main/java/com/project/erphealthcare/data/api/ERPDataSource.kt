@@ -9,6 +9,7 @@ import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.AssociateCaregiverUserResult
 import com.project.erphealthcare.data.result.CreateCuidadorResult
+import com.project.erphealthcare.data.result.CreateExamesResult
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.GetCuidadorResult
 import com.project.erphealthcare.data.result.GetExamesResult
@@ -124,9 +125,18 @@ class ERPDataSource {
     suspend fun getExames(): GetExamesResult {
         return try {
             val res = ApiService.service.getExames()
-            GetExamesResult.Success(res.body() as ArrayList<LinkedTreeMap<String,Any>>)
+            GetExamesResult.Success(res.body() as ArrayList<LinkedTreeMap<String, Any>>)
         } catch (throwable: Throwable) {
             GetExamesResult.ServerError
+        }
+    }
+
+    suspend fun postExames(exame: Exame): CreateExamesResult {
+        return try {
+            val res = ApiService.service.postExame(exame)
+            CreateExamesResult.Success(res.body() as LinkedTreeMap<String, Any>)
+        } catch (throwable: Throwable) {
+            CreateExamesResult.ServerError
         }
     }
 

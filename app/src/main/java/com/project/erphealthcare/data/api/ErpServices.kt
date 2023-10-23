@@ -53,6 +53,11 @@ interface ErpServices {
     @GET("/exams/")
     suspend fun getExames(): Response<Any>
 
+    @POST("/exams/")
+    suspend fun postExame(
+        @Body exame: Exame
+    ): Response<Any>
+
     @GET("/heart-rate/history/")
     suspend fun getBatimentos(@Query("dateTimeMedicao") dataMedicao: String): ArrayList<MedicoesSinaisVitais>
 

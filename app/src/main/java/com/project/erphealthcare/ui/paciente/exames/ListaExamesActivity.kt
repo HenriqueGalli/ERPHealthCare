@@ -3,21 +3,23 @@ package com.project.erphealthcare.ui.paciente.exames
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.internal.LinkedTreeMap
 import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.model.Exame
+import com.project.erphealthcare.data.result.GetExamesResult
 import com.project.erphealthcare.databinding.ActivityListaExamesBinding
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.pdf.PdfDocument
-import java.io.ByteArrayOutputStream
 
 class ListaExamesActivity : AppCompatActivity() {
 
@@ -26,13 +28,27 @@ class ListaExamesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityListaExamesBinding
     private lateinit var adapter: ExamAdapter
 
+    private val viewModel: ListaExamesViewModel =
+        ListaExamesViewModelFactory()
+            .create(ListaExamesViewModel::class.java)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityListaExamesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupAdapter()
+        setupObserver()
+        viewModel.getMedicalHistory()
         setupListeners()
+    }
+
+    private fun setupObserver() {
+        viewModel.examesResult.observe(this) { res ->
+            when (res) {
+                is GetExamesResult.Success -> setupAdapter(res.exames)
+                is GetExamesResult.ServerError -> setupAdapter(arrayListOf())
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -43,9 +59,10 @@ class ListaExamesActivity : AppCompatActivity() {
         this.finish()
     }
 
-    private fun setupAdapter() {
-        val examList = arrayListOf<Exame>()
-        adapter = ExamAdapter(examList)
+    private fun setupAdapter(list: ArrayList<LinkedTreeMap<String,Any>>) {
+
+        val mappedList : List<Exame> = list.map {createExameFromLinkedTreeMap(it)  }
+        adapter = ExamAdapter(mappedList)
         binding.examRecyclerView.adapter = adapter
         binding.examRecyclerView.layoutManager = LinearLayoutManager(
             this, LinearLayoutManager.VERTICAL,
@@ -57,8 +74,14 @@ class ListaExamesActivity : AppCompatActivity() {
         binding.btnBuscarExame.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "*/*"
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/pdf", "image/png", "image/jpeg"))
+            intent.putExtra(
+                Intent.EXTRA_MIME_TYPES,
+                arrayOf("application/pdf", "image/png", "image/jpeg")
+            )
             startActivityForResult(intent, PICK_PDF_REQUEST)
+        }
+        binding.btnSalvarExames.setOnClickListener {
+
         }
     }
 
@@ -77,7 +100,16 @@ class ListaExamesActivity : AppCompatActivity() {
                         if (pdfFileName.contains(".png") || pdfFileName.contains(".jpeg")){
                             byteArray = convertImageToPDF(pdfUri)
                         }
-                        adapter.addExame(Exame(pdfFileName, byteArray))
+                        adapter.addExame(
+                            Exame(
+                                nomeExame = pdfFileName,
+                                arquivoExame = byteArray,
+                                nomeMedico = "Dr",
+                                dataExame = "",
+                                id = "",
+                                idUsuario = "",
+                            )
+                        )
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -135,5 +167,16 @@ class ListaExamesActivity : AppCompatActivity() {
 
             // Converta o documento PDF em um array de bytes
             return outputStream.toByteArray()
+    }
+
+    fun createExameFromLinkedTreeMap(linkedTreeMap: LinkedTreeMap<String, Any>): Exame {
+        val id = linkedTreeMap["id"].toString()
+        val nomeExame = linkedTreeMap["nomeExame"].toString()
+        val arquivoExame = (linkedTreeMap["arquivoExame"] as String).toByteArray() // Converter a String para ByteArray
+        val dataExame = linkedTreeMap["dataExame"].toString()
+        val nomeMedico = linkedTreeMap["nomeMedico"].toString()
+        val idUsuario = linkedTreeMap["idUsuario"].toString()
+
+        return Exame(id, nomeExame, arquivoExame, dataExame, nomeMedico, idUsuario)
     }
 }

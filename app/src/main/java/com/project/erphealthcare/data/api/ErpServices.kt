@@ -50,6 +50,9 @@ interface ErpServices {
     @GET("/user/medical-history/")
     suspend fun getMedicalHistory(): HistoricoMedico
 
+    @GET("/exams/")
+    suspend fun getExames(): Response<Any>
+
     @GET("/heart-rate/history/")
     suspend fun getBatimentos(@Query("dateTimeMedicao") dataMedicao: String): ArrayList<MedicoesSinaisVitais>
 

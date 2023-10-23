@@ -10,10 +10,10 @@ import com.project.erphealthcare.R
 import com.project.erphealthcare.data.model.Exame
 
 
-class ExamAdapter(examList: ArrayList<Exame>) :
+class ExamAdapter(examList: List<Exame>) :
     RecyclerView.Adapter<ExamAdapter.ExamViewHolder>() {
 
-    val exames = examList
+    val exames: ArrayList<Exame> = examList as ArrayList<Exame>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamViewHolder {
         val itemView =
@@ -34,11 +34,11 @@ class ExamAdapter(examList: ArrayList<Exame>) :
         val examNameTextView: TextView = itemView.findViewById(R.id.examNameTextView)
 
         fun bind(exam: Exame) {
-            examNameTextView.text = exam.name
+            examNameTextView.text = exam.nomeExame
             examNameTextView.setOnClickListener {
                 val intent = Intent(examNameTextView.context, PdfManagerActivity::class.java)
-                intent.putExtra("PDF", exam.byteArray)
-                intent.putExtra("PDF_NOME", exam.name)
+                intent.putExtra("PDF", exam.arquivoExame)
+                intent.putExtra("PDF_NOME", exam.nomeExame)
                 examNameTextView.context.startActivity(intent)
             }
         }

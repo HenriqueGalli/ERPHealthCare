@@ -2,8 +2,10 @@ package com.project.erphealthcare.ui.paciente.SinalVital
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.github.mikephil.charting.components.Description
@@ -16,6 +18,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.project.erphealthcare.R
 import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.model.MedicoesSinaisVitais
+import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.GetSinaisVitaisResult
 import com.project.erphealthcare.databinding.ActivityBatimentosCardiacosBinding
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
@@ -182,10 +185,23 @@ class SinaisVitaisActivity : AppCompatActivity() {
         else "0$year"
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onBackPressed() {
         super.onBackPressed()
         val intent = Intent(this, HomePacienteActivity::class.java)
         intent.putExtra("TOKEN", ApiService.token)
+        if(this.intent.hasExtra("VISAO_CUIDADOR")){
+            intent.putExtra(
+                "VISAO_CUIDADOR_PACIENTE",
+                this.intent.getSerializableExtra("PACIENTE", Paciente::class.java)
+            )
+        }
+        else if(this.intent.hasExtra("PACIENTE")){
+            intent.putExtra(
+                "PACIENTE",
+                this.intent.getSerializableExtra("PACIENTE", Paciente::class.java)
+            )
+        }
         startActivity(intent)
         this.finish()
     }

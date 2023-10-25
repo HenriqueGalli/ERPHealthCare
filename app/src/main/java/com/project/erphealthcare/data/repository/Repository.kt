@@ -56,6 +56,13 @@ class Repository(val dataSource: ERPDataSource) {
         return dataSource.updateMedicalHistory(historico)
     }
 
+    suspend fun updateMedicalHistoryCuidador(
+        idPaciente: Int,
+        historico: HistoricoMedico
+    ): UpdateMedicalHistoryResult {
+        return dataSource.updateMedicalHistoryCuidador(historico, idPaciente)
+    }
+
     suspend fun editPaciente(user: Paciente): EditUserResult {
         return dataSource.editPaciente(user)
     }
@@ -129,5 +136,9 @@ class Repository(val dataSource: ERPDataSource) {
 
     suspend fun getCuidador(token: String): GetCuidadorResult? {
         return dataSource.getCuidador(token)
+    }
+
+    suspend fun getMedicalHistoryCuidador(idPaciente: Int): GetMedicalHistoryResult? {
+        return dataSource.getMedicalHistoryCuidador(idPaciente)
     }
 }

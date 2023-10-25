@@ -64,7 +64,7 @@ class ListaPacientesAdapter(
                 }
                 else{
                     val intent = Intent(button.context, HomePacienteActivity::class.java)
-                    intent.putExtra("VISAO_CUIDADOR", paciente)
+                    intent.putExtra("VISAO_CUIDADOR_PACIENTE", paciente)
                     intent.putExtra("TOKEN", tokenReceived)
                     button.context.startActivity(intent)
                 }

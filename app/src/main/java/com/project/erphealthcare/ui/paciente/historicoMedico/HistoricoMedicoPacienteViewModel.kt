@@ -11,7 +11,7 @@ import kotlinx.coroutines.runBlocking
 
 class HistoricoMedicoPacienteViewModel(private val repository: Repository): ViewModel() {
 
-    val medicalHistoryResult: MutableLiveData<GetMedicalHistoryResult> = MutableLiveData()
+    val medicalHistoryResult: MutableLiveData<GetMedicalHistoryResult?> = MutableLiveData()
     val updateAlergiasResult: MutableLiveData<UpdateMedicalHistoryResult> = MutableLiveData()
 
     fun getMedicalHistory() = runBlocking {
@@ -21,10 +21,25 @@ class HistoricoMedicoPacienteViewModel(private val repository: Repository): View
         }
     }
 
-    fun updateMedicalHistory(historicoMedico: HistoricoMedico) = runBlocking{
+    fun getMedicalHistoryCuidador(idPaciente: Int) = runBlocking {
+        launch {
+            val res = repository.getMedicalHistoryCuidador(idPaciente)
+            medicalHistoryResult.postValue(res)
+        }
+    }
+
+    fun updateMedicalHistory(historicoMedico: HistoricoMedico) = runBlocking {
         launch {
             val res = repository.updateMedicalHistory(historicoMedico)
             updateAlergiasResult.postValue(res)
         }
     }
+
+    fun updateMedicalHistoryCuidador(idPaciente: Int, historicoMedico: HistoricoMedico) =
+        runBlocking {
+            launch {
+                val res = repository.updateMedicalHistoryCuidador(idPaciente, historicoMedico)
+                updateAlergiasResult.postValue(res)
+            }
+        }
 }

@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.project.erphealthcare.R
+import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.GetPacienteResult
 import com.project.erphealthcare.databinding.ActivityHomePacienteBinding
@@ -15,12 +16,15 @@ import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity
 import com.project.erphealthcare.ui.paciente.exames.ListaExamesActivity
 import com.project.erphealthcare.ui.paciente.historicoMedico.HistoricoMedicoPacienteActivity
 
+
 class HomePacienteActivity : AppCompatActivity() {
 
     private lateinit var paciente: Paciente
     private lateinit var token: String
 
     private lateinit var binding: ActivityHomePacienteBinding
+
+    private var isCuidador = false
 
     private val viewModel: HomePacienteViewModel =
         HomePacienteViewModelFactory()
@@ -31,11 +35,14 @@ class HomePacienteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_paciente)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home_paciente)
-        if (intent.hasExtra("TOKEN")) {
-            token = intent.getStringExtra("TOKEN") ?: ""
+        token = if (intent.hasExtra("TOKEN")) {
+            intent.getStringExtra("TOKEN") ?: ""
+        } else{
+            ApiService.token
         }
-        if (intent.hasExtra("VISAO_CUIDADOR")) {
-            paciente = intent.getSerializableExtra("VISAO_CUIDADOR", Paciente::class.java)!!
+        if (intent.hasExtra("VISAO_CUIDADOR_PACIENTE")) {
+            isCuidador = true
+            paciente = intent.getSerializableExtra("VISAO_CUIDADOR_PACIENTE", Paciente::class.java)!!
             setupPaciente(paciente)
         } else {
             getPaciente(token)
@@ -48,7 +55,7 @@ class HomePacienteActivity : AppCompatActivity() {
         binding.imageViewUserLogo.setOnClickListener {
             val intent = Intent(this, CadastroPacienteActivity::class.java)
             intent.putExtra("PACIENTE", pac)
-            if (this.intent.hasExtra("VISAO_CUIDADOR"))
+            if (isCuidador)
                 intent.putExtra("VISAO_CUIDADOR", true)
             intent.putExtra("TOKEN", tok)
             startActivity(intent)
@@ -57,47 +64,53 @@ class HomePacienteActivity : AppCompatActivity() {
         binding.clAlergias.setOnClickListener {
             val intent = Intent(this, HistoricoMedicoPacienteActivity::class.java)
             intent.putExtra("TIPO_HISTORICO", "ALERGIAS")
-            if (this.intent.hasExtra("VISAO_CUIDADOR"))
-                intent.putExtra("VISAO_CUIDADOR", true)
+            intent.putExtra("PACIENTE", pac)
+            if (isCuidador)
+                intent.putExtra("VISAO_CUIDADOR", pac.id)
             startActivity(intent)
             this.finish()
         }
         binding.clCirurgias.setOnClickListener {
             val intent = Intent(this, HistoricoMedicoPacienteActivity::class.java)
             intent.putExtra("TIPO_HISTORICO", "CIRURGIAS")
-            if (this.intent.hasExtra("VISAO_CUIDADOR"))
-                intent.putExtra("VISAO_CUIDADOR", true)
+            intent.putExtra("PACIENTE", pac)
+            if (isCuidador)
+                intent.putExtra("VISAO_CUIDADOR", pac.id)
             startActivity(intent)
             this.finish()
         }
         binding.clDoencas.setOnClickListener {
             val intent = Intent(this, HistoricoMedicoPacienteActivity::class.java)
             intent.putExtra("TIPO_HISTORICO", "DOENCAS")
-            if (this.intent.hasExtra("VISAO_CUIDADOR"))
-                intent.putExtra("VISAO_CUIDADOR", true)
+            intent.putExtra("PACIENTE", pac)
+            if (isCuidador)
+                intent.putExtra("VISAO_CUIDADOR", pac.id)
             startActivity(intent)
             this.finish()
         }
         binding.clMedicamentos.setOnClickListener {
             val intent = Intent(this, HistoricoMedicoPacienteActivity::class.java)
             intent.putExtra("TIPO_HISTORICO", "MEDICAMENTOS_ANTERIORES")
-            if (this.intent.hasExtra("VISAO_CUIDADOR"))
-                intent.putExtra("VISAO_CUIDADOR", true)
+            intent.putExtra("PACIENTE", pac)
+            if (isCuidador)
+                intent.putExtra("VISAO_CUIDADOR", pac.id)
             startActivity(intent)
             this.finish()
         }
         binding.clMedicamentosAtuais.setOnClickListener {
             val intent = Intent(this, HistoricoMedicoPacienteActivity::class.java)
             intent.putExtra("TIPO_HISTORICO", "MEDICAMENTOS_ATUAIS")
-            if (this.intent.hasExtra("VISAO_CUIDADOR"))
-                intent.putExtra("VISAO_CUIDADOR", true)
+            intent.putExtra("PACIENTE", pac)
+            if (isCuidador)
+                intent.putExtra("VISAO_CUIDADOR", pac.id)
             startActivity(intent)
             this.finish()
         }
         binding.clBatimentosMenu.setOnClickListener {
             val intent = Intent(this, SinaisVitaisActivity::class.java)
             intent.putExtra("MEDICAO", "BATIMENTOS")
-            if (this.intent.hasExtra("VISAO_CUIDADOR"))
+            intent.putExtra("PACIENTE", pac)
+            if (isCuidador)
                 intent.putExtra("VISAO_CUIDADOR", pac.id)
             startActivity(intent)
             this.finish()
@@ -105,7 +118,8 @@ class HomePacienteActivity : AppCompatActivity() {
         binding.clOxigenacao.setOnClickListener {
             val intent = Intent(this, SinaisVitaisActivity::class.java)
             intent.putExtra("MEDICAO", "OXIGENACAO")
-            if (this.intent.hasExtra("VISAO_CUIDADOR"))
+            intent.putExtra("PACIENTE", pac)
+            if (isCuidador)
                 intent.putExtra("VISAO_CUIDADOR", pac.id)
             startActivity(intent)
             this.finish()
@@ -113,16 +127,18 @@ class HomePacienteActivity : AppCompatActivity() {
         binding.clTemperatura.setOnClickListener {
             val intent = Intent(this, SinaisVitaisActivity::class.java)
             intent.putExtra("MEDICAO", "TEMPERATURA")
-            if (this.intent.hasExtra("VISAO_CUIDADOR"))
-                intent.putExtra("VISAO_CUIDADOR", true)
+            intent.putExtra("PACIENTE", pac)
+            if (isCuidador)
+                intent.putExtra("VISAO_CUIDADOR", pac.id)
             startActivity(intent)
             this.finish()
         }
         binding.clExames.setOnClickListener {
             val intent = Intent(this, ListaExamesActivity::class.java)
             startActivity(intent)
-            if (this.intent.hasExtra("VISAO_CUIDADOR"))
-                intent.putExtra("VISAO_CUIDADOR", true)
+            intent.putExtra("PACIENTE", pac)
+            if (isCuidador)
+                intent.putExtra("VISAO_CUIDADOR", pac.id)
             this.finish()
         }
 

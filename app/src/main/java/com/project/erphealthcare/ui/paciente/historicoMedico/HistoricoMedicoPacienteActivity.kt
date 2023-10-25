@@ -1,18 +1,21 @@
 package com.project.erphealthcare.ui.paciente.historicoMedico
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.erphealthcare.R
-import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.model.HistoricoMedico
+import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.GetMedicalHistoryResult
 import com.project.erphealthcare.data.result.UpdateMedicalHistoryResult
 import com.project.erphealthcare.databinding.ActivityAlergiasPacienteBinding
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
 
     private lateinit var binding: ActivityAlergiasPacienteBinding
@@ -24,6 +27,9 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
     private lateinit var adapter: ListagemAdapter
 
     private lateinit var historicoMedico: HistoricoMedico
+
+    private var isCuidador = false
+    private var idPaciente = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +45,16 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
                 "MEDICAMENTOS_ANTERIORES" -> setupMedicamentosAnterioresView()
                 "MEDICAMENTOS_ATUAIS" -> setupMedicamentosAtuaisView()
             }
-            viewModel.getMedicalHistory()
+            if (intent.hasExtra("VISAO_CUIDADOR")) {
+                isCuidador = true
+                idPaciente = intent.getIntExtra("VISAO_CUIDADOR", 0)
+                viewModel.getMedicalHistoryCuidador(idPaciente)
+            } else {
+                isCuidador = false
+                viewModel.getMedicalHistory()
+            }
+
         }
-
-
     }
 
     private fun setupMedicamentosAnterioresView() {
@@ -78,7 +90,16 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
     override fun onBackPressed() {
         super.onBackPressed()
         val intent = Intent(this, HomePacienteActivity::class.java)
-        intent.putExtra("TOKEN", ApiService.token)
+        if (this.intent.hasExtra("VISAO_CUIDADOR")) {
+            intent.putExtra(
+                "VISAO_CUIDADOR_PACIENTE",
+                this.intent.getSerializableExtra("PACIENTE", Paciente::class.java)
+            )
+        } else if (this.intent.hasExtra("PACIENTE")) {
+            intent.putExtra(
+                "PACIENTE", this.intent.getSerializableExtra("PACIENTE", Paciente::class.java)
+            )
+        }
         startActivity(intent)
         this.finish()
     }
@@ -90,6 +111,8 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
                 is GetMedicalHistoryResult.Success -> successMedicamentosAtuaisMedicalHistory(
                     res.historico
                 )
+
+                else -> errorGetHistory()
             }
         }
 
@@ -108,6 +131,10 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
                 is GetMedicalHistoryResult.Success -> successMedicamentosAnterioresMedicalHistory(
                     res.historico
                 )
+
+                else -> {
+                    errorGetHistory()
+                }
             }
         }
 
@@ -124,6 +151,9 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
             when (res) {
                 is GetMedicalHistoryResult.ServerError -> errorGetHistory()
                 is GetMedicalHistoryResult.Success -> successAlergiasMedicalHistory(res.historico)
+                else -> {
+                    errorGetHistory()
+                }
             }
         }
 
@@ -140,6 +170,9 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
             when (res) {
                 is GetMedicalHistoryResult.ServerError -> errorGetHistory()
                 is GetMedicalHistoryResult.Success -> successCirurgiasMedicalHistory(res.historico)
+                else -> {
+                    errorGetHistory()
+                }
             }
         }
 
@@ -148,7 +181,6 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
                 is UpdateMedicalHistoryResult.ServerError -> errorGetHistory()
                 is UpdateMedicalHistoryResult.Success -> successUpdateHistory()
             }
-
         }
     }
 
@@ -157,6 +189,9 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
             when (res) {
                 is GetMedicalHistoryResult.ServerError -> errorGetHistory()
                 is GetMedicalHistoryResult.Success -> successDoencasMedicalHistory(res.historico)
+                else -> {
+                    errorGetHistory()
+                }
             }
         }
 
@@ -165,7 +200,6 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
                 is UpdateMedicalHistoryResult.ServerError -> errorGetHistory()
                 is UpdateMedicalHistoryResult.Success -> successUpdateHistory()
             }
-
         }
     }
 
@@ -209,7 +243,6 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
     }
 
     private fun errorGetHistory() {
-        TODO("Not yet implemented")
     }
 
     private fun setupAlergiasLayout() {
@@ -261,8 +294,11 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
 
         binding.btnSalvar.setOnClickListener {
             historicoMedico.medicamentosAtuais = adapter.historico
-            viewModel.updateMedicalHistory(historicoMedico)
-
+            if (isCuidador) {
+                viewModel.updateMedicalHistoryCuidador(idPaciente, historicoMedico)
+            } else {
+                viewModel.updateMedicalHistory(historicoMedico)
+            }
         }
     }
 
@@ -277,7 +313,11 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
 
         binding.btnSalvar.setOnClickListener {
             historicoMedico.medicamentosAnteriores = adapter.historico
-            viewModel.updateMedicalHistory(historicoMedico)
+            if (isCuidador) {
+                viewModel.updateMedicalHistoryCuidador(idPaciente, historicoMedico)
+            } else {
+                viewModel.updateMedicalHistory(historicoMedico)
+            }
 
         }
     }
@@ -292,7 +332,11 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
 
         binding.btnSalvar.setOnClickListener {
             historicoMedico.alergias = adapter.historico
-            viewModel.updateMedicalHistory(historicoMedico)
+            if (isCuidador) {
+                viewModel.updateMedicalHistoryCuidador(idPaciente, historicoMedico)
+            } else {
+                viewModel.updateMedicalHistory(historicoMedico)
+            }
         }
     }
 
@@ -307,7 +351,11 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
 
         binding.btnSalvar.setOnClickListener {
             historicoMedico.cirurgias = adapter.historico
-            viewModel.updateMedicalHistory(historicoMedico)
+            if (isCuidador) {
+                viewModel.updateMedicalHistoryCuidador(idPaciente, historicoMedico)
+            } else {
+                viewModel.updateMedicalHistory(historicoMedico)
+            }
         }
     }
 
@@ -322,13 +370,18 @@ class HistoricoMedicoPacienteActivity : AppCompatActivity(), onAddHistorico {
 
         binding.btnSalvar.setOnClickListener {
             historicoMedico.doencas = adapter.historico
-            viewModel.updateMedicalHistory(historicoMedico)
+            if (isCuidador) {
+                viewModel.updateMedicalHistoryCuidador(idPaciente, historicoMedico)
+            } else {
+                viewModel.updateMedicalHistory(historicoMedico)
+            }
         }
     }
 
     override fun setVisible() {
         binding.addHistorico.visibility = View.VISIBLE
     }
+
     override fun setInvisible() {
         binding.addHistorico.visibility = View.INVISIBLE
     }

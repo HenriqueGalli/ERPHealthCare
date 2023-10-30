@@ -1,6 +1,7 @@
 package com.project.erphealthcare.ui.paciente.exames
 
 import android.content.Intent
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,11 +37,16 @@ class ExamAdapter(examList: List<Exame>) :
             examNameTextView.text = exam.nomeExame
             examNameTextView.setOnClickListener {
                 val intent = Intent(examNameTextView.context, PdfManagerActivity::class.java)
-                intent.putExtra("PDF", exam.arquivoExame)
+                val byte = base64ToByteArray(exam.arquivoExame)
+                intent.putExtra("PDF", byte)
                 intent.putExtra("PDF_NOME", exam.nomeExame)
                 examNameTextView.context.startActivity(intent)
             }
         }
+    }
+
+    private fun base64ToByteArray(base64String: String): ByteArray {
+        return Base64.decode(base64String, Base64.DEFAULT)
     }
 
     fun addExame(exame: Exame) {

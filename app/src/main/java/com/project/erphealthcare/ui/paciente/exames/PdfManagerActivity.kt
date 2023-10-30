@@ -18,7 +18,7 @@ class PdfManagerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_pdf_view)
 
         if (intent.hasExtra("PDF")) {
-            val pdfArray = intent.getStringExtra("PDF")
+            val pdfArray = intent.getByteArrayExtra("PDF")
             val pdfNome = intent.getStringExtra("PDF_NOME")
             if (pdfArray != null) {
                 setupLocalPDF(pdfArray)
@@ -26,11 +26,6 @@ class PdfManagerActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun base64ToByteArray(base64String: String): ByteArray {
-        return Base64.decode(base64String, Base64.DEFAULT)
-    }
-
     private fun setupListeners() {
         val shareButton = findViewById<Button>(R.id.btnBuscarExame)
         shareButton.setOnClickListener {
@@ -53,13 +48,12 @@ class PdfManagerActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupLocalPDF(pdfArray: String) {
+    private fun setupLocalPDF(pdfArray: ByteArray) {
         val tempFile = File(cacheDir, "temp.pdf")
-        val pdfByte = base64ToByteArray(pdfArray)
 
         try {
             val outputStream = FileOutputStream(tempFile)
-            outputStream.write(pdfByte)
+            outputStream.write(pdfArray)
             outputStream.close()
             val pdfView = findViewById<PDFView>(R.id.pdfView)
             pdfView.fromFile(tempFile)

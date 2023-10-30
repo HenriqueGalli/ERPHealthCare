@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,8 @@ import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class ListaExamesActivity : AppCompatActivity() {
 
@@ -114,14 +117,14 @@ class ListaExamesActivity : AppCompatActivity() {
                         }
                         val exame = Exame(
                             nomeExame = pdfFileName,
-                            arquivoExame = byteArray,
-                            nomeMedico = "Dr",
-                            dataExame = "",
+                            arquivoExame = byteArrayToBase64(byteArray),
+                            nomeMedico = "DrMedico",
+                            dataExame = obterDataAtualNoFormato(),
                             id = "",
                             idUsuario = "",
                         )
-                        //adapter.addExame(exame)
-                        viewModel.createExam(exame =exame)
+                        adapter.addExame(exame)
+                        viewModel.createExam(exame = exame)
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -129,6 +132,17 @@ class ListaExamesActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun obterDataAtualNoFormato(): String {
+        val formato = SimpleDateFormat("yyyy-MM-dd")
+        val dataAtual = Date()
+        return formato.format(dataAtual)
+    }
+
+    fun byteArrayToBase64(byteArray: ByteArray): String {
+        val base64String = Base64.encodeToString(byteArray, Base64.DEFAULT)
+        return base64String
     }
 
     @Throws(IOException::class)
@@ -158,13 +172,13 @@ class ListaExamesActivity : AppCompatActivity() {
         return null
     }
 
-    fun convertImageToPDF(imageUri: Uri): ByteArray {
+    private fun convertImageToPDF(imageUri: Uri): ByteArray {
         val context = applicationContext // Substitua pela referência ao contexto adequado
 
         val bitmap: Bitmap
-            // Carregue a imagem da URI
-            val inputStream = context.contentResolver.openInputStream(imageUri)
-            bitmap = BitmapFactory.decodeStream(inputStream)
+        // Carregue a imagem da URI
+        val inputStream = context.contentResolver.openInputStream(imageUri)
+        bitmap = BitmapFactory.decodeStream(inputStream)
 
         val pdfDocument = PdfDocument()
         val pageInfo = PdfDocument.PageInfo.Builder(bitmap.width, bitmap.height, 1).create()
@@ -173,18 +187,19 @@ class ListaExamesActivity : AppCompatActivity() {
         canvas.drawBitmap(bitmap, 0f, 0f, null)
         pdfDocument.finishPage(page)
 
-            val outputStream = ByteArrayOutputStream()
-            pdfDocument.writeTo(outputStream)
+        val outputStream = ByteArrayOutputStream()
+        pdfDocument.writeTo(outputStream)
             pdfDocument.close()
 
             // Converta o documento PDF em um array de bytes
             return outputStream.toByteArray()
     }
 
-    fun createExameFromLinkedTreeMap(linkedTreeMap: LinkedTreeMap<String, Any>): Exame {
+    private fun createExameFromLinkedTreeMap(linkedTreeMap: LinkedTreeMap<String, Any>): Exame {
         val id = linkedTreeMap["id"].toString()
         val nomeExame = linkedTreeMap["nomeExame"].toString()
-        val arquivoExame = (linkedTreeMap["arquivoExame"] as String).toByteArray() // Converter a String para ByteArray
+        val arquivoExame =
+            linkedTreeMap["arquivoExame"].toString() // Converter a String para ByteArray
         val dataExame = linkedTreeMap["dataExame"].toString()
         val nomeMedico = linkedTreeMap["nomeMedico"].toString()
         val idUsuario = linkedTreeMap["idUsuario"].toString()

@@ -14,7 +14,6 @@ class ExamAdapter(examList: List<Exame>) :
     RecyclerView.Adapter<ExamAdapter.ExamViewHolder>() {
 
     val exames: ArrayList<Exame> = examList as ArrayList<Exame>
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_exame, parent, false)
@@ -42,8 +41,6 @@ class ExamAdapter(examList: List<Exame>) :
                 examNameTextView.context.startActivity(intent)
             }
         }
-
-
     }
 
     fun addExame(exame: Exame) {

@@ -58,6 +58,11 @@ interface ErpServices {
         @Body exame: Exame
     ): Response<Any>
 
+    @GET("/user/medical-history/caregiver/{idUsuario}/")
+    suspend fun getMedicalHistoryCuidador(
+        @Path("idUsuario") idPaciente: Int
+    ): HistoricoMedico
+
     @GET("/heart-rate/history/")
     suspend fun getBatimentos(@Query("dateTimeMedicao") dataMedicao: String): ArrayList<MedicoesSinaisVitais>
 
@@ -99,6 +104,12 @@ interface ErpServices {
 
     @PUT("user/medical-history/")
     suspend fun updateHistoricoMedico(
+        @Body historico: HistoricoMedico
+    ): HistoricoMedico
+
+    @PUT("/user/medical-history/caregiver/{idUsuario}/")
+    suspend fun updateHistoricoMedicoCuidador(
+        @Path("idUsuario") idUsuario: Int,
         @Body historico: HistoricoMedico
     ): HistoricoMedico
 

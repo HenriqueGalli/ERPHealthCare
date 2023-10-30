@@ -140,6 +140,15 @@ class ERPDataSource {
         }
     }
 
+    suspend fun getMedicalHistoryCuidador(idPaciente: Int): GetMedicalHistoryResult {
+        return try {
+            val res = ApiService.service.getMedicalHistoryCuidador(idPaciente)
+            GetMedicalHistoryResult.Success(res)
+        } catch (throwable: Throwable) {
+            GetMedicalHistoryResult.ServerError
+        }
+    }
+
     suspend fun getBatimentosCardiacos(dataMedicao: String): GetSinaisVitaisResult {
         return try {
             val res = ApiService.service.getBatimentos(dataMedicao)
@@ -209,6 +218,18 @@ class ERPDataSource {
     suspend fun updateMedicalHistory(historico: HistoricoMedico): UpdateMedicalHistoryResult {
         return try {
             val res = ApiService.service.updateHistoricoMedico(historico)
+            UpdateMedicalHistoryResult.Success(res)
+        } catch (throwable: Throwable) {
+            UpdateMedicalHistoryResult.ServerError
+        }
+    }
+
+    suspend fun updateMedicalHistoryCuidador(
+        historico: HistoricoMedico,
+        idCuidador: Int
+    ): UpdateMedicalHistoryResult {
+        return try {
+            val res = ApiService.service.updateHistoricoMedicoCuidador(idCuidador, historico)
             UpdateMedicalHistoryResult.Success(res)
         } catch (throwable: Throwable) {
             UpdateMedicalHistoryResult.ServerError

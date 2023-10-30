@@ -5,12 +5,15 @@ import br.com.preventivewelfare.api.result.EditUserResult
 import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.api.ERPDataSource
 import com.project.erphealthcare.data.model.Cuidador
+import com.project.erphealthcare.data.model.Exame
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.AssociateCaregiverUserResult
 import com.project.erphealthcare.data.result.CreateCuidadorResult
+import com.project.erphealthcare.data.result.CreateExamesResult
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.GetCuidadorResult
+import com.project.erphealthcare.data.result.GetExamesResult
 import com.project.erphealthcare.data.result.GetListaPacienteResult
 import com.project.erphealthcare.data.result.GetMedicalHistoryResult
 import com.project.erphealthcare.data.result.GetPacienteResult
@@ -81,6 +84,14 @@ class Repository(val dataSource: ERPDataSource) {
 
     suspend fun getMedicalHistory(): GetMedicalHistoryResult {
         return dataSource.getMedicalHistory()
+    }
+
+    suspend fun getExames(): GetExamesResult {
+        return dataSource.getExames()
+    }
+
+    suspend fun postExames(exame: Exame): CreateExamesResult {
+        return dataSource.postExames(exame = exame)
     }
 
     suspend fun getBatimentosCardiacos(dataMedicao: String): GetSinaisVitaisResult {

@@ -2,13 +2,17 @@ package com.project.erphealthcare.data.api
 
 import android.util.Log
 import br.com.preventivewelfare.api.result.EditUserResult
+import com.google.gson.internal.LinkedTreeMap
 import com.project.erphealthcare.data.model.Cuidador
+import com.project.erphealthcare.data.model.Exame
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.AssociateCaregiverUserResult
 import com.project.erphealthcare.data.result.CreateCuidadorResult
+import com.project.erphealthcare.data.result.CreateExamesResult
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.GetCuidadorResult
+import com.project.erphealthcare.data.result.GetExamesResult
 import com.project.erphealthcare.data.result.GetListaPacienteResult
 import com.project.erphealthcare.data.result.GetMedicalHistoryResult
 import com.project.erphealthcare.data.result.GetPacienteResult
@@ -115,6 +119,24 @@ class ERPDataSource {
             GetMedicalHistoryResult.Success(res)
         } catch (throwable: Throwable) {
             GetMedicalHistoryResult.ServerError
+        }
+    }
+
+    suspend fun getExames(): GetExamesResult {
+        return try {
+            val res = ApiService.service.getExames()
+            GetExamesResult.Success(res.body() as ArrayList<LinkedTreeMap<String, Any>>)
+        } catch (throwable: Throwable) {
+            GetExamesResult.ServerError
+        }
+    }
+
+    suspend fun postExames(exame: Exame): CreateExamesResult {
+        return try {
+            val res = ApiService.service.postExame(exame)
+            CreateExamesResult.Success(res.body() as LinkedTreeMap<String, Any>)
+        } catch (throwable: Throwable) {
+            CreateExamesResult.ServerError
         }
     }
 

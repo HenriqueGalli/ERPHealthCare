@@ -50,6 +50,14 @@ interface ErpServices {
     @GET("/user/medical-history/")
     suspend fun getMedicalHistory(): HistoricoMedico
 
+    @GET("/exams/")
+    suspend fun getExames(): Response<Any>
+
+    @POST("/exams/")
+    suspend fun postExame(
+        @Body exame: Exame
+    ): Response<Any>
+
     @GET("/user/medical-history/caregiver/{idUsuario}/")
     suspend fun getMedicalHistoryCuidador(
         @Path("idUsuario") idPaciente: Int

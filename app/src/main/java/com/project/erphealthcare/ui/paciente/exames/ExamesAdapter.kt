@@ -1,6 +1,7 @@
 package com.project.erphealthcare.ui.paciente.exames
 
 import android.content.Intent
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +11,10 @@ import com.project.erphealthcare.R
 import com.project.erphealthcare.data.model.Exame
 
 
-class ExamAdapter(examList: ArrayList<Exame>) :
+class ExamAdapter(examList: List<Exame>) :
     RecyclerView.Adapter<ExamAdapter.ExamViewHolder>() {
 
-    val exames = examList
-
+    val exames: ArrayList<Exame> = examList as ArrayList<Exame>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_exame, parent, false)
@@ -34,16 +34,19 @@ class ExamAdapter(examList: ArrayList<Exame>) :
         val examNameTextView: TextView = itemView.findViewById(R.id.examNameTextView)
 
         fun bind(exam: Exame) {
-            examNameTextView.text = exam.name
+            examNameTextView.text = exam.nomeExame
             examNameTextView.setOnClickListener {
                 val intent = Intent(examNameTextView.context, PdfManagerActivity::class.java)
-                intent.putExtra("PDF", exam.byteArray)
-                intent.putExtra("PDF_NOME", exam.name)
+                val byte = base64ToByteArray(exam.arquivoExame)
+                intent.putExtra("PDF", byte)
+                intent.putExtra("PDF_NOME", exam.nomeExame)
                 examNameTextView.context.startActivity(intent)
             }
         }
+    }
 
-
+    private fun base64ToByteArray(base64String: String): ByteArray {
+        return Base64.decode(base64String, Base64.DEFAULT)
     }
 
     fun addExame(exame: Exame) {

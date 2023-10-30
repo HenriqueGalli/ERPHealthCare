@@ -2,6 +2,7 @@ package com.project.erphealthcare.ui.paciente.exames
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Base64
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -9,7 +10,6 @@ import com.github.barteksc.pdfviewer.PDFView
 import com.project.erphealthcare.R
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 
 class PdfManagerActivity : AppCompatActivity() {
 
@@ -17,38 +17,32 @@ class PdfManagerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdf_view)
 
-
-        if(intent.hasExtra("PDF")){
+        if (intent.hasExtra("PDF")) {
             val pdfArray = intent.getByteArrayExtra("PDF")
-            val pdfNome = intent.getByteArrayExtra("PDF_NOME")
+            val pdfNome = intent.getStringExtra("PDF_NOME")
             if (pdfArray != null) {
                 setupLocalPDF(pdfArray)
                 setupListeners()
             }
         }
     }
-
     private fun setupListeners() {
         val shareButton = findViewById<Button>(R.id.btnBuscarExame)
         shareButton.setOnClickListener {
             val tempFile = File(cacheDir, "temp.pdf")
 
-            // Verifique se o arquivo temporário existe
             if (tempFile.exists()) {
-                // Crie uma Uri para o arquivo usando FileProvider
                 val uri = FileProvider.getUriForFile(
                     this,
                     applicationContext.packageName + ".provider",
                     tempFile
                 )
 
-                // Crie uma Intent para compartilhar o arquivo PDF
                 val shareIntent = Intent(Intent.ACTION_SEND)
                 shareIntent.type = "application/pdf"
                 shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
                 shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-                // Inicie a atividade de compartilhamento
                 startActivity(Intent.createChooser(shareIntent, "Compartilhar PDF"))
             }
         }
@@ -62,19 +56,14 @@ class PdfManagerActivity : AppCompatActivity() {
             outputStream.write(pdfArray)
             outputStream.close()
             val pdfView = findViewById<PDFView>(R.id.pdfView)
-            // Carregue e exiba o PDF no PDFView
             pdfView.fromFile(tempFile)
                 .defaultPage(0)
                 .enableSwipe(true)
                 .swipeHorizontal(false)
                 .enableDoubletap(true)
                 .load()
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
-
-
-
 }

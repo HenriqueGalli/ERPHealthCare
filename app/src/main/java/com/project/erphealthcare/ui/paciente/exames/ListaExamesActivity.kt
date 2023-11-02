@@ -99,7 +99,7 @@ class ListaExamesActivity : AppCompatActivity(), onUpdateExame {
             intent.type = "*/*"
             intent.putExtra(
                 Intent.EXTRA_MIME_TYPES,
-                arrayOf("application/pdf", "image/png", "image/jpeg")
+                arrayOf("application/pdf", "image/png")
             )
             startActivityForResult(intent, PICK_PDF_REQUEST)
         }

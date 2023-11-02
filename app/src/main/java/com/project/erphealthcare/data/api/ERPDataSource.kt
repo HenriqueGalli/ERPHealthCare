@@ -11,6 +11,7 @@ import com.project.erphealthcare.data.result.AssociateCaregiverUserResult
 import com.project.erphealthcare.data.result.CreateCuidadorResult
 import com.project.erphealthcare.data.result.CreateExamesResult
 import com.project.erphealthcare.data.result.CreatePacienteResult
+import com.project.erphealthcare.data.result.DeleteExamesResult
 import com.project.erphealthcare.data.result.GetCuidadorResult
 import com.project.erphealthcare.data.result.GetExamesResult
 import com.project.erphealthcare.data.result.GetListaPacienteResult
@@ -125,7 +126,7 @@ class ERPDataSource {
     suspend fun getExames(): GetExamesResult {
         return try {
             val res = ApiService.service.getExames()
-            GetExamesResult.Success(res.body() as ArrayList<LinkedTreeMap<String, Any>>)
+            GetExamesResult.Success(res.body() as ArrayList<LinkedTreeMap<Any, Any>>)
         } catch (throwable: Throwable) {
             GetExamesResult.ServerError
         }
@@ -134,9 +135,18 @@ class ERPDataSource {
     suspend fun postExames(exame: Exame): CreateExamesResult {
         return try {
             val res = ApiService.service.postExame(exame)
-            CreateExamesResult.Success(res.body() as LinkedTreeMap<String, Any>)
+            CreateExamesResult.Success(res.body() as LinkedTreeMap<Any, Any>)
         } catch (throwable: Throwable) {
             CreateExamesResult.ServerError
+        }
+    }
+
+    suspend fun deleteExame(id: Int): DeleteExamesResult {
+        return try {
+            ApiService.service.deleteExame(id)
+            DeleteExamesResult.Success
+        } catch (throwable: Throwable) {
+            DeleteExamesResult.ServerError
         }
     }
 
@@ -259,6 +269,15 @@ class ERPDataSource {
             GetListaPacienteResult.Success(res)
         } catch (throwable: Throwable) {
             GetListaPacienteResult.ServerError
+        }
+    }
+
+    suspend fun updateExame(exame: Exame): CreateExamesResult {
+        return try {
+            val res = ApiService.service.updateExame(exame.id.toInt(), exame)
+            CreateExamesResult.Success(res.body() as LinkedTreeMap<Any, Any>)
+        } catch (throwable: Throwable) {
+            CreateExamesResult.ServerError
         }
     }
 

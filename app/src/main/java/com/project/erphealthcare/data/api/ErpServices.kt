@@ -58,6 +58,17 @@ interface ErpServices {
         @Body exame: Exame
     ): Response<Any>
 
+    @DELETE("/exams/{id}/")
+    suspend fun deleteExame(
+        @Path("id") idExame: Int
+    ): Response<Any>
+
+    @PUT("/exams/{id}/")
+    suspend fun updateExame(
+        @Path("id") idExame: Int,
+        @Body exame: Exame
+    ): Response<Any>
+
     @GET("/user/medical-history/caregiver/{idUsuario}/")
     suspend fun getMedicalHistoryCuidador(
         @Path("idUsuario") idPaciente: Int

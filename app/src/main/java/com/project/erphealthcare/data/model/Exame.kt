@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import java.io.Serializable
 
 data class Exame(
-    @Json(name = "id") var id: String,
+    @Json(name = "id") var id: Double,
     @Json(name = "nomeExame") var nomeExame: String,
     @Json(name = "arquivoExame") var arquivoExame: String,
     @Json(name = "dataExame") var dataExame: String,

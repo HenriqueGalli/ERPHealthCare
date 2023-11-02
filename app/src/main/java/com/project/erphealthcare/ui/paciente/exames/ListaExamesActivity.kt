@@ -16,6 +16,7 @@ import com.google.gson.internal.LinkedTreeMap
 import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.model.Exame
 import com.project.erphealthcare.data.result.CreateExamesResult
+import com.project.erphealthcare.data.result.DeleteExamesResult
 import com.project.erphealthcare.data.result.GetExamesResult
 import com.project.erphealthcare.databinding.ActivityListaExamesBinding
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
@@ -25,7 +26,7 @@ import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class ListaExamesActivity : AppCompatActivity() {
+class ListaExamesActivity : AppCompatActivity(), onUpdateExame {
 
     private val PICK_PDF_REQUEST = 1
 
@@ -60,6 +61,13 @@ class ListaExamesActivity : AppCompatActivity() {
                 is CreateExamesResult.ServerError -> errorCreateExam()
             }
         }
+
+        viewModel.deleteExamesResult.observe(this) { res ->
+            when(res) {
+                is DeleteExamesResult.Success -> viewModel.getExamHistory()
+                is DeleteExamesResult.ServerError -> errorCreateExam()
+            }
+        }
     }
 
     private fun errorCreateExam() {
@@ -74,10 +82,10 @@ class ListaExamesActivity : AppCompatActivity() {
         this.finish()
     }
 
-    private fun setupAdapter(list: ArrayList<LinkedTreeMap<String,Any>>) {
+    private fun setupAdapter(list: ArrayList<LinkedTreeMap<Any,Any>>) {
 
         val mappedList : List<Exame> = list.map {createExameFromLinkedTreeMap(it)  }
-        adapter = ExamAdapter(mappedList)
+        adapter = ExamAdapter(mappedList, this)
         binding.examRecyclerView.adapter = adapter
         binding.examRecyclerView.layoutManager = LinearLayoutManager(
             this, LinearLayoutManager.VERTICAL,
@@ -94,9 +102,6 @@ class ListaExamesActivity : AppCompatActivity() {
                 arrayOf("application/pdf", "image/png", "image/jpeg")
             )
             startActivityForResult(intent, PICK_PDF_REQUEST)
-        }
-        binding.btnSalvarExames.setOnClickListener {
-
         }
     }
 
@@ -120,7 +125,7 @@ class ListaExamesActivity : AppCompatActivity() {
                             arquivoExame = byteArrayToBase64(byteArray),
                             nomeMedico = "DrMedico",
                             dataExame = obterDataAtualNoFormato(),
-                            id = "",
+                            id = 0.0,
                             idUsuario = "",
                         )
                         adapter.addExame(exame)
@@ -195,8 +200,8 @@ class ListaExamesActivity : AppCompatActivity() {
             return outputStream.toByteArray()
     }
 
-    private fun createExameFromLinkedTreeMap(linkedTreeMap: LinkedTreeMap<String, Any>): Exame {
-        val id = linkedTreeMap["id"].toString()
+    private fun createExameFromLinkedTreeMap(linkedTreeMap: LinkedTreeMap<Any, Any>): Exame {
+        val id = linkedTreeMap["id"] as Double
         val nomeExame = linkedTreeMap["nomeExame"].toString()
         val arquivoExame =
             linkedTreeMap["arquivoExame"].toString() // Converter a String para ByteArray
@@ -205,5 +210,13 @@ class ListaExamesActivity : AppCompatActivity() {
         val idUsuario = linkedTreeMap["idUsuario"].toString()
 
         return Exame(id, nomeExame, arquivoExame, dataExame, nomeMedico, idUsuario)
+    }
+
+    override fun exclude(exame: Exame) {
+        viewModel.exclude(exame.id.toInt())
+    }
+
+    override fun update(exame: Exame) {
+        viewModel.updateExame(exame)
     }
 }

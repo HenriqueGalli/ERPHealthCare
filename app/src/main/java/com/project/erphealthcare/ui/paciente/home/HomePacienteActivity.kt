@@ -135,10 +135,10 @@ class HomePacienteActivity : AppCompatActivity() {
         }
         binding.clExames.setOnClickListener {
             val intent = Intent(this, ListaExamesActivity::class.java)
-            startActivity(intent)
             intent.putExtra("PACIENTE", pac)
             if (isCuidador)
                 intent.putExtra("VISAO_CUIDADOR", pac.id)
+            startActivity(intent)
             this.finish()
         }
 

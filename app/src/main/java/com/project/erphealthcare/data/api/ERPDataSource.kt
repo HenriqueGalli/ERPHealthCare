@@ -281,4 +281,45 @@ class ERPDataSource {
         }
     }
 
+    suspend fun getExamesCuidador(intExtra: Int): GetExamesResult? {
+        return try {
+            val res = ApiService.service.getExamesCuidador(intExtra)
+            GetExamesResult.Success(res.body() as ArrayList<LinkedTreeMap<Any, Any>>)
+        } catch (throwable: Throwable) {
+            GetExamesResult.ServerError
+        }
+    }
+
+    suspend fun updateExameCuidador(idPaciente: Int, exame: Exame): CreateExamesResult {
+        return try {
+            val res = ApiService.service.updateExameCuidador(
+                idExame = exame.id.toInt(),
+                exame = exame,
+                idUsuario = idPaciente
+            )
+            CreateExamesResult.Success(res.body() as LinkedTreeMap<Any, Any>)
+        } catch (throwable: Throwable) {
+            CreateExamesResult.ServerError
+        }
+    }
+
+
+    suspend fun postExamesCuidador(idPaciente: Int, exame: Exame): CreateExamesResult {
+        return try {
+            val res = ApiService.service.postExameCuidador(exame, idPaciente)
+            CreateExamesResult.Success(res.body() as LinkedTreeMap<Any, Any>)
+        } catch (throwable: Throwable) {
+            CreateExamesResult.ServerError
+        }
+    }
+
+    suspend fun deleteExameCuidador(idPaciente: Int, id: Int): DeleteExamesResult {
+        return try {
+            ApiService.service.deleteExameCuidador(idPaciente, id)
+            DeleteExamesResult.Success
+        } catch (throwable: Throwable) {
+            DeleteExamesResult.ServerError
+        }
+    }
+
 }

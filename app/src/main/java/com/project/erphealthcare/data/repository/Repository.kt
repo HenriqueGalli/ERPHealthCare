@@ -161,4 +161,20 @@ class Repository(val dataSource: ERPDataSource) {
     suspend fun updateExame(exame: Exame): CreateExamesResult {
         return dataSource.updateExame(exame)
     }
+
+    suspend fun getExamesCuidador(intExtra: Int): GetExamesResult? {
+        return dataSource.getExamesCuidador(intExtra)
+    }
+
+    suspend fun updateExameCuidador(exame: Exame, idPaciente: Int): CreateExamesResult {
+        return dataSource.updateExameCuidador(idPaciente, exame)
+    }
+
+    suspend fun postExamesCuidador(exame: Exame, idPaciente: Int): CreateExamesResult {
+        return dataSource.postExamesCuidador(exame = exame, idPaciente = idPaciente)
+    }
+
+    suspend fun deleteExameCuidador(id: Int, idPaciente: Int): DeleteExamesResult {
+        return dataSource.deleteExameCuidador(id = id, idPaciente = idPaciente)
+    }
 }

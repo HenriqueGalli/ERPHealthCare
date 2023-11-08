@@ -120,8 +120,7 @@ interface ErpServices {
 
     @PUT("/user/medical-history/caregiver/{idUsuario}/")
     suspend fun updateHistoricoMedicoCuidador(
-        @Path("idUsuario") idUsuario: Int,
-        @Body historico: HistoricoMedico
+        @Path("idUsuario") idUsuario: Int, @Body historico: HistoricoMedico
     ): HistoricoMedico
 
     @GET("caregiver/")
@@ -129,4 +128,26 @@ interface ErpServices {
 
     @GET("caregiver/association/")
     suspend fun getListaPacientes(): ArrayList<Paciente>
+
+    @GET("/exams/caregiver/{idUsuario}/")
+    suspend fun getExamesCuidador(@Path("idUsuario") idUsuario: Int): Response<Any>
+
+    @POST("/exams/caregiver/{idUsuario}/")
+    suspend fun postExameCuidador(
+        @Body exame: Exame,
+        @Path("idUsuario") idUsuario: Int
+    ): Response<Any>
+
+    @PUT("/exams/caregiver/{idUsuario}/exam/{idExame}/")
+    suspend fun updateExameCuidador(
+        @Path("idUsuario") idUsuario: Int,
+        @Path("idExame") idExame: Int,
+        @Body exame: Exame
+    ): Response<Any>
+
+    @DELETE("/exams/caregiver/{idUsuario}/exam/{idExame}/")
+    suspend fun deleteExameCuidador(
+        @Path("idUsuario") idUsuario: Int,
+        @Path("idExame") idExame: Int,
+    ): Response<Any>
 }

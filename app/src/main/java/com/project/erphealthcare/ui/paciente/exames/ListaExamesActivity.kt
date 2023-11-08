@@ -33,6 +33,8 @@ class ListaExamesActivity : AppCompatActivity(), onUpdateExame {
     private lateinit var binding: ActivityListaExamesBinding
     private lateinit var adapter: ExamAdapter
 
+    private var isCuidador = false
+
     private val viewModel: ListaExamesViewModel =
         ListaExamesViewModelFactory()
             .create(ListaExamesViewModel::class.java)
@@ -42,8 +44,11 @@ class ListaExamesActivity : AppCompatActivity(), onUpdateExame {
 
         binding = ActivityListaExamesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if(intent.hasExtra("VISAO_CUIDADOR")){
+           isCuidador = true
+        }
         setupObserver()
-        viewModel.getExamHistory()
+        getExamHistory()
         setupListeners()
     }
 
@@ -52,19 +57,22 @@ class ListaExamesActivity : AppCompatActivity(), onUpdateExame {
             when (res) {
                 is GetExamesResult.Success -> setupAdapter(res.exames)
                 is GetExamesResult.ServerError -> setupAdapter(arrayListOf())
+                else -> {
+                    setupAdapter(arrayListOf())
+                }
             }
         }
 
         viewModel.createExamesResult.observe(this) { res ->
             when(res) {
-                is CreateExamesResult.Success -> viewModel.getExamHistory()
+                is CreateExamesResult.Success -> getExamHistory()
                 is CreateExamesResult.ServerError -> errorCreateExam()
             }
         }
 
         viewModel.deleteExamesResult.observe(this) { res ->
-            when(res) {
-                is DeleteExamesResult.Success -> viewModel.getExamHistory()
+            when (res) {
+                is DeleteExamesResult.Success -> getExamHistory()
                 is DeleteExamesResult.ServerError -> errorCreateExam()
             }
         }
@@ -72,6 +80,14 @@ class ListaExamesActivity : AppCompatActivity(), onUpdateExame {
 
     private fun errorCreateExam() {
 
+    }
+
+    private fun getExamHistory() {
+        if (isCuidador) {
+            viewModel.getExamHistoryCuidador(intent.getIntExtra("VISAO_CUIDADOR", 0))
+        } else {
+            viewModel.getExamHistory()
+        }
     }
 
     override fun onBackPressed() {
@@ -82,9 +98,9 @@ class ListaExamesActivity : AppCompatActivity(), onUpdateExame {
         this.finish()
     }
 
-    private fun setupAdapter(list: ArrayList<LinkedTreeMap<Any,Any>>) {
+    private fun setupAdapter(list: ArrayList<LinkedTreeMap<Any, Any>>) {
 
-        val mappedList : List<Exame> = list.map {createExameFromLinkedTreeMap(it)  }
+        val mappedList: List<Exame> = list.map { createExameFromLinkedTreeMap(it) }
         adapter = ExamAdapter(mappedList, this)
         binding.examRecyclerView.adapter = adapter
         binding.examRecyclerView.layoutManager = LinearLayoutManager(
@@ -129,7 +145,14 @@ class ListaExamesActivity : AppCompatActivity(), onUpdateExame {
                             idUsuario = "",
                         )
                         adapter.addExame(exame)
-                        viewModel.createExam(exame = exame)
+                        if (intent.hasExtra("VISAO_CUIDADOR")) {
+                            viewModel.createExamCuidador(
+                                exame,
+                                intent.getIntExtra("VISAO_CUIDADOR", 0)
+                            )
+                        } else {
+                            viewModel.createExam(exame = exame)
+                        }
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -213,10 +236,18 @@ class ListaExamesActivity : AppCompatActivity(), onUpdateExame {
     }
 
     override fun exclude(exame: Exame) {
-        viewModel.exclude(exame.id.toInt())
+        if (intent.hasExtra("VISAO_CUIDADOR")) {
+            viewModel.excludeExamCuidador(exame.id.toInt(), intent.getIntExtra("VISAO_CUIDADOR", 0))
+        } else {
+            viewModel.exclude(exame.id.toInt())
+        }
     }
 
     override fun update(exame: Exame) {
-        viewModel.updateExame(exame)
+        if (intent.hasExtra("VISAO_CUIDADOR")) {
+            viewModel.updateExameCuidador(intent.getIntExtra("VISAO_CUIDADOR", 0), exame)
+        } else {
+            viewModel.updateExame(exame)
+        }
     }
 }

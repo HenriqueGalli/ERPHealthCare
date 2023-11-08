@@ -12,7 +12,7 @@ import kotlinx.coroutines.runBlocking
 
 class ListaExamesViewModel(private val repository: Repository): ViewModel() {
 
-    val examesResult: MutableLiveData<GetExamesResult> = MutableLiveData()
+    val examesResult: MutableLiveData<GetExamesResult?> = MutableLiveData()
     val createExamesResult: MutableLiveData<CreateExamesResult> = MutableLiveData()
     val deleteExamesResult: MutableLiveData<DeleteExamesResult> = MutableLiveData()
 
@@ -41,6 +41,34 @@ class ListaExamesViewModel(private val repository: Repository): ViewModel() {
         launch {
             val res = repository.updateExame(exame)
             createExamesResult.postValue(res)
+        }
+    }
+
+    fun getExamHistoryCuidador(intExtra: Int) = runBlocking {
+        launch {
+            val res = repository.getExamesCuidador(intExtra)
+            examesResult.postValue(res)
+        }
+    }
+
+    fun updateExameCuidador(idPacietne: Int, exame: Exame) = runBlocking {
+        launch {
+            val res = repository.updateExameCuidador(exame, idPacietne)
+            createExamesResult.postValue(res)
+        }
+    }
+
+    fun createExamCuidador(exame: Exame, idPacietne: Int) = runBlocking {
+        launch {
+            val res = repository.postExamesCuidador(exame, idPacietne)
+            createExamesResult.postValue(res)
+        }
+    }
+
+    fun excludeExamCuidador(id: Int, idPacietne: Int) = runBlocking {
+        launch {
+            val res = repository.deleteExameCuidador(id, idPacietne)
+            deleteExamesResult.postValue(res)
         }
     }
 

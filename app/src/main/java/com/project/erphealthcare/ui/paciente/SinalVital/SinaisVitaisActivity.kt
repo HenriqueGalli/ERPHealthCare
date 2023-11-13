@@ -23,6 +23,8 @@ import com.project.erphealthcare.data.result.GetSinaisVitaisResult
 import com.project.erphealthcare.databinding.ActivityBatimentosCardiacosBinding
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 import java.text.SimpleDateFormat
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
@@ -34,6 +36,7 @@ class SinaisVitaisActivity : AppCompatActivity() {
         SinaisPacienteViewModelFactory()
             .create(SinaisPacienteViewModel::class.java)
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_batimentos_cardiacos)
@@ -78,6 +81,7 @@ class SinaisVitaisActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupObserver() {
         viewModel.medicaoResult.observe(this) { res ->
 
@@ -98,12 +102,12 @@ class SinaisVitaisActivity : AppCompatActivity() {
         binding.textViewMensagem.visibility = View.VISIBLE
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupAdapter(listaMedicoes: MutableList<MedicoesSinaisVitais>) {
-        // Limpar os dados existentes no gráfico
         binding.lineChart.clear()
         binding.textViewMensagem.visibility = View.INVISIBLE
 
-        if(listaMedicoes.size == 0)
+        if (listaMedicoes.size == 0)
             binding.textViewMensagem.visibility = View.VISIBLE
 
         when (tipoMedicao) {
@@ -113,18 +117,17 @@ class SinaisVitaisActivity : AppCompatActivity() {
         }
 
         val entries: MutableList<Entry> = ArrayList()
-        val dateFormatInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
-        val dateFormatOutput = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val dateFormatInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale("pt", "BR"))
+        val dateFormatOutput = SimpleDateFormat("HH:mm", Locale("pt", "BR"))
 
         for ((index, medicao) in listaMedicoes.withIndex()) {
-            medicao.dateTimeMedicao?.let {
-                val date = dateFormatInput.parse(it)
-                val formattedDate = date?.let { it1 -> dateFormatOutput.format(it1) }
-
-                medicao.valorMedicao?.toFloat()?.let {
-                    entries.add(Entry(index.toFloat(), it, formattedDate))
-                }
+            medicao.valorMedicao?.toFloat()?.let {
+                entries.add(
+                    Entry(index.toFloat(), it,
+                        medicao.dateTimeMedicao?.let { it1 -> obterHoraMinutoDaString(it1) })
+                )
             }
+
         }
 
         val lineDataSet = LineDataSet(entries, "Sinais Vitais")
@@ -164,6 +167,20 @@ class SinaisVitaisActivity : AppCompatActivity() {
         binding.lineChart.invalidate()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun obterHoraMinutoDaString(dataString: String): String {
+        val formatoEntrada = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+
+        // Formato desejado para a saída
+        val formatoSaida = DateTimeFormatter.ofPattern("HH:mm")
+
+        // Analisar a string para um OffsetDateTime
+        val data = OffsetDateTime.parse(dataString, formatoEntrada)
+
+        // Formatar a data para o formato desejado
+        return data.format(formatoSaida)
+    }
+
 
     private fun getDate(): String {
         val year = binding.simpleDatePicker.year
@@ -171,6 +188,7 @@ class SinaisVitaisActivity : AppCompatActivity() {
         val day = setupDay()
         return "$year-$month-$day"
     }
+
     private fun setupDay(): String {
         val day = binding.simpleDatePicker.dayOfMonth
         return if (day.toString().length == 2)

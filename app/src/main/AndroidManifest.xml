@@ -21,7 +21,12 @@
             android:exported="false" />
         <activity
             android:name=".ui.cuidador.cadastro.CreateCuidadorActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.ERPHealthCare.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ui.cuidador.gerenciaPacientes.listaPacientes.ListarPacientesActivity"
             android:exported="false" />

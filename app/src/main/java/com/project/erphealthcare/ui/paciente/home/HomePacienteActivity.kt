@@ -13,6 +13,7 @@ import com.project.erphealthcare.data.result.GetPacienteResult
 import com.project.erphealthcare.databinding.ActivityHomePacienteBinding
 import com.project.erphealthcare.ui.paciente.SinalVital.SinaisVitaisActivity
 import com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity
+import com.project.erphealthcare.ui.paciente.calendario.CalendarioExamesActivity
 import com.project.erphealthcare.ui.paciente.exames.ListaExamesActivity
 import com.project.erphealthcare.ui.paciente.historicoMedico.HistoricoMedicoPacienteActivity
 
@@ -119,6 +120,13 @@ class HomePacienteActivity : AppCompatActivity() {
             val intent = Intent(this, SinaisVitaisActivity::class.java)
             intent.putExtra("MEDICAO", "OXIGENACAO")
             intent.putExtra("PACIENTE", pac)
+            if (isCuidador)
+                intent.putExtra("VISAO_CUIDADOR", pac.id)
+            startActivity(intent)
+            this.finish()
+        }
+        binding.clProximosExames.setOnClickListener {
+            val intent = Intent(this, CalendarioExamesActivity::class.java)
             if (isCuidador)
                 intent.putExtra("VISAO_CUIDADOR", pac.id)
             startActivity(intent)

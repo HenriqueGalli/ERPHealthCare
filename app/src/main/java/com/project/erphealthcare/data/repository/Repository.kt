@@ -13,6 +13,7 @@ import com.project.erphealthcare.data.result.CreateCuidadorResult
 import com.project.erphealthcare.data.result.CreateExamesResult
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.DeleteExamesResult
+import com.project.erphealthcare.data.result.GetCalendarioResult
 import com.project.erphealthcare.data.result.GetCuidadorResult
 import com.project.erphealthcare.data.result.GetExamesResult
 import com.project.erphealthcare.data.result.GetListaPacienteResult
@@ -85,6 +86,10 @@ class Repository(val dataSource: ERPDataSource) {
 
     suspend fun getMedicalHistory(): GetMedicalHistoryResult {
         return dataSource.getMedicalHistory()
+    }
+
+    suspend fun getCalendario(): GetCalendarioResult {
+        return dataSource.getCalendario()
     }
 
     suspend fun getExames(): GetExamesResult {

@@ -124,15 +124,15 @@ class HomePacienteActivity : AppCompatActivity() {
             startActivity(intent)
             this.finish()
         }
-        binding.clTemperatura.setOnClickListener {
-            val intent = Intent(this, SinaisVitaisActivity::class.java)
-            intent.putExtra("MEDICAO", "TEMPERATURA")
-            intent.putExtra("PACIENTE", pac)
-            if (isCuidador)
-                intent.putExtra("VISAO_CUIDADOR", pac.id)
-            startActivity(intent)
-            this.finish()
-        }
+//        binding.clTemperatura.setOnClickListener {
+//            val intent = Intent(this, SinaisVitaisActivity::class.java)
+//            intent.putExtra("MEDICAO", "TEMPERATURA")
+//            intent.putExtra("PACIENTE", pac)
+//            if (isCuidador)
+//                intent.putExtra("VISAO_CUIDADOR", pac.id)
+//            startActivity(intent)
+//            this.finish()
+//        }
         binding.clExames.setOnClickListener {
             val intent = Intent(this, ListaExamesActivity::class.java)
             intent.putExtra("PACIENTE", pac)

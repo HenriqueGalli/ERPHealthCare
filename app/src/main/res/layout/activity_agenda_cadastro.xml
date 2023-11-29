@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="view"
+            type="android.view.View" />
+
+        <variable
+            name="event"
+            type="com.project.erphealthcare.data.model.Agendamento" />
+
+        <variable
+            name="viewModel"
+            type="com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:context=".ui.paciente.cadastro.CadastroPacienteActivity">
+
+            <TextView
+                android:id="@+id/tv_cadastrar_paciente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Cadastro Evento"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextTipo"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Tipo do Agendamento"
+                android:enabled="@{viewModel.camposHabilitados}"
+                app:layout_constraintStart_toStartOf="@+id/tv_cadastrar_paciente"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cadastrar_paciente">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@={event.tipoAgendamento}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editDescricao"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Descrição"
+                android:enabled="@{viewModel.camposHabilitados}"
+                app:layout_constraintStart_toStartOf="@+id/editTextTipo"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTipo">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@={event.descricaoAgendamento}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextMedico"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Médico"
+                android:enabled="@{viewModel.camposHabilitados}"
+                app:layout_constraintStart_toStartOf="@+id/editDescricao"
+                app:layout_constraintTop_toBottomOf="@+id/editDescricao">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@={event.nomeMedico}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextLocalizacao"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Localização"
+                android:enabled="@{viewModel.camposHabilitados}"
+                app:layout_constraintStart_toStartOf="@+id/editTextMedico"
+                app:layout_constraintTop_toBottomOf="@+id/editTextMedico">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@={event.localizacao}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTelefone"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Telefone do Médico"
+                android:enabled="@{viewModel.camposHabilitados}"
+                app:layout_constraintStart_toStartOf="@+id/editTextLocalizacao"
+                app:layout_constraintTop_toBottomOf="@+id/editTextLocalizacao">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@={event.telefoneMedico}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editObservacao"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Observação"
+                android:enabled="@{viewModel.camposHabilitados}"
+                app:layout_constraintStart_toStartOf="@+id/editTelefone"
+                app:layout_constraintTop_toBottomOf="@+id/editTelefone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@={event.observacoes}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvDataNascimento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:text="Data de Nascimento"
+                app:layout_constraintStart_toStartOf="@id/editObservacao"
+                app:layout_constraintTop_toBottomOf="@+id/editObservacao" />
+
+            <DatePicker
+                android:id="@+id/simpleDatePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:enabled="@{viewModel.camposHabilitados}"
+                android:datePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvDataNascimento"
+                app:layout_constraintTop_toBottomOf="@+id/tvDataNascimento" />
+
+            <Button
+                android:id="@+id/buttonEnviar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/botao_arredondado"
+                android:textColor="@color/white"
+                android:onClick="@{(v)-> viewModel.cadastrar()}"
+                android:text="Salvar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/simpleDatePicker"
+                app:layout_constraintTop_toBottomOf="@+id/simpleDatePicker"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

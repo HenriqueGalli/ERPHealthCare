@@ -17,7 +17,13 @@
         tools:replace="android:appComponentFactory"
         tools:targetApi="31">
         <activity
+            android:name=".ui.paciente.cadastrarAgendamento.CadsatrarAgendamentoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.paciente.calendario.CalendarioExamesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.paciente.agenda.AgendaActivity"
             android:exported="false" />
         <activity
             android:name=".ui.cuidador.gerenciaPacientes.associarPacientes.associarPaciente.AssociarPacienteActivity"

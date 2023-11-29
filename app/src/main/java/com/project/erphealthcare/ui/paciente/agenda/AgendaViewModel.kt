@@ -1,4 +1,4 @@
-package com.project.erphealthcare.ui.paciente.calendario
+package com.project.erphealthcare.ui.paciente.agenda
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import com.project.erphealthcare.data.result.GetCalendarioResult
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class CalendarioViewModel(private val repository: Repository) : ViewModel() {
+class AgendaViewModel(private val repository: Repository) : ViewModel() {
 
     val getCalendarioResult: MutableLiveData<GetCalendarioResult?> = MutableLiveData()
 

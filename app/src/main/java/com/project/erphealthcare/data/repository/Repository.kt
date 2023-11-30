@@ -4,11 +4,13 @@ import br.com.preventivewelfare.api.result.DeleteUserResult
 import br.com.preventivewelfare.api.result.EditUserResult
 import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.api.ERPDataSource
+import com.project.erphealthcare.data.model.Agendamento
 import com.project.erphealthcare.data.model.Cuidador
 import com.project.erphealthcare.data.model.Exame
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.AssociateCaregiverUserResult
+import com.project.erphealthcare.data.result.CreateAgendamentoResult
 import com.project.erphealthcare.data.result.CreateCuidadorResult
 import com.project.erphealthcare.data.result.CreateExamesResult
 import com.project.erphealthcare.data.result.CreatePacienteResult
@@ -98,6 +100,9 @@ class Repository(val dataSource: ERPDataSource) {
 
     suspend fun postExames(exame: Exame): CreateExamesResult {
         return dataSource.postExames(exame = exame)
+    }
+    suspend fun createAgendamento(agendamento: Agendamento): CreateAgendamentoResult {
+        return dataSource.createAgendamento(agendamento)
     }
 
     suspend fun deleteExame(id: Int): DeleteExamesResult {

@@ -3,8 +3,7 @@ package com.project.erphealthcare.data.model
 import com.squareup.moshi.Json
 
 data class Agendamento(
-    @Json(name = "id") var id: Int?,
-    @Json(name = "idUsuario") var idUsuario: Int?,
+    @Json(name = "id") var id: Int? = null,
     @Json(name = "dataAgendamento") var dataAgendamento: String?,
     @Json(name = "tipoAgendamento") var tipoAgendamento: String?,
     @Json(name = "descricaoAgendamento") var descricaoAgendamento: String?,

@@ -53,6 +53,11 @@ interface ErpServices {
     @GET("/calendar/")
     suspend fun getCalendario(): ArrayList<Agendamento>
 
+    @POST("/calendar/")
+    suspend fun postCalendario(
+        @Body agendamento: Agendamento
+    ): Response<Any>
+
     @GET("/exams/")
     suspend fun getExames(): Response<Any>
 

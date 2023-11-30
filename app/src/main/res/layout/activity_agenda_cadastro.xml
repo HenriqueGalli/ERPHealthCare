@@ -15,7 +15,7 @@
 
         <variable
             name="viewModel"
-            type="com.project.erphealthcare.ui.paciente.cadastro.CadastroPacienteActivity" />
+            type="com.project.erphealthcare.ui.paciente.cadastrarAgendamento.CadastrarAgendamentoActivity" />
     </data>
 
     <ScrollView
@@ -50,7 +50,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Tipo do Agendamento"
-                android:enabled="@{viewModel.camposHabilitados}"
                 app:layout_constraintStart_toStartOf="@+id/tv_cadastrar_paciente"
                 app:layout_constraintTop_toBottomOf="@+id/tv_cadastrar_paciente">
 
@@ -71,7 +70,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Descrição"
-                android:enabled="@{viewModel.camposHabilitados}"
                 app:layout_constraintStart_toStartOf="@+id/editTextTipo"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTipo">
 
@@ -93,7 +91,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Médico"
-                android:enabled="@{viewModel.camposHabilitados}"
                 app:layout_constraintStart_toStartOf="@+id/editDescricao"
                 app:layout_constraintTop_toBottomOf="@+id/editDescricao">
 
@@ -113,7 +110,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Localização"
-                android:enabled="@{viewModel.camposHabilitados}"
                 app:layout_constraintStart_toStartOf="@+id/editTextMedico"
                 app:layout_constraintTop_toBottomOf="@+id/editTextMedico">
 
@@ -133,7 +129,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Telefone do Médico"
-                android:enabled="@{viewModel.camposHabilitados}"
                 app:layout_constraintStart_toStartOf="@+id/editTextLocalizacao"
                 app:layout_constraintTop_toBottomOf="@+id/editTextLocalizacao">
 
@@ -154,7 +149,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Observação"
-                android:enabled="@{viewModel.camposHabilitados}"
                 app:layout_constraintStart_toStartOf="@+id/editTelefone"
                 app:layout_constraintTop_toBottomOf="@+id/editTelefone">
 
@@ -183,7 +177,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:calendarViewShown="false"
-                android:enabled="@{viewModel.camposHabilitados}"
                 android:datePickerMode="spinner"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvDataNascimento"
@@ -197,7 +190,6 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/botao_arredondado"
                 android:textColor="@color/white"
-                android:onClick="@{(v)-> viewModel.cadastrar()}"
                 android:text="Salvar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/simpleDatePicker"

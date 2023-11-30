@@ -52,31 +52,40 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <TextView
+        android:id="@+id/textViewMonthLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="172dp"
+        android:text="Mês Atual"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.021"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.github.sundeepk.compactcalendarview.CompactCalendarView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/compactcalendar_view"
-        android:layout_width="fill_parent"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
+        android:layout_width="0dp"
         android:layout_height="250dp"
-        app:compactCalendarTargetHeight="250dp"
-        app:compactCalendarTextSize="12sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         app:compactCalendarBackgroundColor="#03A9F4"
-        app:compactCalendarTextColor="#fff"
+        app:compactCalendarCurrentDayBackgroundColor="#3F51B5"
         app:compactCalendarCurrentSelectedDayBackgroundColor="#FFFFFF"
         app:compactCalendarCurrentSelectedDayTextColor="#2196F3"
-        app:compactCalendarCurrentDayBackgroundColor="#3F51B5"
         app:compactCalendarMultiEventIndicatorColor="#fff"
+        app:compactCalendarTargetHeight="250dp"
+        app:compactCalendarTextColor="#fff"
+        app:compactCalendarTextSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar"
-        />
-
-
-
-
+        app:layout_constraintTop_toBottomOf="@id/textViewMonthLabel"
+        app:layout_constraintVertical_bias="0.063" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

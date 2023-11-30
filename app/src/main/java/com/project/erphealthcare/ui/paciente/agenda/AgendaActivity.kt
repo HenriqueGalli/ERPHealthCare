@@ -3,6 +3,7 @@ package com.project.erphealthcare.ui.paciente.agenda
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.sundeepk.compactcalendarview.CompactCalendarView
@@ -10,8 +11,7 @@ import com.github.sundeepk.compactcalendarview.domain.Event
 import com.project.erphealthcare.R
 import com.project.erphealthcare.data.model.Agendamento
 import com.project.erphealthcare.data.result.GetCalendarioResult
-import com.project.erphealthcare.ui.paciente.cadastrarAgendamento.CadsatrarAgendamentoActivity
-import org.json.JSONObject
+import com.project.erphealthcare.ui.paciente.cadastrarAgendamento.CadastrarAgendamentoActivity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -36,10 +36,18 @@ class AgendaActivity : AppCompatActivity() {
 
         viewModel.getCalendario()
 
+        // Adiciona o TextView do mês atual
+        val textViewMonthLabel = findViewById<TextView>(R.id.textViewMonthLabel)
+
+        // Configura o texto do mês atual
+        val currentMonth = SimpleDateFormat("MMMM yyyy", Locale("pt", "BR")).format(Date())
+        textViewMonthLabel.text = currentMonth
+
+
         // Define um listener para lidar com a seleção de data
         compactCalendarView.setListener(object : CompactCalendarView.CompactCalendarViewListener {
             override fun onDayClick(dateClicked: Date) {
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
                 val selectedDate = dateFormat.format(dateClicked)
 
                 // Obtém todos os eventos para a data selecionada
@@ -56,14 +64,15 @@ class AgendaActivity : AppCompatActivity() {
             }
 
             override fun onMonthScroll(firstDayOfNewMonth: Date) {
-                // Lida com a mudança de mês, se necessário
+                val newMonth = SimpleDateFormat("MMMM yyyy", Locale("pt", "BR")).format(firstDayOfNewMonth)
+                textViewMonthLabel.text = newMonth
             }
         })
     }
 
     private fun setupListeners() {
         btnCadastrar.setOnClickListener {
-            val intent = Intent(this, CadsatrarAgendamentoActivity::class.java)
+            val intent = Intent(this, CadastrarAgendamentoActivity::class.java)
             startActivity(intent)
             this.finish()
         }

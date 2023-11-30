@@ -161,6 +161,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:visibility="invisible"
+                android:clickable="false"
+                android:focusable="false"
                 android:background="@drawable/white_border_home"
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -350,7 +353,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/white_border_home"
                 android:padding="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/clTemperatura"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/clTemperatura"
                 app:layout_constraintTop_toTopOf="@+id/clAlergias">
 

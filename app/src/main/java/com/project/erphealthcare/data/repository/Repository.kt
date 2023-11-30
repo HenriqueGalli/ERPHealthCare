@@ -4,15 +4,18 @@ import br.com.preventivewelfare.api.result.DeleteUserResult
 import br.com.preventivewelfare.api.result.EditUserResult
 import com.project.erphealthcare.data.api.ApiService
 import com.project.erphealthcare.data.api.ERPDataSource
+import com.project.erphealthcare.data.model.Agendamento
 import com.project.erphealthcare.data.model.Cuidador
 import com.project.erphealthcare.data.model.Exame
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.AssociateCaregiverUserResult
+import com.project.erphealthcare.data.result.CreateAgendamentoResult
 import com.project.erphealthcare.data.result.CreateCuidadorResult
 import com.project.erphealthcare.data.result.CreateExamesResult
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.DeleteExamesResult
+import com.project.erphealthcare.data.result.GetCalendarioResult
 import com.project.erphealthcare.data.result.GetCuidadorResult
 import com.project.erphealthcare.data.result.GetExamesResult
 import com.project.erphealthcare.data.result.GetListaPacienteResult
@@ -87,12 +90,19 @@ class Repository(val dataSource: ERPDataSource) {
         return dataSource.getMedicalHistory()
     }
 
+    suspend fun getCalendario(): GetCalendarioResult {
+        return dataSource.getCalendario()
+    }
+
     suspend fun getExames(): GetExamesResult {
         return dataSource.getExames()
     }
 
     suspend fun postExames(exame: Exame): CreateExamesResult {
         return dataSource.postExames(exame = exame)
+    }
+    suspend fun createAgendamento(agendamento: Agendamento): CreateAgendamentoResult {
+        return dataSource.createAgendamento(agendamento)
     }
 
     suspend fun deleteExame(id: Int): DeleteExamesResult {

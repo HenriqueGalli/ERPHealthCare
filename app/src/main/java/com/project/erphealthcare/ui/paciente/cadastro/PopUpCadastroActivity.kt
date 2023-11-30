@@ -11,7 +11,9 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.project.erphealthcare.R
+import com.project.erphealthcare.data.model.Agendamento
 import com.project.erphealthcare.ui.login.LoginActivity
+import com.project.erphealthcare.ui.paciente.agenda.AgendaActivity
 import com.project.erphealthcare.ui.paciente.home.HomePacienteActivity
 
 
@@ -20,6 +22,7 @@ class PopUpCadastroActivity(
     private val isNewUser: Boolean = true,
     private val token: String = "",
     private val isExcludedMessage: Boolean = false,
+    private val isAgenamento: Boolean = false,
     context: Context
 ) :
     DialogFragment() {
@@ -43,6 +46,7 @@ class PopUpCadastroActivity(
         super.onViewCreated(view, savedInstanceState)
         if (isNewUser) setPopUpStatus()
         else if (isExcludedMessage) setPopUpExcludeStatus()
+        else if (isAgenamento) setupAgendamentoListener()
         else setPopUpStatusEditUser()
 
     }
@@ -82,6 +86,17 @@ class PopUpCadastroActivity(
             } else {
                 val intent = Intent(context, HomePacienteActivity::class.java)
                 intent.putExtra("TOKEN", token)
+                activity?.finish()
+                startActivity(intent)
+            }
+        }
+    }
+    private fun setupAgendamentoListener() {
+        view?.findViewById<Button>(R.id.popup_window_button)?.setOnClickListener {
+            if (isError) {
+                dialog?.dismiss()
+            } else {
+                val intent = Intent(context, AgendaActivity::class.java)
                 activity?.finish()
                 startActivity(intent)
             }

@@ -3,15 +3,18 @@ package com.project.erphealthcare.data.api
 import android.util.Log
 import br.com.preventivewelfare.api.result.EditUserResult
 import com.google.gson.internal.LinkedTreeMap
+import com.project.erphealthcare.data.model.Agendamento
 import com.project.erphealthcare.data.model.Cuidador
 import com.project.erphealthcare.data.model.Exame
 import com.project.erphealthcare.data.model.HistoricoMedico
 import com.project.erphealthcare.data.model.Paciente
 import com.project.erphealthcare.data.result.AssociateCaregiverUserResult
+import com.project.erphealthcare.data.result.CreateAgendamentoResult
 import com.project.erphealthcare.data.result.CreateCuidadorResult
 import com.project.erphealthcare.data.result.CreateExamesResult
 import com.project.erphealthcare.data.result.CreatePacienteResult
 import com.project.erphealthcare.data.result.DeleteExamesResult
+import com.project.erphealthcare.data.result.GetCalendarioResult
 import com.project.erphealthcare.data.result.GetCuidadorResult
 import com.project.erphealthcare.data.result.GetExamesResult
 import com.project.erphealthcare.data.result.GetListaPacienteResult
@@ -71,6 +74,17 @@ class ERPDataSource {
         }
     }
 
+    suspend fun createAgendamento(agendamento: Agendamento): CreateAgendamentoResult {
+        return try {
+            ApiService.service.postCalendario(agendamento)
+            CreateAgendamentoResult.Success
+        } catch (throwable: Throwable) {
+            if (throwable is HttpException) {
+                CreateAgendamentoResult.ApiError(401)
+            } else CreateAgendamentoResult.ServerError
+        }
+    }
+
     suspend fun createCuidador(cuidador: Cuidador): CreateCuidadorResult {
         return try {
             val res = ApiService.service.createCuidador(cuidador)
@@ -120,6 +134,15 @@ class ERPDataSource {
             GetMedicalHistoryResult.Success(res)
         } catch (throwable: Throwable) {
             GetMedicalHistoryResult.ServerError
+        }
+    }
+
+    suspend fun getCalendario(): GetCalendarioResult {
+        return try {
+            val res = ApiService.service.getCalendario()
+            GetCalendarioResult.Success(res)
+        } catch (throwable: Throwable) {
+            GetCalendarioResult.ServerError
         }
     }
 
